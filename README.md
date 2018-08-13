@@ -1,27 +1,26 @@
-# UbipongUiNg
+UbiPong
+=======
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
+## Table Tennis Tournament Manager
 
-## Development server
+This project is aimed at managing an on-site table tennis tournament.  Its goals are
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- To be able to create player list and draws, for both single elimination and round robin.
 
-## Code scaffolding
+- To be able to record scores, including
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  - Normal completed games.
+  - Defaults.
+  - Double defaults.
+  - Retirements.
 
-## Build
+- To be able to advance players according to the rules.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- To be able to display current playing status:
 
-## Running unit tests
+  - Summary of results, especially for a round robin.
+  - Which players are due to play.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- To be able to enter results by players.  This is done through the use of
+  challonge.com, which has a mobile application that allows players to enter
+  scores.
