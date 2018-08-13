@@ -27,7 +27,7 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
   initRefreshInterval() {
     this.refreshInterval = setInterval(() => {
       this.refreshData();
-    }, this.refreshIntervalTime;
+    }, this.refreshIntervalTime);
   }
 
   clearRefreshInterval() {
