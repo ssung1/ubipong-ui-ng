@@ -23,10 +23,13 @@ describe('RoundRobinGridComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should refresh', async(() => {
+  it('should refresh', (done) => {
+    component.refreshIntervalTime = 100;
+    component.initRefreshInterval();
     const refreshData = spyOn(component, "refreshData");
-    // setTimeout(() => {
-    //   console.log("checking");
-    // }, 10000);
-  }));
+    setTimeout(() => {
+      expect(refreshData).toHaveBeenCalled();
+      done();
+    }, component.refreshIntervalTime + 100);
+  });
 });

@@ -9,6 +9,7 @@ import { OnDestroy } from '@angular/core';
 export class RoundRobinGridComponent implements OnInit, OnDestroy {
 
   private refreshInterval;
+  refreshIntervalTime = 5000;
 
   gridContent = [
     [ "", "Group 1", "A", "B", "C" ],
@@ -20,9 +21,19 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
+    this.initRefreshInterval();
+  }
+
+  initRefreshInterval() {
     this.refreshInterval = setInterval(() => {
       this.refreshData();
-    }, 5000);
+    }, this.refreshIntervalTime;
+  }
+
+  clearRefreshInterval() {
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
   }
 
   refreshData() {
@@ -30,6 +41,6 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    clearInterval(this.refreshInterval);
+    this.clearRefreshInterval();
   }
 }
