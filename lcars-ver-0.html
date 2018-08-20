@@ -1,0 +1,95 @@
+<html>
+
+<head>
+  <style>
+    #outside-curve {
+      border: solid;
+    }
+
+    body {
+      background-color: black;
+    }
+
+    .title-bracket {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .title-bracket td {
+      background-color: peachpuff;
+      min-width: 300px;
+    }
+
+    .title-bracket td.vertical-bar {
+      border-style: solid none none none;
+      min-height: 150px;
+    }
+
+    .title-bracket td.outer-corner {
+      min-height: 150px;
+      border-style: solid none none none;
+      border-bottom-left-radius: 100px;
+    }
+
+    .title-bracket td.inner-corner {
+      padding: 0;
+      height: 70px;
+      border: none;
+    }
+
+    .title-bracket td.inner-corner div {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      border-bottom-left-radius: 30px;
+      background-color: black;
+    }
+
+    .title-bracket td.horizontal-bar-invisible {
+      background-color: black;
+      min-height: 70px;
+    }
+
+    .title-bracket td.horizontal-bar {
+      border-style: none solid none none;
+      min-height: 70px;
+    }
+
+    .title-bracket td.title-area {
+      background-color: black;
+    }
+
+    
+
+  </style>
+</head>
+
+<body>
+  <table class="title-bracket">
+    <tr>
+      <td class="vertical-bar">1</td>
+      <td rowspan="2" colspan="2" class="title-area">2</td>
+    </tr>
+    <tr>
+      <td class="vertical-bar">4</td>
+    </tr>
+    <tr>
+      <td class="vertical-bar outer-corner" rowspan="2">7</td>
+      <td class="inner-corner">
+        <div></div>
+      </td>
+      <td class="horizontal-bar-invisible">9</td>
+    </tr>
+    <tr>
+      <td class="horizontal-bar">11</td>
+      <td class="horizontal-bar">12</td>
+    </tr>
+  </table>
+
+  <div id="outside-curve">
+    outside-curve
+  </div>
+</body>
+
+</html>
