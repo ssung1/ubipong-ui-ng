@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-round-robin-grid',
@@ -10,6 +11,9 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
 
   private refreshInterval;
   refreshIntervalTime = 5000;
+
+  eventIndex: number = 0;
+  eventList: Array<String> = ["group1", "group2"];
 
   gridContent = [
     [ "", "Group 1", "A", "B", "C" ],
@@ -37,7 +41,31 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
   }
 
   refreshData() {
-    console.log(1);
+    if (environment.mockData) {
+      if (this.eventIndex == 0) {
+        this.gridContent = [
+          [ "", "Group 1", "A", "B", "C" ],
+          [ "A", "SpongeBob", "x", "W 5 7", "W 3 5" ],
+          [ "B", "Patrick", "L -5 -7", "x", "W 3 5" ],
+          [ "C", "Sandy", "L -3 -5", "L -3 -5", "x" ],
+        ];
+      }
+      else {
+        this.gridContent = [
+          [ "", "Group 2", "A", "B", "C" ],
+          [ "A", "Blossom", "x", "W 5 7", "W 3 5" ],
+          [ "B", "Bubbles", "L -5 -7", "x", "W 3 5" ],
+          [ "C", "Buttercup", "L -3 -5", "L -3 -5", "x" ],
+        ];
+      }
+    }
+    else {
+      //
+    }
+    this.eventIndex += 1;
+    if (this.eventIndex >= this.eventList.length) {
+      this.eventIndex = 0;
+    }
   }
 
   ngOnDestroy() {

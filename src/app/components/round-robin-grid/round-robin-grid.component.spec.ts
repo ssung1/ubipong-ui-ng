@@ -29,7 +29,21 @@ describe('RoundRobinGridComponent', () => {
     const refreshData = spyOn(component, "refreshData");
     setTimeout(() => {
       expect(refreshData).toHaveBeenCalled();
-      done();
+      setTimeout(() => {
+        expect(refreshData).toHaveBeenCalled();
+        done();
+      }, component.refreshIntervalTime + 100);
     }, component.refreshIntervalTime + 100);
+  });
+
+  it('should rotate round robin groups', () => {
+    component.eventList = ["1", "2", "3"];
+    component.eventIndex = 0;
+    component.refreshData();
+    expect(component.eventIndex).toBe(1);
+    component.refreshData();
+    expect(component.eventIndex).toBe(2);
+    component.refreshData();
+    expect(component.eventIndex).toBe(0);
   });
 });
