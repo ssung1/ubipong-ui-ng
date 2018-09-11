@@ -11,6 +11,7 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
 
   private refreshInterval;
   refreshIntervalTime = 5000;
+  cycle = environment.roundRobinGridCycle;
 
   eventIndex: number = 0;
   eventList: Array<String> = ["group1", "group2"];
@@ -25,7 +26,9 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    this.initRefreshInterval();
+    if (this.cycle) {
+      this.initRefreshInterval();
+    }
   }
 
   initRefreshInterval() {
