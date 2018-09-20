@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   mockData: true,
-  roundRobinGridCycle: false,
+  roundRobinGridRefresh: false,
+  roundRobinGridRefreshInterval: 5000,
 };
 
 /*
