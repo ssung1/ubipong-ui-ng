@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { RoundRobinGridComponent } from './components/round-robin-grid/round-robin-grid.component';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
+import { TournamentService } from './services/tournament.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    TournamentService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
