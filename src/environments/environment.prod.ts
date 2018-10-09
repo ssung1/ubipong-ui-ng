@@ -3,5 +3,5 @@ export const environment = {
   mockData: false,
   roundRobinGridRefresh: true,
   roundRobinGridRefreshTime: 5000,
-  tournamentServiceUrl: "localhost:8080",
+  tournamentServiceUrl: "http://localhost:8080",
 };
