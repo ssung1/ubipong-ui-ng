@@ -26,7 +26,7 @@ describe('TournamentService', () => {
     const response = await subject.getRoundRobinGrid(eventId);
 
     expect(httpGet).toHaveBeenCalledWith(
-      `{url}/rest/v0/event/roundRobinGrid/{eventId}`);
-    //expect(response[0][0].content).toBe(content);
+      `${url}/rest/v0/event/${eventId}/roundRobinGrid`);
+    expect(response[0][0].content).toBe(content);
   });
 });

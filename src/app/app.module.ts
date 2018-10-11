@@ -6,6 +6,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { RoundRobinGridComponent } from './components/round-robin-grid/round-robin-grid.component';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { TournamentService } from './services/tournament.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { TournamentService } from './services/tournament.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [
     TournamentService,
