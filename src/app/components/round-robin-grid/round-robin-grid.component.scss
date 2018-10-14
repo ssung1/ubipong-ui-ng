@@ -1,38 +1,51 @@
 #round-robin-grid {
-    font-size: 2vw;
     width: 100%;
     height: 100vh;
+
+    box-sizing: border-box;
     background: black;
     color: #ffff99;
+
+    font-family: 'Roboto', sans-serif;
+}
+
+#grid-content {
+    font-size: 2vw;
 
     padding: 1ex 0;
 
     display: flex;
     align-items: center;
 
+    width: 100%;
+    height: 100%;
+
     overflow: hidden;
 
-    table {
-        border-collapse: collapse;
-        margin: auto;
+    div {
         width: 95%;
-        table-layout: fixed;
+        margin: auto;
 
-        td {
-            text-transform: uppercase;
-            width: 5ex;
-            text-overflow: clip;
-            padding: .5em;
-            border: 1px solid #3366cc;
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+    
+            td {
+                text-transform: uppercase;
+                width: 5ex;
+                text-overflow: clip;
+                padding: .5em;
+                border: 1px solid #3366cc;
+            }
+    
+            td:nth-child(1) {
+                width: 2ex;
+            }
+    
+            td:nth-child(2) {
+                width: 12ex;
+            }
         }
-
-        td:nth-child(1) {
-            width: 2ex;
-        }
-
-        td:nth-child(2) {
-            width: 12ex;
-        }
-
     }
 }

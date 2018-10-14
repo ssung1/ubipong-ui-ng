@@ -16,9 +16,10 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
   refresh = environment.roundRobinGridRefresh;
 
   eventIndex: number = 0;
-  eventList: string[] = ["group1", "group2"];
+  eventUrlList: string[] = ["group1", "group2"];
 
   gridContent: any[][] = [[]];
+  event: any = {};
 
   constructor(
     private tournamentService: TournamentService,
@@ -29,7 +30,7 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
     if (this.refresh) {
       this.initRefreshInterval();
     }
-    this.eventList = this.parseEventList();
+    this.eventUrlList = this.parseEventList();
     this.refreshData();
   }
 
@@ -51,14 +52,17 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
   }
 
   refreshData() {
-    const event = this.eventList[this.eventIndex];
-    console.log("Refreshing...", event);
-    this.tournamentService.getRoundRobinGrid(this.eventList[this.eventIndex])
+    const eventUrl = this.eventUrlList[this.eventIndex];
+    this.tournamentService.getRoundRobinGrid(eventUrl)
       .subscribe((grid) => {
         this.gridContent = grid;
-      })
+      });
+    this.tournamentService.getEvent(eventUrl)
+    .subscribe((e) => {
+      this.event = e;
+    });
     this.eventIndex += 1;
-    if (this.eventIndex >= this.eventList.length) {
+    if (this.eventIndex >= this.eventUrlList.length) {
       this.eventIndex = 0;
     }
   }

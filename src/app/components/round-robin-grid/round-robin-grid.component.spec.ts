@@ -9,15 +9,22 @@ import { ActivatedRoute } from '@angular/router';
 describe('RoundRobinGridComponent', () => {
   let component: RoundRobinGridComponent;
   let fixture: ComponentFixture<RoundRobinGridComponent>;
+
+  const eventName = "Bikini Bottom Round Robin Group 1";
+  const roundRobinGrid = [["A", "B", "C"]];
   const mockTournamentService = new TournamentService(null);
   const mockActivatedRoute = new ActivatedRoute();
 
   let getRoundRobinGrid: jasmine.Spy;
+  let getEvent: jasmine.Spy;
   let parseEventList: jasmine.Spy;
 
   beforeEach(async(() => {
     getRoundRobinGrid = spyOn(mockTournamentService, "getRoundRobinGrid");
-    getRoundRobinGrid.and.returnValue(of([["A", "B", "C"]]));
+    getRoundRobinGrid.and.returnValue(of(roundRobinGrid));
+
+    getEvent = spyOn(mockTournamentService, "getEvent");
+    getEvent.and.returnValue(of({ name: eventName }));
 
     TestBed.configureTestingModule({
       declarations: [ RoundRobinGridComponent ],
@@ -69,5 +76,15 @@ describe('RoundRobinGridComponent', () => {
     component.refreshData();
     expect(getRoundRobinGrid).toHaveBeenCalledWith("event 3");
     expect(component.eventIndex).toBe(0);
+  });
+
+  it('should update round robin grid after refresh', () => {
+    component.refreshData();
+    expect(component.gridContent).toBe(roundRobinGrid);
+  });
+
+  it('should update event information after refresh', () => {
+    component.refreshData();
+    expect(component.event["name"]).toBe(eventName);
   });
 });

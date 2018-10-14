@@ -1,9 +1,15 @@
 <div id="round-robin-grid">
-  <table>
-    <tr *ngFor="let r of gridContent">
-      <td *ngFor="let c of r">
-        {{c.content}}
-      </td>
-    </tr>
-  </table>
+
+  <div id="grid-content">
+    <div>
+      <h2>{{event["name"]}}</h2>
+      <table>
+        <tr *ngFor="let r of gridContent">
+          <td *ngFor="let c of r">
+            {{c.content}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
