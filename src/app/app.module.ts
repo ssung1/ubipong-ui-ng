@@ -7,6 +7,7 @@ import { RoundRobinGridComponent } from './components/round-robin-grid/round-rob
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { TournamentService } from './services/tournament.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
   providers: [
-    TournamentService,
-  ],
+    TournamentService
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
