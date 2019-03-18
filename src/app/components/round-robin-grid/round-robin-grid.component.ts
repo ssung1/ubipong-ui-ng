@@ -3,6 +3,7 @@ import { OnDestroy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-round-robin-grid',
@@ -53,14 +54,15 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
 
   refreshData() {
     const eventUrl = this.eventUrlList[this.eventIndex];
-    this.tournamentService.getRoundRobinGrid(eventUrl)
-      .subscribe((grid) => {
-        this.gridContent = grid;
-      });
-    this.tournamentService.getEvent(eventUrl)
-    .subscribe((e) => {
-      this.event = e;
+
+    forkJoin(
+      this.tournamentService.getRoundRobinGrid(eventUrl),
+      this.tournamentService.getEvent(eventUrl),
+    ).subscribe(v => {
+      this.gridContent = v[0];
+      this.event = v[1];
     });
+
     this.eventIndex += 1;
     if (this.eventIndex >= this.eventUrlList.length) {
       this.eventIndex = 0;

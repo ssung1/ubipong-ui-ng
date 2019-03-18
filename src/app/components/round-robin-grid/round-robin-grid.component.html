@@ -2,7 +2,7 @@
 
   <div id="grid-content">
     <div>
-      <h2>{{event["name"]}}</h2>
+      <h2>{{event?.challongeTournament?.name}}</h2>
       <table>
         <tr *ngFor="let r of gridContent">
           <td *ngFor="let c of r">
