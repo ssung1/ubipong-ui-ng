@@ -56,4 +56,9 @@ export class TournamentService {
     const url = this.getUrl(`/rest/v0/event/${eventUrl}`);
     return this.httpClient.get(url);
   }
+
+  getRoundRobinMatchList(eventUrl: string): Observable<any[]> {
+    const url = this.getUrl(`/rest/v0/event/${eventUrl}/roundRobinMatchList`);
+    return <Observable<any[]>>this.httpClient.get(url);
+  }
 }

@@ -1,0 +1,15 @@
+<div id="round-robin-match-sheet">
+
+  <div id="grid-content">
+    <div>
+      <h2>{{event?.challongeTournament?.name}}</h2>
+      <table>
+        <tr *ngFor="let r of gridContent">
+          <td *ngFor="let c of r">
+            {{c.content}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

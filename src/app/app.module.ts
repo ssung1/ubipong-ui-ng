@@ -8,12 +8,14 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { TournamentService } from './services/tournament.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { RoundRobinMatchSheetComponent } from './components/round-robin-match-sheet/round-robin-match-sheet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RoundRobinGridComponent,
-    MainMenuComponent
+    MainMenuComponent,
+    RoundRobinMatchSheetComponent
   ],
   imports: [
     BrowserModule,

@@ -53,11 +53,11 @@ export class RoundRobinGridComponent implements OnInit, OnDestroy {
   }
 
   refreshData() {
-    const eventUrl = this.eventUrlList[this.eventIndex];
+    const eventName = this.eventUrlList[this.eventIndex];
 
     forkJoin(
-      this.tournamentService.getRoundRobinGrid(eventUrl),
-      this.tournamentService.getEvent(eventUrl),
+      this.tournamentService.getRoundRobinGrid(eventName),
+      this.tournamentService.getEvent(eventName),
     ).subscribe(v => {
       this.gridContent = v[0];
       this.event = v[1];
