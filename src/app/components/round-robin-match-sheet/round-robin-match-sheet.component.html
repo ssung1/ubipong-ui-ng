@@ -1,15 +1,15 @@
 <div id="round-robin-match-sheet">
-
-  <div id="grid-content">
-    <div>
-      <h2>{{event?.challongeTournament?.name}}</h2>
-      <table>
-        <tr *ngFor="let r of gridContent">
-          <td *ngFor="let c of r">
-            {{c.content}}
-          </td>
-        </tr>
-      </table>
-    </div>
+  <div *ngFor="let mg of matchGroupList; let i = index">
+    <h2>{{event?.challongeTournament?.name}}</h2>
+    <table>
+      <tr><th *ngFor="let gh of gameHeader()">{{gh}}</th></tr>
+      <ng-container *ngFor="let m of mg">
+        <tr><td>{{m.player1Seed}}</td><td>{{m.player1Name}}</td><td *ngFor="let b of gameResultBlank()">{{b}}</td></tr>
+        <tr><td>{{m.player2Seed}}</td><td>{{m.player2Name}}</td><td *ngFor="let b of gameResultBlank()">{{b}}</td></tr>
+        <tr><td class="blank-row"></td></tr>
+      </ng-container>
+    </table>
+    <p *ngIf="i % 2 == 1; else space" class="page-break"></p>
+    <ng-template #space><p class="space"></p></ng-template>
   </div>
 </div>

@@ -1,3 +1,31 @@
 #round-robin-match-sheet {
-    color: blue;
+    table {
+        margin: .5rem;
+        border-collapse: collapse;
+    }
+
+    th {
+        border: none;
+        font-weight: normal;
+        padding: 0 1rem;
+    }
+
+    td {
+        border: 1pt solid;
+        padding: 0 1rem;
+    }
+
+    td.blank-row {
+        border: none;
+        font-weight: normal;
+        padding: .5rem 1rem;
+    }
+
+    p.page-break {
+        page-break-after: always;
+    }
+
+    p.space {
+        padding: 3rem;
+    }
 }
