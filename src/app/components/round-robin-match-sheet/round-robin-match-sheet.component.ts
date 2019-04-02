@@ -10,7 +10,7 @@ import { forkJoin } from 'rxjs';
 })
 export class RoundRobinMatchSheetComponent implements OnInit {
   eventName: string;
-  event: any[];
+  event: any;
   matchList: any[];
   matchGroupList: any[][];
 
