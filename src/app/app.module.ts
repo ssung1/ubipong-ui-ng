@@ -9,13 +9,15 @@ import { TournamentService } from './services/tournament.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { RoundRobinMatchSheetComponent } from './components/round-robin-match-sheet/round-robin-match-sheet.component';
+import { EventPlayerListComponent } from './components/event-player-list/event-player-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RoundRobinGridComponent,
     MainMenuComponent,
-    RoundRobinMatchSheetComponent
+    RoundRobinMatchSheetComponent,
+    EventPlayerListComponent
   ],
   imports: [
     BrowserModule,
