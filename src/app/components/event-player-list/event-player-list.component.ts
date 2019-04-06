@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Player } from 'src/app/models/player';
-import { race } from 'q';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-event-player-list',
@@ -8,13 +8,7 @@ import { race } from 'q';
   styleUrls: ['./event-player-list.component.scss']
 })
 export class EventPlayerListComponent implements OnInit {
-  playerList: Player[] = [
-    {
-      name: "spongebob",
-      club: "atlantic ocean",
-      rating: 123
-    }
-  ];
+  playerList: Player[] = [];
 
   newName = '';
   newClub = '';
@@ -25,9 +19,19 @@ export class EventPlayerListComponent implements OnInit {
   ngOnInit() {
   }
 
-  addPlayer(name: string) {
+  addPlayer() {
     const player = new Player();
-    player.name = name;
+    player.name = this.newName;
+    player.club = this.newClub;
+    player.rating = this.newRating;
     this.playerList.push(player);
+
+    this.newName = '';
+    this.newClub = '';
+    this.newRating = null;
+  }
+
+  deletePlayer(index: number) {
+    this.playerList.splice(index, 1);
   }
 }

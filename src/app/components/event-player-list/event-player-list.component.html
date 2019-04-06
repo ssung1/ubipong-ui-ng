@@ -2,18 +2,21 @@
     <table>
         <tr><td>Name</td><td>Club</td><td>Rating</td><td></td></tr>
 
-        <tr *ngFor="let p of playerList">
+        <tr *ngFor="let p of playerList; index as i">
             <td>{{p.name}}</td>
             <td>{{p.club}}</td>
             <td>{{p.rating}}</td>
-            <td><input type="button" (click)="addPlayer('x')" value="X"></td>
+            <td><input type="button" (click)="deletePlayer(i)" value="X"></td>
         </tr>
 
         <tr>
-            <td><input class="new-name" type="text" [value]="newName" size="24"></td>
-            <td><input class="new-club" type="text" [value]="newClub" size="24"></td>
-            <td><input class="new-rating" type="text" [value]="newRating" size="5"></td>
-            <td><input type="button" (click)="addPlayer('x')" value="+"></td>
+            <td><input id="input-new-name" [(ngModel)]="newName" class="new-name" type="text" size="24"></td>
+            <td><input id="input-new-club" [(ngModel)]="newClub" class="new-club" type="text" size="24"></td>
+            <td><input id="input-new-rating" [(ngModel)]="newRating" class="new-rating" type="number" size="5"></td>
+            <td>
+                <input id="button-add-player" type="button"
+                (click)="addPlayer(this.newName, this.newClub, this.newRating)" value="+">
+            </td>
         </tr>
     </table>
 </div>
