@@ -83,4 +83,93 @@ describe('EventPlayerListComponent', () => {
     expect(component.playerList.length).toBe(1);
     expect(component.playerList[0].name).toBe(player2Name);
   });
+
+  it('should set number of groups to 4 if there are 16 players and group size is 4', () => {
+    component.playerList = [
+      player1, player2, player1, player2,
+      player1, player2, player1, player2,
+      player1, player2, player1, player2,
+      player1, player2, player1, player2,
+    ];
+
+    expect(component.calculateNumberOfGroups(4)).toBe(4);
+  });
+
+  it('should set number of groups to 3 if there are 9 players and group size is 4', () => {
+    component.playerList = [
+      player1, player2, player1, player2,
+      player1, player2, player1, player2,
+      player1, 
+    ];
+
+    expect(component.calculateNumberOfGroups(4)).toBe(3);
+  });
+
+  it('should correctly create the round robin groups - empty list', () => {
+    component.playerList = [
+    ];
+    component.createGroupList(4);
+
+    expect(component.roundRobinGroupList.length).toBe(0);
+  });
+
+  it('should correctly create the round robin groups - singleton list', () => {
+    component.playerList = [
+      player1,
+    ];
+    component.createGroupList(4);
+
+    expect(component.roundRobinGroupList.length).toBe(1);
+  });
+
+  it('should correctly create the round robin groups - two players into two groups', () => {
+    component.playerList = [
+      player1, player2
+    ];
+    component.createGroupList(1);
+
+    expect(component.roundRobinGroupList.length).toBe(2);
+    expect(component.roundRobinGroupList[0].playerList[0].name).toBe(player1Name);
+    expect(component.roundRobinGroupList[1].playerList[0].name).toBe(player2Name);
+  });
+
+  it('should correctly create the round robin groups - three players into two groups', () => {
+    component.playerList = [
+      player1, player2, player1
+    ];
+    component.createGroupList(2);
+
+    expect(component.roundRobinGroupList.length).toBe(2);
+
+    // group1 should have player1
+    // group2 should have player2, player1
+    expect(component.roundRobinGroupList[0].playerList[0].name).toBe(player1Name);
+    expect(component.roundRobinGroupList[1].playerList[0].name).toBe(player2Name);
+    expect(component.roundRobinGroupList[1].playerList[1].name).toBe(player1Name);
+  });
+
+  it('should get the correct group size', () => {
+    const groupSize = 5;
+    const dom = fixture.nativeElement;
+    dom.querySelector('#input-group-size').value = groupSize;
+
+    const createGroupList = spyOn(component, 'createGroupList').and.stub();
+    dom.querySelector('#button-make-groups').click();
+    expect(createGroupList).toHaveBeenCalledWith(groupSize.toString());
+  });
+
+  it('should create round robin groups when user clicks on the make group button', () => {
+    component.playerList = [
+      player1
+    ];
+
+    const dom = fixture.nativeElement;
+    dom.querySelector('#input-group-size').value = "1";
+    dom.querySelector('#button-make-groups').click();
+
+    fixture.detectChanges();
+
+    const player = dom.querySelector('div.group-list table tr:nth-child(2) > td:nth-child(1)');
+    expect(player.textContent).toBe(player1.name);
+  });
 });

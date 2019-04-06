@@ -1,6 +1,6 @@
 <div id="event-player-list">
-    <table>
-        <tr><td>Name</td><td>Club</td><td>Rating</td><td></td></tr>
+    <table class="full-player-list">
+        <tr><th>Name</th><th>Club</th><th>Rating</th><th></th></tr>
 
         <tr *ngFor="let p of playerList; index as i">
             <td>{{p.name}}</td>
@@ -10,13 +10,36 @@
         </tr>
 
         <tr>
-            <td><input id="input-new-name" [(ngModel)]="newName" class="new-name" type="text" size="24"></td>
-            <td><input id="input-new-club" [(ngModel)]="newClub" class="new-club" type="text" size="24"></td>
-            <td><input id="input-new-rating" [(ngModel)]="newRating" class="new-rating" type="number" size="5"></td>
+            <td><input id="input-new-name" [(ngModel)]="newName" type="text" size="24"></td>
+            <td><input id="input-new-club" [(ngModel)]="newClub" type="text" size="24"></td>
+            <td><input id="input-new-rating" [(ngModel)]="newRating" type="tel" maxlength="4" size="4"></td>
             <td>
                 <input id="button-add-player" type="button"
                 (click)="addPlayer(this.newName, this.newClub, this.newRating)" value="+">
             </td>
         </tr>
     </table>
+
+    <div class="group-control">
+        Group size: <input id="input-group-size" #inputGroupSize type="tel" maxlength="1" size="1" value="5">
+        <button id="button-make-groups" (click)="createGroupList(inputGroupSize.value)">Make Groups</button>
+    </div>
+
+    <div class="group-list">
+        <div *ngFor="let g of roundRobinGroupList; index as i">
+            <p>Group {{i}}</p>
+
+            <table class="group-player-list">
+                <tr><th>Name</th><th>Club</th><th>Rating</th><th></th></tr>
+
+                <tr *ngFor="let p of g.playerList; index as i">
+                    <td>{{p.name}}</td>
+                    <td>{{p.club}}</td>
+                    <td>{{p.rating}}</td>
+                    <td><i class="fa fa-copy" (click)="copyPlayerToClipboard(p)"></i></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
 </div>

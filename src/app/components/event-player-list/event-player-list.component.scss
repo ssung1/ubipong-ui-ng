@@ -1,2 +1,42 @@
 #event-player-list {
+    padding: 1rem;
+
+    th {
+        padding: 0 .2rem;
+        text-align: left;
+    }
+
+    td {
+        padding: 0 .2rem;
+        text-align: left;
+    }
+
+    table {
+        margin: 0;
+        border-collapse: collapse;
+    }
+
+    div.group-list {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: flex-start;
+
+        div {
+            margin: .5rem;
+            padding: 1rem;
+            border: 1pt solid;
+
+            table.group-player-list {
+                margin: 0;
+                padding: 0;
+                th {
+                    margin: 0;
+                }
+                td {
+                    margin: 0;
+                }
+            }
+        }
+    }
 }
