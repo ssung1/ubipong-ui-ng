@@ -20,6 +20,14 @@
         </tr>
     </table>
 
+    <div>
+        <label>
+            <input id="checkbox-sorted-by-rating" type="checkbox" [checked]="sortedByRating"
+                    (change)="toggleSortedByRating()">
+            Sort by Rating
+        </label>
+    </div>
+
     <div class="group-control">
         Group size: <input id="input-group-size" #inputGroupSize type="tel" maxlength="1" size="1" value="5">
         <button id="button-make-groups" (click)="createGroupList(inputGroupSize.value)">Make Groups</button>

@@ -172,4 +172,51 @@ describe('EventPlayerListComponent', () => {
     const player = dom.querySelector('div.group-list table tr:nth-child(2) > td:nth-child(1)');
     expect(player.textContent).toBe(player1.name);
   });
+
+  it('should not sort players by rating if option is turned off', () => {
+    component.sortedByRating = false;
+
+    component.playerList = [];
+
+    component.addPlayer(player1Name, player1Club, player1Rating.toString());
+    expect(component.playerList.length).toBe(1);
+    expect(component.playerList[0].name).toBe(player1Name);
+
+    component.addPlayer(player2Name, player2Club, player2Rating.toString());
+    expect(component.playerList.length).toBe(2);
+    expect(component.playerList[0].name).toBe(player1Name);
+    expect(component.playerList[1].name).toBe(player2Name);
+  });
+
+  it('should sort players by rating if option is turned on', () => {
+    component.sortedByRating = true;
+
+    component.playerList = [];
+
+    component.addPlayer(player1Name, player1Club, player1Rating.toString());
+    expect(component.playerList.length).toBe(1);
+    expect(component.playerList[0].name).toBe(player1Name);
+
+    component.addPlayer(player2Name, player2Club, player2Rating.toString());
+    expect(component.playerList.length).toBe(2);
+    // player 2 has higher rating and should be placed before player 1
+    expect(player2Rating).toBeGreaterThan(player1Rating);
+    expect(component.playerList[0].name).toBe(player2Name);
+    expect(component.playerList[1].name).toBe(player1Name);
+  });
+
+  it('should turn on/off sort-by-rating option as user clicks on the checkbox', () => {
+    component.sortedByRating = true;
+
+    const dom = fixture.nativeElement;
+    const checkbox = dom.querySelector('#checkbox-sorted-by-rating');
+
+    fixture.detectChanges();
+    expect(checkbox.checked).toBe(true);
+
+    checkbox.click();
+
+    expect(checkbox.checked).toBe(false);
+    expect(component.sortedByRating).toBe(false);
+  });
 });

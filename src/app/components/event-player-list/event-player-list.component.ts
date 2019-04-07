@@ -37,6 +37,8 @@ export class EventPlayerListComponent implements OnInit {
   newClub = '';
   newRating = null;
 
+  sortedByRating = true;
+
   roundRobinGroupList: RoundRobinGroup[] = [
     {
       eventId: 1,
@@ -77,16 +79,35 @@ export class EventPlayerListComponent implements OnInit {
   ngOnInit() {
   }
 
-  addPlayer() {
+  addPlayer(name: string = this.newName,
+      club: string = this.newClub, rating: string = this.newRating) {
     const player = new Player();
-    player.name = this.newName;
-    player.club = this.newClub;
-    player.rating = parseInt(this.newRating);
+    player.name = name;
+    player.club = club;
+    player.rating = parseInt(rating);
     this.playerList.push(player);
+
+    if (this.sortedByRating) {
+      this.sortPlayerListByRating();
+    }
 
     this.newName = '';
     this.newClub = '';
     this.newRating = null;
+  }
+
+  sortPlayerListByRating() {
+    this.playerList.sort((a, b) => {
+      if (!a.rating && !b.rating) {
+        return 1;
+      } else if(!a.rating) {
+        return 1;
+      } else if(!b.rating) {
+        return -1;
+      } else {
+        return b.rating - a.rating;
+      }
+    });
   }
 
   deletePlayer(index: number) {
@@ -151,5 +172,9 @@ export class EventPlayerListComponent implements OnInit {
         }
       }
   });
+  }
+
+  toggleSortedByRating() {
+    this.sortedByRating = !this.sortedByRating;
   }
 }
