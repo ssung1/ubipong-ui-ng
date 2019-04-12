@@ -31,7 +31,7 @@ export class EventPlayerListComponent implements OnInit {
       club: "club 4",
       rating: 1004,
     },
-];
+  ];
 
   newName = '';
   newClub = '';
@@ -174,7 +174,25 @@ export class EventPlayerListComponent implements OnInit {
   });
   }
 
-  toggleSortedByRating() {
+  toggleSortedByRating(): void {
     this.sortedByRating = !this.sortedByRating;
+  }
+
+  getAllPlayersAsString(roundRobinGroup: RoundRobinGroup) {
+    return roundRobinGroup.playerList.map(p => p.name).join('\n');
+  }
+
+  copyGroupToClipboard(roundRobinGroup: RoundRobinGroup) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.getAllPlayersAsString(roundRobinGroup);
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 }

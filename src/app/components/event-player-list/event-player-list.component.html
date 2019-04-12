@@ -35,9 +35,12 @@
 
     <div class="group-list">
         <div *ngFor="let g of roundRobinGroupList; index as i">
-            <p>Group {{i}}</p>
-
             <table class="group-player-list">
+                <tr>
+                    <th colspan="3">Group {{i}}</th>
+                    <th><i class="fa fa-copy" (click)="copyGroupToClipboard(g)"></i></th>
+                </tr>
+
                 <tr><th>Name</th><th>Club</th><th>Rating</th><th></th></tr>
 
                 <tr *ngFor="let p of g.playerList; index as i">
@@ -47,7 +50,6 @@
                     <td><i class="fa fa-copy" (click)="copyPlayerToClipboard(p)"></i></td>
                 </tr>
             </table>
-
         </div>
     </div>
 </div>

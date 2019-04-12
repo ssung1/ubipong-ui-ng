@@ -169,7 +169,7 @@ describe('EventPlayerListComponent', () => {
 
     fixture.detectChanges();
 
-    const player = dom.querySelector('div.group-list table tr:nth-child(2) > td:nth-child(1)');
+    const player = dom.querySelector('div.group-list table tr:nth-child(3) > td:nth-child(1)');
     expect(player.textContent).toBe(player1.name);
   });
 
@@ -219,4 +219,12 @@ describe('EventPlayerListComponent', () => {
     expect(checkbox.checked).toBe(false);
     expect(component.sortedByRating).toBe(false);
   });
+
+  it('should create a string that contains all the players in a group', () => {
+    component.playerList = [player1, player2];
+    component.createGroupList(2);
+    const playerString = component.getAllPlayersAsString(component.roundRobinGroupList[0]);
+
+    expect(playerString).toBe(player1Name + '\n' + player2Name);
+  })
 });
