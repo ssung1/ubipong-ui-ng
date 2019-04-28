@@ -3,5 +3,5 @@ export const environment = {
   mockData: false,
   roundRobinGridRefresh: true,
   roundRobinGridRefreshTime: 15000,
-  tournamentServiceUrl: "http://localhost:8080",
+  tournamentServiceUrl: "https://ubipong-api.herokuapp.com",
 };
