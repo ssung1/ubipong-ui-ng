@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { urlbuilder } from 'urlbuilder';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -60,5 +60,9 @@ export class TournamentService {
   getRoundRobinMatchList(eventUrl: string): Observable<any[]> {
     const url = this.getUrl(`/rest/v0/event/${eventUrl}/roundRobinMatchList`);
     return <Observable<any[]>>this.httpClient.get(url);
+  }
+
+  createTournament(tournament: string): Observable<any[]> {
+    return of([""]);
   }
 }
