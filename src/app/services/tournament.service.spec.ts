@@ -9,14 +9,13 @@ describe('TournamentService', () => {
   const eventUrl = "bikiniBottomOpen-RoundRobin-Group-5";
   const eventName = "From Bikini Bottom: Round Robin Group 5";
   const tournamentName = "Bikini Bottom Open";
-  var mockHttpClient = jasmine.createSpyObj('mockHttpClient', ['get', 'post']);
-  const subject = new TournamentService(mockHttpClient);
+  let mockHttpClient: any;
+  let subject;
   const url = environment.tournamentServiceUrl;
 
-  let httpGet: jasmine.Spy;
-
   beforeEach(() => {
-    httpGet = spyOn(mockHttpClient, 'get');
+    mockHttpClient = jasmine.createSpyObj('mockHttpClient', ['get', 'post']);
+    subject = new TournamentService(mockHttpClient);
 
     TestBed.configureTestingModule({
       providers: [TournamentService]
@@ -25,19 +24,19 @@ describe('TournamentService', () => {
 
   it('can retrieve a round robin grid by event URL', async () => {
     const content = "example";
-    httpGet.and.returnValue([[{type: 1, content: content}]]);
+    mockHttpClient.get.and.returnValue([[{type: 1, content: content}]]);
     const response = await subject.getRoundRobinGrid(eventUrl);
 
-    expect(httpGet).toHaveBeenCalledWith(
+    expect(mockHttpClient.get).toHaveBeenCalledWith(
       `${url}/rest/v0/event/${eventUrl}/roundRobinGrid`);
     expect(response[0][0].content).toBe(content);
   });
 
   it('can retrieve event information by event URL', async () => {
-    httpGet.and.returnValue({ name: eventName });
+    mockHttpClient.get.and.returnValue({ name: eventName });
     const response = await subject.getEvent(eventUrl);
 
-    expect(httpGet).toHaveBeenCalledWith(
+    expect(mockHttpClient.get).toHaveBeenCalledWith(
       `${url}/rest/v0/event/${eventUrl}`);
     expect(response["name"]).toBe(eventName);
   });
@@ -48,7 +47,7 @@ describe('TournamentService', () => {
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
     };
 
-    httpGet.and.returnValues({
+    mockHttpClient.get.and.returnValues({
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": {
@@ -62,7 +61,7 @@ describe('TournamentService', () => {
     });
 
     const response = await subject.createTournament(tournamentName);
-    expect(httpGet).toHaveBeenCalledWith(`http://${url}/crud/tournaments`);
+    expect(mockHttpClient.post).toHaveBeenCalledWith(`http://${url}/crud/tournaments`);
     expect(response['_links']['self']['href']).toBe('asfasd');
   });
 });
