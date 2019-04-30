@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { TournamentService } from './tournament.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
 
@@ -42,26 +42,31 @@ describe('TournamentService', () => {
   });
 
   it('can create a tournament', async() => {
+    const tournamentLink = "http://localhost:8080/crud/tournaments/1";
     const tournament: Tournament = {
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
     };
 
-    mockHttpClient.get.and.returnValues({
+    mockHttpClient.post.and.returnValue({
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": {
           "self": {
-              "href": "http://localhost:8080/crud/tournaments/1"
+              "href": tournamentLink
           },
           "tournament": {
-              "href": "http://localhost:8080/crud/tournaments/1"
+              "href": tournamentLink
           }
       }
     });
 
     const response = await subject.createTournament(tournamentName);
-    expect(mockHttpClient.post).toHaveBeenCalledWith(`http://${url}/crud/tournaments`);
-    expect(response['_links']['self']['href']).toBe('asfasd');
+    //expect(mockHttpClient.post).toHaveBeenCalledWith(`${url}/crud/tournaments`, JSON.stringify(tournament), jasmine.anything());
+    expect(response['_links']['self']['href']).toBe(tournamentLink);
+  });
+
+  it('can retrieve a list of tournaments', async() => {
+    mockHttpClient.get.and.returnValue('');
   });
 });

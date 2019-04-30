@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { urlbuilder } from 'urlbuilder';
 import { environment } from '../../environments/environment';
 
@@ -63,6 +63,9 @@ export class TournamentService {
   }
 
   createTournament(tournament: string): Observable<any[]> {
-    return of([""]);
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    const url = this.getUrl('crud/tournaments');
+    return <Observable<any>>this.httpClient.post(url, JSON.stringify(tournament), { headers: headers });
   }
 }
