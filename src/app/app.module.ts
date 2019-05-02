@@ -11,6 +11,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { RoundRobinMatchSheetComponent } from './components/round-robin-match-sheet/round-robin-match-sheet.component';
 import { EventPlayerListComponent } from './components/event-player-list/event-player-list.component';
 import { FormsModule } from '@angular/forms';
+import { TournamentListComponent } from './components/tournament-list/tournament-list.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     RoundRobinGridComponent,
     MainMenuComponent,
     RoundRobinMatchSheetComponent,
-    EventPlayerListComponent
+    EventPlayerListComponent,
+    TournamentListComponent
   ],
   imports: [
     BrowserModule,
