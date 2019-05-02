@@ -10,12 +10,12 @@ describe('TournamentService', () => {
   const eventName = "From Bikini Bottom: Round Robin Group 5";
   const tournamentName = "Bikini Bottom Open";
   let mockHttpClient: any;
-  let subject;
+  let tournamentService;
   const url = environment.tournamentServiceUrl;
 
   beforeEach(() => {
     mockHttpClient = jasmine.createSpyObj('mockHttpClient', ['get', 'post']);
-    subject = new TournamentService(mockHttpClient);
+    tournamentService = new TournamentService(mockHttpClient);
 
     TestBed.configureTestingModule({
       providers: [TournamentService]
@@ -25,7 +25,7 @@ describe('TournamentService', () => {
   it('can retrieve a round robin grid by event URL', async () => {
     const content = "example";
     mockHttpClient.get.and.returnValue([[{type: 1, content: content}]]);
-    const response = await subject.getRoundRobinGrid(eventUrl);
+    const response = tournamentService.getRoundRobinGrid(eventUrl);
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(
       `${url}/rest/v0/event/${eventUrl}/roundRobinGrid`);
@@ -34,7 +34,7 @@ describe('TournamentService', () => {
 
   it('can retrieve event information by event URL', async () => {
     mockHttpClient.get.and.returnValue({ name: eventName });
-    const response = await subject.getEvent(eventUrl);
+    const response = tournamentService.getEvent(eventUrl);
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(
       `${url}/rest/v0/event/${eventUrl}`);
@@ -52,21 +52,59 @@ describe('TournamentService', () => {
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": {
-          "self": {
-              "href": tournamentLink
-          },
-          "tournament": {
-              "href": tournamentLink
-          }
+        "self": {
+          "href": tournamentLink
+        },
+        "tournament": {
+          "href": tournamentLink
+        }
       }
     });
 
-    const response = await subject.createTournament(tournamentName);
+    const response = tournamentService.createTournament(tournamentName);
     //expect(mockHttpClient.post).toHaveBeenCalledWith(`${url}/crud/tournaments`, JSON.stringify(tournament), jasmine.anything());
     expect(response['_links']['self']['href']).toBe(tournamentLink);
   });
 
   it('can retrieve a list of tournaments', async() => {
-    mockHttpClient.get.and.returnValue('');
+    mockHttpClient.get.and.returnValue({
+      "_embedded": {
+        "tournaments": [
+          {
+            "name": "THD Summer Games 2018",
+            "tournamentDate": "2018-06-20T17:00:00.000+0000",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/crud/tournaments/1"
+              },
+              "tournament": {
+                "href": "http://localhost:8080/crud/tournaments/1"
+              }
+            }
+          }
+        ]
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:8080/crud/tournaments{?page,size,sort}",
+          "templated": true
+        },
+        "profile": {
+          "href": "http://localhost:8080/crud/profile/tournaments"
+        },
+        "search": {
+          "href": "http://localhost:8080/crud/tournaments/search"
+        }
+      },
+      "page": {
+        "size": 20,
+        "totalElements": 1,
+        "totalPages": 1,
+        "number": 0
+      }
+    });
+
+    const response = tournamentService.getTournamentList();
+    
   });
 });

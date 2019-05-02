@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { urlbuilder } from 'urlbuilder';
 import { environment } from '../../environments/environment';
+import { Tournament } from '../models/tournament';
 
 @Injectable({
   providedIn: 'root'
@@ -67,5 +68,18 @@ export class TournamentService {
     headers.set('Content-Type', 'application/json');
     const url = this.getUrl('crud/tournaments');
     return <Observable<any>>this.httpClient.post(url, JSON.stringify(tournament), { headers: headers });
+  }
+
+  getTournamentList(): Observable<any> {
+    const url = this.getUrl('crud/tournaments');
+    return <Observable<any>>this.httpClient.get(url);
+  }
+
+  getTournament(tournamentId: string): Observable<any> {
+    return of('');
+  }
+
+  updateTournament(tournament: Tournament): Observable<any> {
+    return of('');
   }
 }
