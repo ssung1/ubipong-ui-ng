@@ -63,7 +63,7 @@ export class TournamentService {
     return <Observable<any[]>>this.httpClient.get(url);
   }
 
-  createTournament(tournament: string): Observable<any[]> {
+  createTournament(tournament: Tournament): Observable<any> {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     const url = this.getUrl('crud/tournaments');
@@ -75,11 +75,14 @@ export class TournamentService {
     return <Observable<any>>this.httpClient.get(url);
   }
 
-  getTournament(tournamentId: string): Observable<any> {
-    return of('');
+  getTournament(tournamentLink: string): Observable<any> {
+    const url = tournamentLink;
+    return <Observable<any>>this.httpClient.get(url);
   }
 
-  updateTournament(tournament: Tournament): Observable<any> {
-    return of('');
+  updateTournament(tournamentLink: string, tournament: Tournament): Observable<any> {
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return <Observable<any>>this.httpClient.put(tournamentLink, JSON.stringify(tournament), { headers: headers });
   }
 }
