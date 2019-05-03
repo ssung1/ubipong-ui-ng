@@ -2,6 +2,24 @@
   <p>
     tournament-list works!
   </p>
+
+  <ng-template #r001>
+    hi there
+  </ng-template>
+
+  <ng-container *ngTemplateOutlet="r001">
+
+  </ng-container>
+  <div class="new-tournament-box">
+    <button id="button-add-tournament-start">Add Tournament</button>
+    <div class="new-tournament-form">
+      <p>Name: <input id="input-new-name" type="text" size="48"></p>
+      <p>Date: <input id="input-new-tournament-date" type="text" size="10"></p>
+      <button id="button-add-tournament">Add</button>
+      <button id="button-add-tournament-cancel">Cancel</button>
+    </div>
+  </div>
+
   <ul>
     <li class="tournament-item">
       Tournament 1
@@ -11,11 +29,6 @@
     </li>
     <li class="tournament-item">
       Tournament 3
-    </li>
-    <li>
-      <p>Create new:</p>
-      <p>Name: <input id="input-new-name" type="text" size="48"></p>
-      <p>Date: <input id="input-new-tournament-date" type="text" size="10"></p>
     </li>
   </ul>
 </div>
