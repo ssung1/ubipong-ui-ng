@@ -1,14 +1,31 @@
 #tournament-list {
-    ul {
-        margin: 0;
-        // padding: 12pt;
-    }
-    li {
-        list-style-type: none;
-        margin: 2rem 1rem;
-        // margin: 0;
-        // padding: 0;
-        // height: 5rem;
-        // background-color: red;
+    div.content {
+        padding: 1rem;
+
+        div#new-tournament-box {
+            display: table;
+
+            div#accordion-add-tournament {
+                border: solid 1pt;
+            }
+
+            div#new-tournament-form {
+                border-style: solid;
+                border-width: 1pt;
+            }
+        }
+
+        ul {
+            margin: 0;
+            padding: 1rem;
+            li {
+                list-style-type: none;
+                margin: 2rem 1rem;
+                // margin: 0;
+                // padding: 0;
+                // height: 5rem;
+                // background-color: red;
+            }
+        }
     }
 }

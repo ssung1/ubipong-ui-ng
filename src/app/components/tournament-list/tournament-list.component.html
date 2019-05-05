@@ -1,34 +1,23 @@
 <div id="tournament-list">
-  <p>
-    tournament-list works!
-  </p>
+  <div class="content">
+    <h1>Tournaments</h1>
 
-  <ng-template #r001>
-    hi there
-  </ng-template>
-
-  <ng-container *ngTemplateOutlet="r001">
-
-  </ng-container>
-  <div class="new-tournament-box">
-    <button id="button-add-tournament-start">Add Tournament</button>
-    <div class="new-tournament-form">
-      <p>Name: <input id="input-new-name" type="text" size="48"></p>
-      <p>Date: <input id="input-new-tournament-date" type="text" size="10"></p>
-      <button id="button-add-tournament">Add</button>
-      <button id="button-add-tournament-cancel">Cancel</button>
+    <div id="new-tournament-box">
+      <!-- <button id="button-add-tournament-start" (click)="openNewTournamentForm()">Add Tournament</button> -->
+      <div id="accordion-add-tournament" (click)="openNewTournamentForm()">Add Tournament</div>
+      <!-- <div id="new-tournament-form" *ngIf="isNewTournamentFormOpen"> -->
+      <div id="new-tournament-form" [hidden]="!isNewTournamentFormOpen">
+        <p>Name: <input id="input-new-name" type="text" size="48" [(ngModel)]="inputNewName"></p>
+        <p>Date: <input id="input-new-tournament-date" type="text" size="10" [(ngModel)]="inputNewTournamentDate"></p>
+        <button id="button-add-tournament" (click)="addTournament()">Add</button>
+        <button id="button-add-tournament-cancel" (click)="closeNewTournamentForm()">Cancel</button>
+      </div>
     </div>
-  </div>
 
-  <ul>
-    <li class="tournament-item">
-      Tournament 1
-    </li>
-    <li class="tournament-item">
-      Tournament 2
-    </li>
-    <li class="tournament-item">
-      Tournament 3
-    </li>
-  </ul>
+    <ul>
+      <li class="tournament-item" *ngFor="let tournament of tournamentList">
+        {{tournament.name}}
+      </li>
+    </ul>
+  </div>
 </div>

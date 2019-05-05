@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TournamentListComponent } from './tournament-list.component';
+import { FormsModule } from '@angular/forms';
 
 describe('TournamentListComponent', () => {
   const tournamentName = 'Summer Games 2019';
@@ -11,7 +12,8 @@ describe('TournamentListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TournamentListComponent ]
+      declarations: [ TournamentListComponent ],
+      imports: [ FormsModule ],
     })
     .compileComponents();
   }));
@@ -53,28 +55,42 @@ describe('TournamentListComponent', () => {
   it('should be able to activate the new tournament form', () => {
     const dom = fixture.nativeElement;
 
-    const tournamentButon = dom.querySelector('.button-add-tournament-start');
-    expect(tournamentButon).toBeTruthy();
-    tournamentButon.click();
+    const buttonStartAdd = dom.querySelector('#button-add-tournament-start');
+    expect(buttonStartAdd).toBeTruthy();
+    buttonStartAdd.click();
 
-    const tournamentForm = dom.querySelector('.new-tournament-form');
+    fixture.detectChanges();
+
+    const tournamentForm = dom.querySelector('#new-tournament-form');
     expect(tournamentForm).toBeTruthy();
   });
 
   it('should be able to add a new tournament', () => {
     const dom = fixture.nativeElement;
 
-    const buttonStartAdd = dom.querySelector('.button-add-tournament-start');
-    expect(buttonStartAdd).toBeTruthy();
-    buttonStartAdd.click();
+    component.tournamentList = [
+    ];
 
-    const tournamentForm = dom.querySelector('.new-tournament-form');
+    component.openNewTournamentForm();
+
+    fixture.detectChanges();
+
+    const tournamentForm = dom.querySelector('#new-tournament-form');
     expect(tournamentForm).toBeTruthy();
 
     const inputNewName = dom.querySelector('#input-new-name');
     inputNewName.value = tournamentName;
+    inputNewName.dispatchEvent(new Event('input'));
 
     const inputNewTournamentDate = dom.querySelector('#input-new-tournament-date');
     inputNewTournamentDate.value = tournamentDate;
+    inputNewTournamentDate.dispatchEvent(new Event('input'));
+
+    const buttonAddTournament = dom.querySelector('#button-add-tournament');
+    buttonAddTournament.click();
+
+    expect(component.tournamentList.length).toBe(1);
+    expect(component.tournamentList[0].name).toBe(tournamentName);
+    expect(component.tournamentList[0].tournamentDate).toBe(tournamentDate);
   });
 });
