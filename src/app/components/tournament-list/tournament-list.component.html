@@ -1,22 +1,24 @@
 <div id="tournament-list">
-  <div class="content">
-    <h1>Tournaments</h1>
+    <div class="content">
+        <h1>Tournaments</h1>
 
-    <div id="new-tournament-box">
-      <!-- <button id="button-add-tournament-start" (click)="openNewTournamentForm()">Add Tournament</button> -->
-      <div id="accordion-add-tournament" (click)="openNewTournamentForm()"> <img src="assets/plussign.jpg" width="12" height="12"> Add Tournament</div>
-      <div id="new-tournament-form" *ngIf="isNewTournamentFormOpen">
-        <p>Name: <input id="input-new-name" type="text" size="48" [(ngModel)]="inputNewName"></p>
-        <p>Date: <input id="input-new-tournament-date" type="text" size="10" [(ngModel)]="inputNewTournamentDate"></p>
-        <button id="button-add-tournament" (click)="addTournament()">Add</button>
-        <button id="button-add-tournament-cancel" (click)="closeNewTournamentForm()">Cancel</button>
-      </div>
+        <div id="new-tournament-box">
+        <!-- <button id="button-add-tournament-start" (click)="openNewTournamentForm()">Add Tournament</button> -->
+        <div id="accordion-add-tournament" (click)="openNewTournamentForm()">
+            <i class="fa fa-plus-circle"></i> Add Tournament
+        </div>
+        <div id="new-tournament-form" *ngIf="isNewTournamentFormOpen">
+            <p>Name: <input id="input-new-name" type="text" size="48" [(ngModel)]="inputNewName"></p>
+            <p>Date: <input id="input-new-tournament-date" type="text" size="10" [(ngModel)]="inputNewTournamentDate"></p>
+            <button id="button-add-tournament" (click)="addTournament()">Add</button>
+            <button id="button-add-tournament-cancel" (click)="closeNewTournamentForm()">Cancel</button>
+          </div>
+        </div>
+
+        <ul>
+            <li class="tournament-item item-card" *ngFor="let tournament of tournamentList">
+                {{tournament.name}}
+            </li>
+        </ul>
     </div>
-
-    <ul>
-      <li class="tournament-item item-card" *ngFor="let tournament of tournamentList">
-        {{tournament.name}}
-      </li>
-    </ul>
-  </div>
 </div>
