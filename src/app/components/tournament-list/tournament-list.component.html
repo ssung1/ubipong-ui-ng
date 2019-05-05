@@ -4,9 +4,8 @@
 
     <div id="new-tournament-box">
       <!-- <button id="button-add-tournament-start" (click)="openNewTournamentForm()">Add Tournament</button> -->
-      <div id="accordion-add-tournament" (click)="openNewTournamentForm()">Add Tournament</div>
-      <!-- <div id="new-tournament-form" *ngIf="isNewTournamentFormOpen"> -->
-      <div id="new-tournament-form" [hidden]="!isNewTournamentFormOpen">
+      <div id="accordion-add-tournament" (click)="openNewTournamentForm()"> <img src="assets/plussign.jpg" width="12" height="12"> Add Tournament</div>
+      <div id="new-tournament-form" *ngIf="isNewTournamentFormOpen">
         <p>Name: <input id="input-new-name" type="text" size="48" [(ngModel)]="inputNewName"></p>
         <p>Date: <input id="input-new-tournament-date" type="text" size="10" [(ngModel)]="inputNewTournamentDate"></p>
         <button id="button-add-tournament" (click)="addTournament()">Add</button>
@@ -15,7 +14,7 @@
     </div>
 
     <ul>
-      <li class="tournament-item" *ngFor="let tournament of tournamentList">
+      <li class="tournament-item item-card" *ngFor="let tournament of tournamentList">
         {{tournament.name}}
       </li>
     </ul>

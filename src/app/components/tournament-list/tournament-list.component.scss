@@ -1,26 +1,31 @@
 #tournament-list {
     div.content {
+        display: table;
         padding: 1rem;
 
         div#new-tournament-box {
-            display: table;
-
             div#accordion-add-tournament {
-                border: solid 1pt;
+                margin-left: no;
+                display: table;
             }
 
             div#new-tournament-form {
-                border-style: solid;
-                border-width: 1pt;
+                padding: 1rem;
+                button {
+                    margin: 0 1rem;
+                }
             }
         }
 
         ul {
             margin: 0;
-            padding: 1rem;
-            li {
+            padding: 0;
+            li.tournament-item {
+                // border: 1pt solid;
                 list-style-type: none;
-                margin: 2rem 1rem;
+                margin: .5rem;
+                padding: .5rem;
+                box-shadow: 1rem 1rem 1rem cornflowerblue inset;
                 // margin: 0;
                 // padding: 0;
                 // height: 5rem;
