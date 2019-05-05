@@ -1,6 +1,5 @@
 #tournament-list {
     div.content {
-        display: table;
         padding: 1rem;
 
         div#new-tournament-box {
@@ -18,18 +17,22 @@
         }
 
         ul {
+            width: 40rem;
             margin: 0;
             padding: 0;
             li.tournament-item {
-                // border: 1pt solid;
                 list-style-type: none;
                 margin: .5rem;
                 padding: .5rem;
                 box-shadow: 1rem 1rem 1rem cornflowerblue inset;
-                // margin: 0;
-                // padding: 0;
-                // height: 5rem;
-                // background-color: red;
+
+                h2.tournament-name {
+                    margin-bottom: 0;
+                }
+
+                p.tournament-date {
+                    margin-top: 0;
+                }
             }
         }
     }
