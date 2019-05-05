@@ -92,5 +92,28 @@ describe('TournamentListComponent', () => {
     expect(component.tournamentList.length).toBe(1);
     expect(component.tournamentList[0].name).toBe(tournamentName);
     expect(component.tournamentList[0].tournamentDate).toBe(tournamentDate);
+
+    expect(component.inputNewName).toBe(null);
+    expect(component.inputNewTournamentDate).toBe(null);
+
+    const buttonStartAdd = dom.querySelector('#button-add-tournament-start');
+    expect(buttonStartAdd).toBeFalsy();
+  });
+
+  it('should be able to cancel the adding of tournament', () => {
+    const dom = fixture.nativeElement;
+
+    component.openNewTournamentForm();
+
+    fixture.detectChanges();
+
+    const tournamentForm = dom.querySelector('#new-tournament-form');
+    expect(tournamentForm).toBeTruthy();
+
+    const buttonAddTournament = dom.querySelector('#button-add-tournament-cancel');
+    buttonAddTournament.click();
+
+    const buttonStartAdd = dom.querySelector('#button-add-tournament-start');
+    expect(buttonStartAdd).toBeFalsy();
   });
 });
