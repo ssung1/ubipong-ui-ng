@@ -4,34 +4,34 @@
 
         div#new-tournament-box {
             div#accordion-add-tournament {
-                margin-left: no;
+                margin-left: none;
                 display: table;
             }
 
             div#new-tournament-form {
-                padding: 1rem;
+                margin: 0 1rem 1rem;
                 button {
                     margin: 0 1rem;
+                }
+                input {
+                    text-align: left;
                 }
             }
         }
 
         ul {
-            width: 40rem;
             margin: 0;
             padding: 0;
             li.tournament-item {
                 list-style-type: none;
-                margin: .5rem;
-                padding: .5rem;
-                box-shadow: 1rem 1rem 1rem cornflowerblue inset;
 
                 h2.tournament-name {
-                    margin-bottom: 0;
+                    margin-bottom: -.5rem;
                 }
 
                 p.tournament-date {
                     margin-top: 0;
+                    text-align: left;
                 }
             }
         }

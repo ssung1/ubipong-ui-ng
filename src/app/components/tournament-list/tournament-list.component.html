@@ -1,24 +1,32 @@
 <div id="tournament-list">
     <div class="content">
-        <h1>Tournaments</h1>
+        <h2 class="lcars-title right lcars-dodger-blue-bg lcars-black-color">Tournaments</h2>
 
         <div id="new-tournament-box">
-        <!-- <button id="button-add-tournament-start" (click)="openNewTournamentForm()">Add Tournament</button> -->
-        <div id="accordion-add-tournament" (click)="openNewTournamentForm()">
-            <i class="fa fa-plus-circle"></i> Add Tournament
-        </div>
-        <div id="new-tournament-form" *ngIf="isNewTournamentFormOpen">
-            <p>Name: <input id="input-new-name" type="text" size="48" [(ngModel)]="inputNewName"></p>
-            <p>Date: <input id="input-new-tournament-date" type="text" size="10" [(ngModel)]="inputNewTournamentDate"></p>
-            <button id="button-add-tournament" (click)="addTournament()">Add</button>
-            <button id="button-add-tournament-cancel" (click)="closeNewTournamentForm()">Cancel</button>
-          </div>
+            <div id="accordion-add-tournament" class="button" (click)="openNewTournamentForm()">
+                <i class="fa fa-plus-circle"></i> Add Tournament
+            </div>
+            <div id="new-tournament-form" class="lcars-row" *ngIf="isNewTournamentFormOpen">
+                <div class="lcars-bracket lcars-vu-3 left"></div>
+                <div class="lcars-column">
+                    <div class="lcars-element full-centered lcars-eggplant-bg">Name</div>
+                    <div class="lcars-element lcars-eggplant-bg">Date</div>
+                    <div id="button-add-tournament" class="lcars-element button" (click)="addTournament()">Add</div>
+                </div>
+                <div class="lcars-column">
+                    <input id="input-new-name" class="lcars-element left lcars-u-2 lcars-periwinkle-bg" type="text" size="48" [(ngModel)]="inputNewName">
+                    <input id="input-new-tournament-date" class="lcars-element lcars-u-2  lcars-periwinkle-bg" type="text" size="10" [(ngModel)]="inputNewTournamentDate">
+                    <div id="button-add-tournament-cancel" class="lcars-element button" (click)="closeNewTournamentForm()">Cancel</div>
+                </div>
+            </div>
         </div>
 
-        <ul>
-            <li class="tournament-item item-card" *ngFor="let tournament of tournamentList">
-                <h2 class="tournament-name">{{tournament.name}}</h2>
-                <p class="tournament-date">{{tournament.tournamentDate}}</p>
+        <ul class="lcars-column">
+            <li class="tournament-item lcars-element lcars-bahama-blue-bg lcars-vu-2 lcars-u-5 left-rounded left-center" *ngFor="let tournament of tournamentList">
+                <div>
+                    <h2 class="tournament-name">{{tournament.name}}</h2>
+                    <p class="tournament-date">{{tournament.tournamentDate}}</p>
+                </div>
             </li>
         </ul>
     </div>
