@@ -1,0 +1,28 @@
+#header {
+    .layout {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        h3 {
+            margin: 0;
+        }
+    
+        #version {
+            padding: 0;
+            font-size: 1rem;
+        }
+    }
+
+    .content {
+        position: relative;
+        width: 100%;
+        top: 10rem;
+        display: flex;
+
+        div.filler {
+            width: 20rem;
+        }
+    }
+}

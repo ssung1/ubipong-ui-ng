@@ -11,6 +11,8 @@ import { RoundRobinMatchSheetComponent } from './components/round-robin-match-sh
 import { EventPlayerListComponent } from './components/event-player-list/event-player-list.component';
 import { FormsModule } from '@angular/forms';
 import { TournamentListComponent } from './components/tournament/tournament-list/tournament-list.component';
+import { TournamentPageComponent } from './components/tournament/tournament-page/tournament-page.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { TournamentListComponent } from './components/tournament/tournament-list
     MainMenuComponent,
     RoundRobinMatchSheetComponent,
     EventPlayerListComponent,
-    TournamentListComponent
+    TournamentListComponent,
+    TournamentPageComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

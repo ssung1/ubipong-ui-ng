@@ -5,7 +5,8 @@ import { RoundRobinGridComponent } from './components/round-robin-grid/round-rob
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { RoundRobinMatchSheetComponent } from './components/round-robin-match-sheet/round-robin-match-sheet.component';
 import { EventPlayerListComponent } from './components/event-player-list/event-player-list.component';
-import { TournamentListComponent } from './components/tournament/tournament-list/tournament-list.component';
+import { TournamentPageComponent } from './components/tournament/tournament-page/tournament-page.component';
+import { HeaderComponent } from './components/header/header.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,10 @@ const routes: Routes = [
     path: "event-player-list", component: EventPlayerListComponent,
   },
   {
-    path: "tournament-list", component: TournamentListComponent,
+    path: "tournament-list", component: TournamentPageComponent,
+  },
+  {
+    path: "header", component: HeaderComponent,
   },
   {
     path: "", component: MainMenuComponent,
