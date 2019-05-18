@@ -1,5 +1,5 @@
 #header {
-    .layout {
+    .layout-top {
         width: 100%;
         position: absolute;
         top: 0;
@@ -15,14 +15,11 @@
         }
     }
 
-    .content {
+    .layout-bottom {
         position: relative;
         width: 100%;
         top: 10rem;
+        left: 10rem;
         display: flex;
-
-        div.filler {
-            width: 20rem;
-        }
     }
 }

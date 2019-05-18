@@ -8,7 +8,7 @@ import { Tournament } from 'src/app/models/tournament';
 })
 export class TournamentListComponent implements OnInit {
 
-  isNewTournamentFormOpen = true;
+  isNewTournamentFormOpen = false;
   inputNewName: string = null;
   inputNewTournamentDate: string = null;
   
