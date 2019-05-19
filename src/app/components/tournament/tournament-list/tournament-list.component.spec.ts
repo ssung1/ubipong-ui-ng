@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TournamentListComponent } from './tournament-list.component';
 import { FormsModule } from '@angular/forms';
+import { TournamentService } from 'src/app/services/tournament.service';
 
 describe('TournamentListComponent', () => {
   const tournamentName = 'Summer Games 2019';
@@ -9,10 +10,17 @@ describe('TournamentListComponent', () => {
 
   let component: TournamentListComponent;
   let fixture: ComponentFixture<TournamentListComponent>;
+  let mockTournamentService: any;
 
   beforeEach(async(() => {
+    mockTournamentService = jasmine.createSpyObj('mockTournamentService', ['addTournament']);
+    mockTournamentService.addTournament.and.returnValue('asdf');
+
     TestBed.configureTestingModule({
       declarations: [ TournamentListComponent ],
+      providers: [
+        { provide: TournamentService, useValue: mockTournamentService },
+      ],
       imports: [ FormsModule ],
     })
     .compileComponents();
@@ -31,6 +39,7 @@ describe('TournamentListComponent', () => {
   it('should display tournament list', () => {
     component.tournamentList = [
       {
+        tournamentId: 10,
         name: tournamentName,
         tournamentDate: tournamentDate,
       },
@@ -55,9 +64,9 @@ describe('TournamentListComponent', () => {
   it('should be able to activate the new tournament form', () => {
     const dom = fixture.nativeElement;
 
-    const buttonStartAdd = dom.querySelector('#button-add-tournament-start');
-    expect(buttonStartAdd).toBeTruthy();
-    buttonStartAdd.click();
+    const accordionAddTournament = dom.querySelector('#accordion-add-tournament');
+    expect(accordionAddTournament).toBeTruthy();
+    accordionAddTournament.click();
 
     fixture.detectChanges();
 
@@ -65,13 +74,13 @@ describe('TournamentListComponent', () => {
     expect(tournamentForm).toBeTruthy();
   });
 
-  it('should be able to add a new tournament', () => {
+  it('should be able to add a new tournament (in ui)', () => {
     const dom = fixture.nativeElement;
 
     component.tournamentList = [
     ];
 
-    component.openNewTournamentForm();
+    component.toggleNewTournamentForm();
 
     fixture.detectChanges();
 
@@ -90,20 +99,19 @@ describe('TournamentListComponent', () => {
     buttonAddTournament.click();
 
     expect(component.tournamentList.length).toBe(1);
-    expect(component.tournamentList[0].name).toBe(tournamentName);
-    expect(component.tournamentList[0].tournamentDate).toBe(tournamentDate);
+    const addedTournament = component.tournamentList[0];
+    expect(addedTournament.name).toBe(tournamentName);
+    expect(addedTournament.tournamentDate).toBe(tournamentDate);
+    expect(addedTournament.tournamentId).toBeTruthy();
 
     expect(component.inputNewName).toBe(null);
     expect(component.inputNewTournamentDate).toBe(null);
-
-    const buttonStartAdd = dom.querySelector('#button-add-tournament-start');
-    expect(buttonStartAdd).toBeFalsy();
   });
 
   it('should be able to cancel the adding of tournament', () => {
     const dom = fixture.nativeElement;
 
-    component.openNewTournamentForm();
+    component.toggleNewTournamentForm();
 
     fixture.detectChanges();
 
@@ -116,4 +124,8 @@ describe('TournamentListComponent', () => {
     const buttonStartAdd = dom.querySelector('#button-add-tournament-start');
     expect(buttonStartAdd).toBeFalsy();
   });
+
+  it('should be able to load a list of tournaments', () => {
+    expect(1).toBeCloseTo(2);
+  })
 });
