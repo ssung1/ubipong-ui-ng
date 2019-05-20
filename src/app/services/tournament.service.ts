@@ -63,15 +63,15 @@ export class TournamentService {
     return <Observable<any[]>>this.httpClient.get(url);
   }
 
-  createTournament(tournament: Tournament): Observable<any> {
+  addTournament(tournament: Tournament): Observable<Tournament> {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
-    const url = this.getUrl('crud/tournaments');
+    const url = this.getUrl('/crud/tournaments');
     return <Observable<any>>this.httpClient.post(url, JSON.stringify(tournament), { headers: headers });
   }
 
   getTournamentList(): Observable<any> {
-    const url = this.getUrl('crud/tournaments');
+    const url = this.getUrl('/crud/tournaments');
     return <Observable<any>>this.httpClient.get(url);
   }
 

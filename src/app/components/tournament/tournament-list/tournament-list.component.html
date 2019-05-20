@@ -17,7 +17,7 @@
                     <div class="lcars-column">
                         <input id="input-new-name" class="lcars-element left lcars-u-2 lcars-periwinkle-bg" type="text" size="48" [(ngModel)]="inputNewName">
                         <input id="input-new-tournament-date" class="lcars-element lcars-u-2  lcars-periwinkle-bg" type="text" size="10" [(ngModel)]="inputNewTournamentDate">
-                        <div id="button-add-tournament-cancel" class="lcars-element button" (click)="closeNewTournamentForm()">Cancel</div>
+                        <div id="button-add-tournament-cancel" class="lcars-element button" (click)="toggleNewTournamentForm()">Cancel</div>
                     </div>
                 </div>
                 <div class="lcars-element lcars-u-5">{{errorMessage}}</div>

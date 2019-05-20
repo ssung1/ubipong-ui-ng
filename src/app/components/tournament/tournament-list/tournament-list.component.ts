@@ -23,7 +23,12 @@ export class TournamentListComponent implements OnInit {
     this.resetInputNewTournament();
   }
 
-  loadTournamentList() {
+  getTournamentList() {
+    this.tournamentService.getTournamentList().subscribe(response => {
+      this.tournamentList = response['_embedded']['tournaments'];
+    }, error => {
+      this.errorMessage = error;
+    });
   }
 
   toggleNewTournamentForm() {
@@ -36,14 +41,18 @@ export class TournamentListComponent implements OnInit {
   }
 
   addTournament() {
-    const newTournament = {
-      tournamentId: null,
+    const newTournament: Tournament = {
       name: this.inputNewName,
-      tournamentDate: this.inputNewTournamentDate
+      tournamentDate: this.inputNewTournamentDate,
+      _links: null
     };
 
-    this.tournamentList.push(newTournament);
-
-    this.resetInputNewTournament();
+    const response = this.tournamentService.addTournament(newTournament);
+    response.subscribe(addedTournament => {
+      this.tournamentList.push(addedTournament);
+      this.resetInputNewTournament();
+    }, error => {
+      this.errorMessage = error;
+    });
   }
 }

@@ -41,11 +41,12 @@ describe('TournamentService', () => {
     expect(response["name"]).toBe(eventName);
   });
 
-  it('can create a tournament', async () => {
+  it('can add a tournament', async () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/1";
     const tournament: Tournament = {
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
+      "_links": null,
     };
 
     mockHttpClient.post.and.returnValue({
@@ -61,7 +62,7 @@ describe('TournamentService', () => {
       }
     });
 
-    const response = tournamentService.createTournament(tournament);
+    const response = tournamentService.addTournament(tournament);
     //expect(mockHttpClient.post).toHaveBeenCalledWith(`${url}/crud/tournaments`, JSON.stringify(tournament), jasmine.anything());
     expect(mockHttpClient.post).toHaveBeenCalled();
     expect(response['_links']['self']['href']).toBe(tournamentLink);
