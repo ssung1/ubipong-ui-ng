@@ -33,11 +33,17 @@ export class TournamentListComponent implements OnInit {
 
   toggleNewTournamentForm() {
     this.isNewTournamentFormOpen = !this.isNewTournamentFormOpen;
+    this.errorMessage = null;
   }
 
   private resetInputNewTournament() {
     this.inputNewName = null;
     this.inputNewTournamentDate = null;
+    this.errorMessage = null;
+  }
+
+  hasError() {
+    return this.errorMessage !== null;
   }
 
   addTournament() {
@@ -52,7 +58,8 @@ export class TournamentListComponent implements OnInit {
       this.tournamentList.push(addedTournament);
       this.resetInputNewTournament();
     }, error => {
-      this.errorMessage = error;
+      console.table(error);
+      this.errorMessage = "System error: " + error.message;
     });
   }
 }

@@ -142,6 +142,7 @@ describe('TournamentService', () => {
     const tournament: Tournament = {
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
+      "_links": null,
     };
 
     mockHttpClient.put.and.returnValue({

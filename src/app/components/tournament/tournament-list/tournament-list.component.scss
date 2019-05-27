@@ -2,6 +2,10 @@
     div.content {
         padding: 1rem;
 
+        div#input-error-message {
+            margin-bottom: .25rem;
+        }
+
         div#new-tournament-box {
             div#accordion-add-tournament {
                 margin-left: none;

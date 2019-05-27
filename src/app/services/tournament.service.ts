@@ -64,8 +64,9 @@ export class TournamentService {
   }
 
   addTournament(tournament: Tournament): Observable<Tournament> {
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
     const url = this.getUrl('/crud/tournaments');
     return <Observable<any>>this.httpClient.post(url, JSON.stringify(tournament), { headers: headers });
   }

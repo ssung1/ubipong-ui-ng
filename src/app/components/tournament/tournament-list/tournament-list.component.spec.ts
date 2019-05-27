@@ -3,7 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TournamentListComponent } from './tournament-list.component';
 import { FormsModule } from '@angular/forms';
 import { TournamentService } from 'src/app/services/tournament.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { Tournament } from 'src/app/models/tournament';
 
 describe('TournamentListComponent', () => {
   const tournamentLink = "http://localhost:8080/crud/tournaments/1";
@@ -198,5 +199,39 @@ describe('TournamentListComponent', () => {
   it('should be able to load a list of tournaments', () => {
     component.getTournamentList();
     expect(component.tournamentList.length).toBe(2);
+  });
+
+  it('should not have a box to display error message unless there is an error', () => {
+    const dom = fixture.nativeElement;
+
+    component.toggleNewTournamentForm();
+
+    fixture.detectChanges();
+
+    const errorMessageBox = dom.querySelector('#input-error-message');
+
+    expect(errorMessageBox).toBeFalsy();
+  });
+
+  it('should display error message if tournament addition fails', () => {
+    const errorMessage = 'System Error: Please Try Again Later';
+
+    mockTournamentService.addTournament.and.returnValue(throwError({
+      message: errorMessage
+    }));
+
+    component.toggleNewTournamentForm();
+
+    fixture.detectChanges();
+
+    component.addTournament();
+    expect(component.errorMessage).toContain(errorMessage);
+
+    const dom = fixture.nativeElement;
+    fixture.detectChanges();
+    const errorMessageBox = dom.querySelector('#input-error-message');
+
+    expect(errorMessageBox).toBeTruthy();
+    expect(errorMessageBox.innerText).toContain(errorMessage);
   });
 });
