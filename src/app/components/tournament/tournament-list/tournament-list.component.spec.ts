@@ -197,7 +197,8 @@ describe('TournamentListComponent', () => {
   });
 
   it('should be able to load a list of tournaments', () => {
-    component.getTournamentList();
+    //component.refreshTournamentList();
+    //component.ngOnInit();
     expect(component.tournamentList.length).toBe(2);
   });
 
@@ -208,7 +209,7 @@ describe('TournamentListComponent', () => {
 
     fixture.detectChanges();
 
-    const errorMessageBox = dom.querySelector('#input-error-message');
+    const errorMessageBox = dom.querySelector('#input-error-message > div');
 
     expect(errorMessageBox).toBeFalsy();
   });
@@ -229,7 +230,7 @@ describe('TournamentListComponent', () => {
 
     const dom = fixture.nativeElement;
     fixture.detectChanges();
-    const errorMessageBox = dom.querySelector('#input-error-message');
+    const errorMessageBox = dom.querySelector('#input-error-message > div');
 
     expect(errorMessageBox).toBeTruthy();
     expect(errorMessageBox.innerText).toContain(errorMessage);

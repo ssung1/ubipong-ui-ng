@@ -21,9 +21,10 @@ export class TournamentListComponent implements OnInit {
 
   ngOnInit() {
     this.resetInputNewTournament();
+    this.refreshTournamentList();
   }
 
-  getTournamentList() {
+  refreshTournamentList() {
     this.tournamentService.getTournamentList().subscribe(response => {
       this.tournamentList = response['_embedded']['tournaments'];
     }, error => {
@@ -58,7 +59,6 @@ export class TournamentListComponent implements OnInit {
       this.tournamentList.push(addedTournament);
       this.resetInputNewTournament();
     }, error => {
-      console.table(error);
       this.errorMessage = "System error: " + error.message;
     });
   }

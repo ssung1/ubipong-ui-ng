@@ -2,8 +2,9 @@
     <div class="content">
         <h2 class="lcars-title lcars-u-5 right lcars-dodger-blue-bg lcars-black-color">Tournaments</h2>
 
-        <div id="input-error-message" class="lcars-element lcars-u-5" *ngIf="hasError()">{{errorMessage}}</div>
-        <div id="input-error-message" class="lcars-element lcars-u-5 lcars-black-bg" *ngIf="!hasError()">&nbsp;</div>
+        <div id="input-error-message">
+            <div class="lcars-element lcars-u-5" *ngIf="hasError(); else noInputErrorMessage">{{errorMessage}}</div>
+        </div>
 
         <div id="new-tournament-box">
             <div id="accordion-add-tournament" class="button" (click)="toggleNewTournamentForm()">
@@ -19,7 +20,7 @@
                     </div>
                     <div class="lcars-column">
                         <input id="input-new-name" class="lcars-element left lcars-u-2 lcars-periwinkle-bg" type="text" size="48" [(ngModel)]="inputNewName">
-                        <input id="input-new-tournament-date" class="lcars-element lcars-u-2  lcars-periwinkle-bg" type="text" size="10" [(ngModel)]="inputNewTournamentDate">
+                        <input id="input-new-tournament-date" class="lcars-element lcars-u-2  lcars-periwinkle-bg" type="text" size="10" placeholder="yyyy-MM-dd" [(ngModel)]="inputNewTournamentDate">
                         <div id="button-add-tournament-cancel" class="lcars-element button" (click)="toggleNewTournamentForm()">Cancel</div>
                     </div>
                 </div>
