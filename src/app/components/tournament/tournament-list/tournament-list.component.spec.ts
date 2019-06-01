@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { TournamentService } from 'src/app/services/tournament.service';
 import { of, throwError } from 'rxjs';
 import { Tournament } from 'src/app/models/tournament';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TournamentListComponent', () => {
   const tournamentLink = "http://localhost:8080/crud/tournaments/1";
@@ -17,6 +19,7 @@ describe('TournamentListComponent', () => {
   let component: TournamentListComponent;
   let fixture: ComponentFixture<TournamentListComponent>;
   let mockTournamentService: any;
+  let router: Router;
 
   beforeEach(async(() => {
     mockTournamentService = jasmine.createSpyObj('mockTournamentService', ['addTournament', 'getTournamentList']);
@@ -88,7 +91,10 @@ describe('TournamentListComponent', () => {
       providers: [
         { provide: TournamentService, useValue: mockTournamentService },
       ],
-      imports: [ FormsModule ],
+      imports: [ 
+        FormsModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
   }));
@@ -97,6 +103,8 @@ describe('TournamentListComponent', () => {
     fixture = TestBed.createComponent(TournamentListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    router = TestBed.get(Router);
   });
 
   it('should create', () => {
@@ -234,5 +242,31 @@ describe('TournamentListComponent', () => {
 
     expect(errorMessageBox).toBeTruthy();
     expect(errorMessageBox.innerText).toContain(errorMessage);
+  });
+
+  it('should navigate to the event list page when a tournament is selected', () => {
+    component.tournamentList = [
+      {
+        name: tournamentName,
+        tournamentDate: tournamentDate,
+        _links: {
+          self: {
+            href: tournamentLink
+          }
+        },
+      },
+    ];
+
+    fixture.detectChanges();
+    
+    const dom = fixture.nativeElement;
+    const tournamentItem = dom.querySelector('.tournament-item');
+
+    expect(tournamentItem).toBeTruthy();
+
+    const navigate = spyOn(router, 'navigate');
+    tournamentItem.click();
+
+    expect(navigate).toHaveBeenCalled();
   });
 });

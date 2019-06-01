@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { TournamentListComponent } from './components/tournament/tournament-list/tournament-list.component';
 import { TournamentPageComponent } from './components/tournament/tournament-page/tournament-page.component';
 import { HeaderComponent } from './components/header/header.component';
+import { EventListComponent } from './components/event/event-list/event-list.component';
+import { TournamentDetailsComponent } from './components/tournament/tournament-details/tournament-details.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { HeaderComponent } from './components/header/header.component';
     EventPlayerListComponent,
     TournamentListComponent,
     TournamentPageComponent,
-    HeaderComponent
+    HeaderComponent,
+    EventListComponent,
+    TournamentDetailsComponent,
   ],
   imports: [
     BrowserModule,

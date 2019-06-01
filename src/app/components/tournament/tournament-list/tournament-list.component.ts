@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tournament } from 'src/app/models/tournament';
 import { TournamentService } from 'src/app/services/tournament.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tournament-list',
@@ -17,7 +18,10 @@ export class TournamentListComponent implements OnInit {
   tournamentList: Tournament[] = [
   ];
 
-  constructor(private tournamentService: TournamentService) { }
+  constructor(
+    private tournamentService: TournamentService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.resetInputNewTournament();

@@ -7,6 +7,7 @@ import { RoundRobinMatchSheetComponent } from './components/round-robin-match-sh
 import { EventPlayerListComponent } from './components/event-player-list/event-player-list.component';
 import { TournamentPageComponent } from './components/tournament/tournament-page/tournament-page.component';
 import { HeaderComponent } from './components/header/header.component';
+import { TournamentDetailsComponent } from './components/tournament/tournament-details/tournament-details.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,9 @@ const routes: Routes = [
   },
   {
     path: "tournament-list", component: TournamentPageComponent,
+  },
+  {
+    path: "tournament-details", component: TournamentDetailsComponent,
   },
   {
     path: "header", component: HeaderComponent,
