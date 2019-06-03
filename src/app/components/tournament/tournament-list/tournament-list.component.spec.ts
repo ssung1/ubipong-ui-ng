@@ -97,14 +97,14 @@ describe('TournamentListComponent', () => {
       ],
     })
     .compileComponents();
+
+    router = TestBed.get(Router);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TournamentListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-    router = TestBed.get(Router);
   });
 
   it('should create', () => {
@@ -265,6 +265,8 @@ describe('TournamentListComponent', () => {
     expect(tournamentItem).toBeTruthy();
 
     const navigate = spyOn(router, 'navigate');
+
+    expect(router).toBe(component.router);
     tournamentItem.click();
 
     expect(navigate).toHaveBeenCalled();

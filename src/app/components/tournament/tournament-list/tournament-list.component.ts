@@ -16,11 +16,16 @@ export class TournamentListComponent implements OnInit {
   errorMessage: string = null;
   
   tournamentList: Tournament[] = [
+    {
+      name: 'THD Summer Games 2019',
+      tournamentDate: '2019-06-15',
+      _links: null,
+    }
   ];
 
   constructor(
     private tournamentService: TournamentService,
-    private router: Router,
+    public router: Router,
   ) { }
 
   ngOnInit() {
@@ -64,6 +69,17 @@ export class TournamentListComponent implements OnInit {
       this.resetInputNewTournament();
     }, error => {
       this.errorMessage = "System error: " + error.message;
+    });
+  }
+
+  navigateToTournamentDetails(tourament: Tournament) {
+    this.router.navigate(['tournament-details'], {
+      queryParams: {
+        tournament: tourament['_links']['self']['href'],
+      },
+    })
+    .catch((error) => {
+      this.errorMessage = "Fatal error: " + error.message;
     });
   }
 }

@@ -28,7 +28,11 @@
         </div>
 
         <ul class="lcars-column">
-            <li class="tournament-item lcars-element lcars-bahama-blue-bg lcars-vu-2 lcars-u-5 left-rounded left-center" *ngFor="let tournament of tournamentList">
+            <li class="tournament-item lcars-element lcars-bahama-blue-bg lcars-vu-2 lcars-u-5 left-rounded left-center
+                button"
+                *ngFor="let tournament of tournamentList"
+                (click)="navigateToTournamentDetails(tournament)">
+
                 <div>
                     <h2 class="tournament-name">{{tournament.name}}</h2>
                     <p class="tournament-date">{{tournament.tournamentDate}}</p>
