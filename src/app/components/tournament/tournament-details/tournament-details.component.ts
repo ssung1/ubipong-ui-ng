@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tournament-details',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tournament-details.component.scss']
 })
 export class TournamentDetailsComponent implements OnInit {
+  tournamentUrl: string;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.tournamentUrl = this.route.snapshot.queryParamMap.get("tournament");
   }
 
 }
