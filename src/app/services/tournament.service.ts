@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { urlbuilder } from 'urlbuilder';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
+
+const eventRoot = '/rest/v0/events';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class TournamentService {
       }
     }
 
-    const url = this.getUrl(`/rest/v0/event/${eventUrl}/roundRobinGrid`);
+    const url = this.getUrl(`${eventRoot}/${eventUrl}/roundRobinGrid`);
     return <Observable<any[][]>>this.httpClient.get(url);
   }
 
@@ -54,12 +55,12 @@ export class TournamentService {
       }
     }
 
-    const url = this.getUrl(`/rest/v0/event/${eventUrl}`);
+    const url = this.getUrl(`${eventRoot}/${eventUrl}`);
     return this.httpClient.get(url);
   }
 
   getRoundRobinMatchList(eventUrl: string): Observable<any[]> {
-    const url = this.getUrl(`/rest/v0/event/${eventUrl}/roundRobinMatchList`);
+    const url = this.getUrl(`${eventRoot}/${eventUrl}/roundRobinMatchList`);
     return <Observable<any[]>>this.httpClient.get(url);
   }
 
