@@ -1,7 +1,9 @@
 <div class="tournament-url">URL: {{tournamentUrl}}</div>
 
 <p>
-    <a id="monitor-events-button">Monitor all active (round robin) events</a>
+    <a id="monitor-events-button" (click)="navigateToRoundRobinGrid()">
+        Monitor all active (round robin) events
+    </a>
 </p>
 
 <div class="event-list">

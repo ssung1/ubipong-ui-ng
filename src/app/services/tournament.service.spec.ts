@@ -28,7 +28,7 @@ describe('TournamentService', () => {
     const response = tournamentService.getRoundRobinGrid(eventUrl);
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(
-      `${url}/rest/v0/event/${eventUrl}/roundRobinGrid`);
+      `${url}/rest/v0/events/${eventUrl}/roundRobinGrid`);
     expect(response[0][0].content).toBe(content);
   });
 
@@ -37,7 +37,7 @@ describe('TournamentService', () => {
     const response = tournamentService.getEvent(eventUrl);
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(
-      `${url}/rest/v0/event/${eventUrl}`);
+      `${url}/rest/v0/events/${eventUrl}`);
     expect(response["name"]).toBe(eventName);
   });
 
