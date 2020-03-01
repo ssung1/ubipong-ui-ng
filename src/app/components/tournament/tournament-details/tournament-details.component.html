@@ -1,2 +1,14 @@
-<div class="tournament-url">URL: {{tournament-url}}</div>
+<div class="tournament-url">URL: {{tournamentUrl}}</div>
+
+<p>
+    <a id="monitor-events-button">Monitor all active (round robin) events</a>
+</p>
+
+<div class="event-list">
+    <div class="event" *ngFor="let event of eventList" id="event-{{event.url}}">
+        <div>{{event.name}}</div>
+        <div>{{event.url}}</div>
+        <div>{{event.status}}</div>
+    </div>
+</div>
 

@@ -8,14 +8,32 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TournamentDetailsComponent implements OnInit {
   tournamentUrl: string;
+  eventList: any[] = [
+    {
+      name: "Preliminary Round Robin Group 1",
+      url: "thd_201907_pr_rr_1",
+      status: "started"
+    },
+    {
+      name: "Preliminary Round Robin Group 2",
+      url: "thd_201907_pr_rr_2",
+      status: "started"
+    },
+    {
+      name: "Championship Group 2",
+      url: "thd_201907_ch_rr_2",
+      status: "pending"
+    }
+  ];
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.tournamentUrl = this.route.snapshot.queryParamMap.get("tournament");
-
-    // mock data
-    this.tournamentUrl = "tournament does not have url";
+    this.tournamentUrl = this.route.snapshot.queryParams["tournament"] ?
+      this.route.snapshot.queryParams["tournament"] : "tournament does not have url";
   }
 
+  navigateToRoundRobinGrid() {
+
+  }
 }
