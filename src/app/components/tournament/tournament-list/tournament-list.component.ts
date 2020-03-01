@@ -37,7 +37,7 @@ export class TournamentListComponent implements OnInit {
     this.tournamentService.getTournamentList().subscribe(response => {
       this.tournamentList = response['_embedded']['tournaments'];
     }, error => {
-      this.errorMessage = error;
+      this.errorMessage = error.message;
     });
   }
 
