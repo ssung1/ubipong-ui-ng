@@ -126,35 +126,35 @@ describe('TournamentListComponent', () => {
 
     fixture.detectChanges();
     
-    const dom = fixture.nativeElement;
-    const tournamentItem = dom.querySelector('.tournament-item');
+    const compiled = fixture.nativeElement;
+    const tournamentItem = compiled.querySelector('.tournament-item');
 
     expect(tournamentItem).toBeTruthy();
     expect(tournamentItem.textContent).toContain(tournamentName);
   });
 
   it('should hide new tournament form in the beginning', () => {
-    const dom = fixture.nativeElement;
+    const compiled = fixture.nativeElement;
 
-    const tournamentForm = dom.querySelector('.new-tournament-form');
+    const tournamentForm = compiled.querySelector('.new-tournament-form');
     expect(tournamentForm).toBeFalsy();
   });
 
   it('should be able to activate the new tournament form', () => {
-    const dom = fixture.nativeElement;
+    const compiled = fixture.nativeElement;
 
-    const accordionAddTournament = dom.querySelector('#accordion-add-tournament');
+    const accordionAddTournament = compiled.querySelector('#accordion-add-tournament');
     expect(accordionAddTournament).toBeTruthy();
     accordionAddTournament.click();
 
     fixture.detectChanges();
 
-    const tournamentForm = dom.querySelector('#new-tournament-form');
+    const tournamentForm = compiled.querySelector('#new-tournament-form');
     expect(tournamentForm).toBeTruthy();
   });
 
   it('should be able to add a new tournament (in ui)', () => {
-    const dom = fixture.nativeElement;
+    const compiled = fixture.nativeElement;
 
     component.tournamentList = [
     ];
@@ -163,18 +163,18 @@ describe('TournamentListComponent', () => {
 
     fixture.detectChanges();
 
-    const tournamentForm = dom.querySelector('#new-tournament-form');
+    const tournamentForm = compiled.querySelector('#new-tournament-form');
     expect(tournamentForm).toBeTruthy();
 
-    const inputNewName = dom.querySelector('#input-new-name');
+    const inputNewName = compiled.querySelector('#input-new-name');
     inputNewName.value = tournamentName;
     inputNewName.dispatchEvent(new Event('input'));
 
-    const inputNewTournamentDate = dom.querySelector('#input-new-tournament-date');
+    const inputNewTournamentDate = compiled.querySelector('#input-new-tournament-date');
     inputNewTournamentDate.value = tournamentDate;
     inputNewTournamentDate.dispatchEvent(new Event('input'));
 
-    const buttonAddTournament = dom.querySelector('#button-add-tournament');
+    const buttonAddTournament = compiled.querySelector('#button-add-tournament');
     buttonAddTournament.click();
 
     expect(component.tournamentList.length).toBe(1);
@@ -188,19 +188,19 @@ describe('TournamentListComponent', () => {
   });
 
   it('should be able to cancel the adding of tournament', () => {
-    const dom = fixture.nativeElement;
+    const compiled = fixture.nativeElement;
 
     component.toggleNewTournamentForm();
 
     fixture.detectChanges();
 
-    const tournamentForm = dom.querySelector('#new-tournament-form');
+    const tournamentForm = compiled.querySelector('#new-tournament-form');
     expect(tournamentForm).toBeTruthy();
 
-    const buttonAddTournament = dom.querySelector('#button-add-tournament-cancel');
+    const buttonAddTournament = compiled.querySelector('#button-add-tournament-cancel');
     buttonAddTournament.click();
 
-    const buttonStartAdd = dom.querySelector('#button-add-tournament-start');
+    const buttonStartAdd = compiled.querySelector('#button-add-tournament-start');
     expect(buttonStartAdd).toBeFalsy();
   });
 
@@ -211,13 +211,13 @@ describe('TournamentListComponent', () => {
   });
 
   it('should not have a box to display error message unless there is an error', () => {
-    const dom = fixture.nativeElement;
+    const compiled = fixture.nativeElement;
 
     component.toggleNewTournamentForm();
 
     fixture.detectChanges();
 
-    const errorMessageBox = dom.querySelector('#input-error-message > div');
+    const errorMessageBox = compiled.querySelector('#input-error-message > div');
 
     expect(errorMessageBox).toBeFalsy();
   });
@@ -236,9 +236,9 @@ describe('TournamentListComponent', () => {
     component.addTournament();
     expect(component.errorMessage).toContain(errorMessage);
 
-    const dom = fixture.nativeElement;
+    const compiled = fixture.nativeElement;
     fixture.detectChanges();
-    const errorMessageBox = dom.querySelector('#input-error-message > div');
+    const errorMessageBox = compiled.querySelector('#input-error-message > div');
 
     expect(errorMessageBox).toBeTruthy();
     expect(errorMessageBox.innerText).toContain(errorMessage);
@@ -259,8 +259,8 @@ describe('TournamentListComponent', () => {
 
     fixture.detectChanges();
     
-    const dom = fixture.nativeElement;
-    const tournamentItem = dom.querySelector('.tournament-item');
+    const compiled = fixture.nativeElement;
+    const tournamentItem = compiled.querySelector('.tournament-item');
 
     expect(tournamentItem).toBeTruthy();
 
