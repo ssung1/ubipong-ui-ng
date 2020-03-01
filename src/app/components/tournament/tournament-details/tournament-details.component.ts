@@ -13,6 +13,9 @@ export class TournamentDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.tournamentUrl = this.route.snapshot.queryParamMap.get("tournament");
+
+    // mock data
+    this.tournamentUrl = "tournament does not have url";
   }
 
 }
