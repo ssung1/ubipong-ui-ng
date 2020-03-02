@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TournamentDetailsComponent } from './tournament-details.component';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TournamentDetailsComponent', () => {
   let component: TournamentDetailsComponent;
@@ -33,7 +34,8 @@ describe('TournamentDetailsComponent', () => {
       }
     };
     TestBed.configureTestingModule({
-      declarations: [ TournamentDetailsComponent ],
+      declarations: [TournamentDetailsComponent],
+      imports: [RouterTestingModule],
       providers: [
         { provide: ActivatedRoute, useValue: mockActivatedRoute }
       ]
@@ -63,5 +65,5 @@ describe('TournamentDetailsComponent', () => {
     compiled.querySelector('#monitor-events-button').click();
 
     expect(component.navigateToRoundRobinGrid).toHaveBeenCalled();
-  })
+  });
 });

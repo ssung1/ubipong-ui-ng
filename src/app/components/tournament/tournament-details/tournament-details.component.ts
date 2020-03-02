@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tournament-details',
@@ -26,7 +26,9 @@ export class TournamentDetailsComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.tournamentUrl = this.route.snapshot.queryParams["tournament"] ?
@@ -34,6 +36,11 @@ export class TournamentDetailsComponent implements OnInit {
   }
 
   navigateToRoundRobinGrid() {
-
+    const eventListJson = JSON.stringify(this.eventList.map(event => event.url));
+    this.router.navigate(['/rr-grid'], {
+      queryParams: {
+        eventList: eventListJson
+      }
+    });
   }
 }
