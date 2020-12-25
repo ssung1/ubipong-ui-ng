@@ -4,6 +4,10 @@
 
 export const environment = {
   production: false,
+  mockData: false,
+  roundRobinGridRefresh: false,
+  roundRobinGridRefreshInterval: 5000,
+  tournamentServiceUrl: "http://localhost:8080",
 };
 
 /*
