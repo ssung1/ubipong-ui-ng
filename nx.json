@@ -1,0 +1,44 @@
+{
+  "npmScope": "ubipong-ui-ng",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "accessToken": "MjhhMTFmYTctYTNkOC00YmMyLWI2MWYtZmRlM2YzZWQ0MDYzfHJlYWQtd3JpdGU=",
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "e2e"
+        ],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
+      }
+    }
+  },
+  "projects": {
+    "ubipong-ui": {
+      "tags": []
+    },
+    "ubipong-ui-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "ubipong-ui"
+      ]
+    }
+  }
+}
