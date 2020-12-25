@@ -42,18 +42,18 @@ describe('RoundRobinMatchSheetComponent', () => {
   let mockActivatedRoute: any;
 
   beforeEach(async(() => {
-    mockTournamentService = jasmine.createSpyObj('mockTournamentService', [
-      'getRoundRobinMatchList',
-      'getEvent',
-    ]);
-    mockTournamentService.getRoundRobinMatchList.and.returnValue(of(matchList));
-    mockTournamentService.getEvent.and.returnValue(of(event));
+    mockTournamentService = {
+      'getRoundRobinMatchList': jest.fn().mockReturnValue(of(matchList)),
+      'getEvent': jest.fn().mockReturnValue(of(event)),
+    };
 
-    mockActivatedRoute = jasmine.createSpyObj('mockActivatedRoute', ['']);
-    mockActivatedRoute.snapshot = jasmine.createSpyObj('mockSnapshot', ['']);
-    mockActivatedRoute.snapshot.queryParamMap = jasmine.createSpyObj('mockQueryParamMap', ['get']);
-
-    mockActivatedRoute.snapshot.queryParamMap.get.and.returnValue(eventName);
+    mockActivatedRoute = {
+      snapshot: {
+        queryParamMap: {
+          get: jest.fn().mockReturnValue(eventName)
+        }
+      }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ RoundRobinMatchSheetComponent ],

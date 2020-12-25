@@ -14,7 +14,11 @@ describe('TournamentService', () => {
   const url = environment.tournamentServiceUrl;
 
   beforeEach(() => {
-    mockHttpClient = jasmine.createSpyObj('mockHttpClient', ['get', 'post', 'put']);
+    mockHttpClient = {
+      'get': jest.fn(),
+      'post': jest.fn(),
+      'put': jest.fn()
+    };
     tournamentService = new TournamentService(mockHttpClient);
 
     TestBed.configureTestingModule({
@@ -24,7 +28,7 @@ describe('TournamentService', () => {
 
   it('can retrieve a round robin grid by event URL', async () => {
     const content = "example";
-    mockHttpClient.get.and.returnValue([[{ type: 1, content: content }]]);
+    mockHttpClient.get.mockReturnValue([[{ type: 1, content: content }]]);
     const response = tournamentService.getRoundRobinGrid(eventUrl);
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(
@@ -33,7 +37,7 @@ describe('TournamentService', () => {
   });
 
   it('can retrieve event information by event URL', async () => {
-    mockHttpClient.get.and.returnValue({ name: eventName });
+    mockHttpClient.get.mockReturnValue({ name: eventName });
     const response = tournamentService.getEvent(eventUrl);
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(
@@ -49,7 +53,7 @@ describe('TournamentService', () => {
       "_links": null,
     };
 
-    mockHttpClient.post.and.returnValue({
+    mockHttpClient.post.mockReturnValue({
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": {
@@ -70,7 +74,7 @@ describe('TournamentService', () => {
   });
 
   it('can retrieve a list of tournaments', async () => {
-    mockHttpClient.get.and.returnValue({
+    mockHttpClient.get.mockReturnValue({
       "_embedded": {
         "tournaments": [
           {
@@ -120,7 +124,7 @@ describe('TournamentService', () => {
 
   it('can retrieve a tournament by ID (url)', () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/3";
-    mockHttpClient.get.and.returnValue({
+    mockHttpClient.get.mockReturnValue({
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": {
@@ -146,7 +150,7 @@ describe('TournamentService', () => {
       "_links": null,
     };
 
-    mockHttpClient.put.and.returnValue({
+    mockHttpClient.put.mockReturnValue({
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": {
