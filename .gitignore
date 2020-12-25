@@ -33,6 +33,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/apps/ubipong-ui-e2e/debug.log
 
 # System Files
 .DS_Store
