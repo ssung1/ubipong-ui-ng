@@ -41,7 +41,7 @@ describe('RoundRobinMatchSheetComponent', () => {
   let mockTournamentService: any;
   let mockActivatedRoute: any;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     mockTournamentService = {
       'getRoundRobinMatchList': jest.fn().mockReturnValue(of(matchList)),
       'getEvent': jest.fn().mockReturnValue(of(event)),
@@ -63,7 +63,7 @@ describe('RoundRobinMatchSheetComponent', () => {
       ],
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RoundRobinMatchSheetComponent);

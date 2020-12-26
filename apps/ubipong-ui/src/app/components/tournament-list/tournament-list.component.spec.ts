@@ -6,66 +6,60 @@ import { of, throwError } from 'rxjs'
 import { Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import { TournamentService } from '../../services/tournament.service'
+import { Tournament } from '../../models/tournament'
 
 describe('TournamentListComponent', () => {
   const tournamentLink = "http://localhost:8080/crud/tournaments/1";
   const tournamentName = 'Summer Games 2019';
   const tournamentDate = '2019-06-20T12:00:00-0500';
+  const tournamentId = 1
   const tournamentLink2 = "http://localhost:8080/crud/tournaments/2";
   const tournamentName2 = 'Summer Games 2020';
   const tournamentDate2 = '2020-06-20T12:00:00-0500';
+  const tournamentId2 = 2
+  const tournament: Tournament = {
+    "tournamentId": tournamentId,
+    "name": tournamentName,
+    "tournamentDate": tournamentDate,
+    "_links": {
+        "self": {
+            "href": tournamentLink
+        },
+        "tournament": {
+            "href": tournamentLink
+        }
+    }
+  }
+  const tournament2: Tournament = {
+    "tournamentId": tournamentId2,
+    "name": tournamentName2,
+    "tournamentDate": tournamentDate2,
+    "_links": {
+        "self": {
+            "href": tournamentLink2
+        },
+        "tournament": {
+            "href": tournamentLink2
+        }
+    }
+  }
 
   let component: TournamentListComponent;
   let fixture: ComponentFixture<TournamentListComponent>;
   let mockTournamentService: any;
   let router: Router;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     mockTournamentService = {
       addTournament: jest.fn(),
       getTournamentList: jest.fn(),
     }
-    mockTournamentService.addTournament.mockReturnValue(of(
-      {
-          "name": tournamentName,
-          "tournamentDate": tournamentDate,
-          "_links": {
-              "self": {
-                  "href": tournamentLink
-              },
-              "tournament": {
-                  "href": tournamentLink
-              }
-          }
-      }
-    ));
+    mockTournamentService.addTournament.mockReturnValue(of(tournament));
     mockTournamentService.getTournamentList.mockReturnValue(of({
       "_embedded": {
         "tournaments": [
-          {
-              "name": tournamentName,
-              "tournamentDate": tournamentDate,
-              "_links": {
-                  "self": {
-                      "href": tournamentLink
-                  },
-                  "tournament": {
-                      "href": tournamentLink
-                  }
-              }
-          },
-          {
-              "name": tournamentName2,
-              "tournamentDate": tournamentDate2,
-              "_links": {
-                  "self": {
-                      "href": tournamentLink2
-                  },
-                  "tournament": {
-                      "href": tournamentLink2
-                  }
-              }
-          },
+          tournament,
+          tournament2
         ]
       },
       "_links": {
@@ -101,28 +95,20 @@ describe('TournamentListComponent', () => {
     .compileComponents();
 
     router = TestBed.get(Router);
+  })
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(TournamentListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should display tournament list', () => {
-    component.tournamentList = [
-      {
-        name: tournamentName,
-        tournamentDate: tournamentDate,
-        _links: {
-          self: {
-            href: tournamentLink
-          }
-        },
-      },
-    ];
+    component.tournamentList = [tournament];
 
     fixture.detectChanges();
     
@@ -156,8 +142,7 @@ describe('TournamentListComponent', () => {
   it('should be able to add a new tournament (in ui)', () => {
     const compiled = fixture.nativeElement;
 
-    component.tournamentList = [
-    ];
+    component.tournamentList = [];
 
     component.toggleNewTournamentForm();
 
@@ -185,6 +170,13 @@ describe('TournamentListComponent', () => {
 
     expect(component.inputNewName).toBe(null);
     expect(component.inputNewTournamentDate).toBe(null);
+
+    expect(mockTournamentService.addTournament).toHaveBeenCalledWith({
+      _links: null,
+      name: tournamentName,
+      tournamentDate: tournamentDate,
+      tournamentId: 0
+    })
   });
 
   it('should be able to cancel the adding of tournament', () => {
@@ -205,8 +197,6 @@ describe('TournamentListComponent', () => {
   });
 
   it('should be able to load a list of tournaments', () => {
-    //component.refreshTournamentList();
-    //component.ngOnInit();
     expect(component.tournamentList.length).toBe(2);
   });
 
@@ -245,17 +235,7 @@ describe('TournamentListComponent', () => {
   });
 
   it('should navigate to the event list page when a tournament is selected', () => {
-    component.tournamentList = [
-      {
-        name: tournamentName,
-        tournamentDate: tournamentDate,
-        _links: {
-          self: {
-            href: tournamentLink
-          }
-        },
-      },
-    ];
+    component.tournamentList = [tournament];
 
     fixture.detectChanges();
     
@@ -269,6 +249,10 @@ describe('TournamentListComponent', () => {
     expect(router).toBe(component.router);
     tournamentItem.click();
 
-    expect(navigate).toHaveBeenCalled();
+    expect(navigate).toHaveBeenCalledWith(['tournament-page'], {
+      queryParams: {
+        tournamentId: tournamentId
+      }
+    });
   });
 });

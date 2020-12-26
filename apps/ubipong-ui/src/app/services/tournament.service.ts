@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
 
 const eventRoot = '/rest/v0/events';
+const crudEventRoot = '/crud/events'
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,11 @@ export class TournamentService {
 
     const url = this.getUrl(`${eventRoot}/${eventUrl}`);
     return this.httpClient.get(url);
+  }
+
+  getEventList(tournamentId: number): Observable<any[]> {
+    const url = this.getUrl(`${crudEventRoot}/search/findByTournamentId?tournamentId=${tournamentId}`)
+    return <Observable<any[]>>this.httpClient.get(url).pipe(map((response: any) => response._embedded.events));
   }
 
   getRoundRobinMatchList(eventUrl: string): Observable<any[]> {

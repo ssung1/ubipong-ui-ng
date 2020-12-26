@@ -16,7 +16,7 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   let mockTournamentService: any;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     mockTournamentService = {
       getTournamentList: jest.fn()
     }
@@ -71,7 +71,9 @@ describe('DashboardComponent', () => {
       ],
     })
     .compileComponents();
+  })
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

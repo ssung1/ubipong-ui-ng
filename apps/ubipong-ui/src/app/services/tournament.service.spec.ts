@@ -4,11 +4,28 @@ import { TournamentService } from './tournament.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
+import { of } from 'rxjs';
 
 describe('TournamentService', () => {
   const eventUrl = "bikiniBottomOpen-RoundRobin-Group-5";
   const eventName = "From Bikini Bottom: Round Robin Group 5";
   const tournamentName = "Bikini Bottom Open";
+  const tournamentId = 1
+  const eventId = 101
+  const tournamentLink = "http://localhost:8080/crud/tournaments/1";
+  const tournament = {
+    "name": tournamentName,
+    "tournamentDate": "2018-06-20T17:00:00.000+0000",
+    "_links": {
+      "self": {
+        "href": tournamentLink
+      },
+      "tournament": {
+        "href": tournamentLink
+      }
+    }
+  }
+
   let mockHttpClient: any;
   let tournamentService;
   const url = environment.tournamentServiceUrl;
@@ -45,28 +62,17 @@ describe('TournamentService', () => {
     expect(response["name"]).toBe(eventName);
   });
 
-  it('can add a tournament', async () => {
+  it('can add a tournament', () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/1";
-    const tournament: Tournament = {
+    const addTournamentRequest = {
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": null,
     };
 
-    mockHttpClient.post.mockReturnValue({
-      "name": tournamentName,
-      "tournamentDate": "2018-06-20T17:00:00.000+0000",
-      "_links": {
-        "self": {
-          "href": tournamentLink
-        },
-        "tournament": {
-          "href": tournamentLink
-        }
-      }
-    });
+    mockHttpClient.post.mockReturnValue(tournament);
 
-    const response = tournamentService.addTournament(tournament);
+    const response = tournamentService.addTournament(addTournamentRequest);
 
     //expect(mockHttpClient.post).toHaveBeenCalledWith(`${url}/crud/tournaments`, JSON.stringify(tournament), jasmine.anything());
     expect(mockHttpClient.post).toHaveBeenCalled();
@@ -76,20 +82,7 @@ describe('TournamentService', () => {
   it('can retrieve a list of tournaments', async () => {
     mockHttpClient.get.mockReturnValue({
       "_embedded": {
-        "tournaments": [
-          {
-            "name": tournamentName,
-            "tournamentDate": "2018-06-20T17:00:00.000+0000",
-            "_links": {
-              "self": {
-                "href": "http://localhost:8080/crud/tournaments/1"
-              },
-              "tournament": {
-                "href": "http://localhost:8080/crud/tournaments/1"
-              }
-            }
-          }
-        ]
+        "tournaments": [tournament]
       },
       "_links": {
         "self": {
@@ -114,43 +107,32 @@ describe('TournamentService', () => {
     const response = tournamentService.getTournamentList();
     expect(mockHttpClient.get).toHaveBeenCalled();
     const tournamentList = response['_embedded']['tournaments'];
-    expect(tournamentList).toBeTruthy();
-    expect(typeof (tournamentList)).toBe('object');
-    expect(tournamentList.length).toBe(1);
+    expect(tournamentList).toBeTruthy()
+    expect(typeof (tournamentList)).toBe('object')
+    expect(tournamentList.length).toBe(1)
 
-    const tournament: Tournament = tournamentList[0];
-    expect(tournament.name).toBe(tournamentName);
+    expect(tournamentList[0].name).toBe(tournamentName)
   });
 
   it('can retrieve a tournament by ID (url)', () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/3";
-    mockHttpClient.get.mockReturnValue({
-      "name": tournamentName,
-      "tournamentDate": "2018-06-20T17:00:00.000+0000",
-      "_links": {
-        "self": {
-          "href": "http://localhost:8080/crud/tournaments/3"
-        },
-        "tournament": {
-          "href": "http://localhost:8080/crud/tournaments/3"
-        }
-      }
-    });
+    mockHttpClient.get.mockReturnValue(tournament);
 
-    const tournament = tournamentService.getTournament(tournamentLink);
+    const tournamentResponse = tournamentService.getTournament(tournamentLink);
     expect(mockHttpClient.get).toHaveBeenCalledWith(tournamentLink);
-    expect(tournament.name).toBe(tournamentName);
+    expect(tournamentResponse.name).toBe(tournamentName);
   });
 
   it('can update a tournament', () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/1";
-    const tournament: Tournament = {
+    const updateTournamentRequest = {
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": null,
     };
 
     mockHttpClient.put.mockReturnValue({
+      tournamentId: 12345,
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": {
@@ -166,4 +148,43 @@ describe('TournamentService', () => {
     const response = tournamentService.updateTournament(tournament);
     expect(mockHttpClient.put).toHaveBeenCalled();
   });
+
+  it('can return list of events of a given tournament', () => {
+    const eventLink = 'http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1'
+    mockHttpClient.get.mockReturnValue(of({
+      "_embedded": {
+        "events": [
+          {
+            "eventId": eventId,
+            "challongeUrl": eventUrl,
+            "name": "Preliminary Group 1",
+            "tournamentId": tournamentId,
+            "challongeTournament": null,
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/crud/events/1"
+              },
+              "event": {
+                "href": "http://localhost:8080/crud/events/1"
+              }
+            }
+          }
+        ]
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1"
+        }
+      }
+    }))
+
+    const eventListObservable = tournamentService.getEventList(1)
+
+    eventListObservable.subscribe(eventList => {
+      expect(mockHttpClient.get).toHaveBeenCalledWith(eventLink)
+      expect(eventList.length).toBe(1)
+      expect(eventList[0].eventId).toBe(eventId)
+      expect(eventList[0].challongeUrl).toBe(eventUrl)
+    })
+  })
 });
