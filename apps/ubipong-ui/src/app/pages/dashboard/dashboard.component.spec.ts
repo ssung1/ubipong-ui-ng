@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { TournamentPageComponent } from './tournament-page.component'
+import { DashboardComponent } from './dashboard.component'
 import { FormsModule } from '@angular/forms'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
 import { TournamentListComponent } from '../../components/tournament-list/tournament-list.component'
 import { TournamentService } from '../../services/tournament.service'
 
-describe('TournamentPageComponent', () => {
+describe('DashboardComponent', () => {
   const tournamentLink = "http://localhost:8080/crud/tournaments/1";
   const tournamentName = 'Summer Games 2019';
   const tournamentDate = '2019-06-20T12:00:00-0500';
 
-  let component: TournamentPageComponent;
-  let fixture: ComponentFixture<TournamentPageComponent>;
+  let component: DashboardComponent;
+  let fixture: ComponentFixture<DashboardComponent>;
   let mockTournamentService: any;
 
   beforeEach(() => {
@@ -59,7 +59,7 @@ describe('TournamentPageComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        TournamentPageComponent,
+        DashboardComponent,
         TournamentListComponent,
       ],
       providers: [
@@ -72,7 +72,7 @@ describe('TournamentPageComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TournamentPageComponent);
+    fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   })

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router'
 import { Routes } from '@angular/router'
 import { MainMenuComponent } from './components/main-menu/main-menu.component'
 import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/round-robin-match-sheet.component'
-import { TournamentPageComponent } from './pages/tournament-page/tournament-page.component'
+import { DashboardComponent } from './pages/dashboard/dashboard.component'
 // import { RoundRobinGridComponent } from './components/round-robin-grid/round-robin-grid.component'
 // import { EventPlayerListComponent } from './components/event-player-list/event-player-list.component';
 // import { TournamentPageComponent } from './components/tournament/tournament-page/tournament-page.component';
@@ -21,7 +21,7 @@ const routes: Routes = [
   //   path: "event-player-list", component: EventPlayerListComponent,
   // },
   {
-    path: "tournament-list", component: TournamentPageComponent,
+    path: "dashboard", component: DashboardComponent,
   },
   // {
   //   path: "tournament-details", component: TournamentDetailsComponent,

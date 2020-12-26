@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/round-robin-match-sheet.component';
-import { TournamentPageComponent } from './pages/tournament-page/tournament-page.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TournamentListComponent } from './components/tournament-list/tournament-list.component';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -18,7 +18,7 @@ describe('AppComponent', () => {
         AppComponent,
         MainMenuComponent,
         RoundRobinMatchSheetComponent,
-        TournamentPageComponent,
+        DashboardComponent,
         TournamentListComponent,
       ],
     }).compileComponents();
