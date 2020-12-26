@@ -95,7 +95,7 @@ describe('TournamentListComponent', () => {
       ],
       imports: [ 
         FormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([]),
       ],
     })
     .compileComponents();
@@ -264,7 +264,7 @@ describe('TournamentListComponent', () => {
 
     expect(tournamentItem).toBeTruthy();
 
-    const navigate = spyOn(router, 'navigate');
+    const navigate = jest.spyOn(router, 'navigate');
 
     expect(router).toBe(component.router);
     tournamentItem.click();

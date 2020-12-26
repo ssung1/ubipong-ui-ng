@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/round-robin-match-sheet.component';
 import { TournamentPageComponent } from './pages/tournament-page/tournament-page.component';
 import { TournamentListComponent } from './components/tournament-list/tournament-list.component';
 import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AppRoutingModule,
+        RouterTestingModule,
         FormsModule,
       ],
       declarations: [
