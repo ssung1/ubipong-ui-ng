@@ -80,23 +80,32 @@ let component: TournamentPageComponent;
     nativeElement.querySelector('#accordion-add-event').click()
     fixture.detectChanges()
 
+    // after adding, we would have one more event
+    mockTournamentService.getEventList.mockReturnValueOnce(of([
+      event, event
+    ]))
+
     const newEventForm = nativeElement.querySelector('#new-event-form')
     expect(newEventForm).toBeTruthy()
 
     const inputNewName = nativeElement.querySelector('#input-new-name')
     inputNewName.value = eventName
-    inputNewName.dispatch(new Event('input'))
+    inputNewName.dispatchEvent(new Event('input'))
     const inputNewChallongeUrl = nativeElement.querySelector('#input-new-challonge-url')
     inputNewChallongeUrl.value = challongeUrl
-    inputNewChallongeUrl.dispatch(new Event('input'))
+    inputNewChallongeUrl.dispatchEvent(new Event('input'))
 
     const buttonAddEvent = nativeElement.querySelector('#button-add-event')
     buttonAddEvent.click()
 
-    expect(mockTournamentService.addEvent).toHaveBeenCalledWith(123)
+    expect(mockTournamentService.addEvent).toHaveBeenCalledWith({
+      challongeUrl,
+      name: eventName,
+      tournamentId,
+    })
 
-    expect(component.eventList.length).toBe(1)
-    const addedEvent = component.eventList[0]
+    expect(component.eventList.length).toBe(2)
+    const addedEvent = component.eventList[1]
     expect(addedEvent.name).toBe(eventName)
     expect(addedEvent.challongeUrl).toBe(challongeUrl)
     expect(addedEvent.eventId).toBe(eventId)

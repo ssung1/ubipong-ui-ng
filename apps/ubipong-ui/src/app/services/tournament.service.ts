@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
+import { AddEventRequest } from '../models/add-event-request';
 
 const eventRoot = '/rest/v0/events';
 const crudEventRoot = '/crud/events'
@@ -93,5 +94,13 @@ export class TournamentService {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     return <Observable<any>>this.httpClient.put(tournamentLink, JSON.stringify(tournament), { headers: headers });
+  }
+
+  addEvent(addEventRequest: AddEventRequest): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+    const url = this.getUrl(`${crudEventRoot}`)
+    return <Observable<any>>this.httpClient.post(url, addEventRequest, { headers: headers })
   }
 }

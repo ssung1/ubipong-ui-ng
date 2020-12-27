@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'ubipong-ui-ng-tournament-page',
@@ -9,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TournamentPageComponent implements OnInit {
 
-  tournamentId: string
+  tournamentId: number
   eventList: any[]
   isNewEventFormOpen: boolean
   errorMessage: string
@@ -20,15 +21,29 @@ export class TournamentPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.tournamentId = this.route.snapshot.queryParamMap.get('tournamentId')
+    this.tournamentId = Number(this.route.snapshot.queryParamMap.get('tournamentId'))
     this.refreshData()
   }
 
   refreshData() {
-    this.tournamentService.getEventList(Number(this.tournamentId))
+    this.tournamentService.getEventList(this.tournamentId)
       .subscribe(eventList => {
         this.eventList = eventList
       })
+  }
+
+  addEvent(name: string, challongeUrl: string) {
+    this.tournamentService
+      .addEvent({
+        tournamentId: this.tournamentId,
+        name,
+        challongeUrl,
+      })
+      .pipe(map(addedEvent => this.refreshData()))
+      .subscribe(() => {},
+        error => {
+          this.errorMessage = "System error: " + error.message;
+      });
   }
 
   toggleNewEventForm() {

@@ -13,6 +13,60 @@ describe('ubipong-ui', () => {
   // spongebob vs squidward: spongebob wins 13 -5 9 9
   // patrick vs squidward: patrick wins 3 3 3
   
+  const bikiniBottomOpen = {
+    name: 'Bikini Bottom Open 2019',
+    tournamentDate: '2019-06-23T00:00:00-05:00'
+  }
+
+  const preliminaryGroup1 = {
+    name: "Preliminary Group 1",
+    challongeUrl: "bb_201906_pg_rr_1"
+  }
+
+  const spongebob = {
+    name: 'spongebob'
+  }
+  const patrick = {
+    name: 'patrick'
+  }
+  const squidward = {
+    name: 'squidward'
+  }
+
+  const patrickVsSquidward = {
+    player1Name: 'patrick',
+    player2Name: 'squidward',
+    scores: '11-3,11-3,11-3',
+    winner: 'patrick'
+  }
+  const spongbobVsPatrick = {
+    player1Name: 'spongebob',
+    player2Name: 'patrick',
+    scores: '11-3,11-5,11-1',
+    winner: 'spongebob'
+  }
+  const squidwardVsSpongebob = {
+    player1Name: 'squidward',
+    player2Name: 'spongebob',
+    scores: '11-13,11-5,9-11,9-11',
+    winner: 'spongebob'
+  }
+
+  function addTournament(tournament) {
+    cy.get('nav a[href="dashboard"]').click()
+    cy.get('#accordion-add-tournament').click()
+    cy.get('#input-new-name').type(tournament.name)
+    cy.get('#input-new-tournament-date').type(tournament.tournamentDate)
+    cy.get('#button-add-tournament').click()
+  }
+
+  function addEvent(event) {
+    cy.get('p').click()
+    cy.get('#input-new-name').type(event.name)
+    cy.get('#input-new-challonge-url').type(event.challongeUrl)
+    cy.get('#button-add-event').click()
+  }
+
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {
@@ -24,22 +78,17 @@ describe('ubipong-ui', () => {
   })
 
   it('should run a tournament', () => {
-    // TODO: add tournament
-    cy.get('nav a[href="tournament-list"]').click()
-    cy.get('#accordion-add-tournament').click()
-    cy.get('#input-new-name').type('Bikini Bottom Open 2019')
-    cy.get('#input-new-tournament-date').type('2020-06-23')
-    cy.get('#button-add-tournament').click()
-    cy.contains('.tournament-name', 'Bikini Bottom Open 2019').click()
+    addTournament(bikiniBottomOpen)
+    cy.contains('.tournament-name', bikiniBottomOpen.name).click()
+    addEvent(preliminaryGroup1)
 
-    // TODO: add event
     // TODO: add players
     // TODO: start tournament (on challonge.com)
     //   const response = await superagent.get('https://example.com')
     //   expect(response.status).equal(200)
 
     // get match sheet (by tournament/event -- ui selection would be best)
-    cy.get(':nth-child(2) > a').click()
+    // cy.get(':nth-child(2) > a').click()
     // cheating a little to get match sheet -- fix later
     cy.visit('/rr-match-sheet?eventName=bb_201906_pg_rr_1')
     cy.reload(true)
