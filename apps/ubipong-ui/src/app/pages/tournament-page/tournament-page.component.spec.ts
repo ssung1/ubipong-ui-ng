@@ -81,7 +81,7 @@ let component: TournamentPageComponent;
     fixture.detectChanges()
 
     // after adding, we would have one more event
-    mockTournamentService.getEventList.mockReturnValueOnce(of([
+    mockTournamentService.getEventList.mockReturnValue(of([
       event, event
     ]))
 
