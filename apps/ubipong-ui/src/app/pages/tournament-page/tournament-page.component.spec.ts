@@ -25,11 +25,11 @@ describe('TournamentPageComponent', () => {
       }
     }
   }
-let component: TournamentPageComponent;
+  let component: TournamentPageComponent;
   let fixture: ComponentFixture<TournamentPageComponent>;
 
-  let mockActivatedRoute
-  let mockTournamentService
+  let mockActivatedRoute: any
+  let mockTournamentService: any
 
   beforeEach(async () => {
     mockActivatedRoute = {
@@ -109,5 +109,19 @@ let component: TournamentPageComponent;
     expect(addedEvent.name).toBe(eventName)
     expect(addedEvent.challongeUrl).toBe(challongeUrl)
     expect(addedEvent.eventId).toBe(eventId)
+  })
+
+  it('should navigate to round robin grid page if user clicks on the monitor events button', () => {
+    component.eventList.push(event)
+
+    fixture.detectChanges();
+
+    component.navigateToRoundRobinGrid = jasmine.createSpy('navigateToRoundRobinGridSpy');
+
+    const compiled = fixture.nativeElement;
+
+    compiled.querySelector('#monitor-events-button').click();
+
+    expect(component.navigateToRoundRobinGrid).toHaveBeenCalled();
   })
 })
