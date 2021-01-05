@@ -16,6 +16,8 @@ describe('ubipong-ui', () => {
   // spongebob vs squidward: spongebob wins 13 -5 9 9
   // patrick vs squidward: patrick wins 3 3 3
   
+  const eventContext = '/rest/v0/events'
+
   const bikiniBottomOpenBase = {
     name: 'Bikini Bottom Open 2019',
     tournamentDate: '2019-06-23T00:00:00-05:00'
@@ -121,6 +123,54 @@ describe('ubipong-ui', () => {
     })
   }
 
+  function getEventMatchList(challongeUrl) {
+    const url = new URL(
+      `${eventContext}/${challongeUrl}/roundRobinMatchList`,
+      environment.apiHost)
+    
+    return cy.request(url.toString()).then(response => response.body)
+  }
+
+  // find the correct ID of the match we want from matchList
+  // then submit score
+  function submitMatchResult(match, challongeUrl) {
+    // get the entire list
+    const matchListChainable = getEventMatchList(challongeUrl)
+
+    matchListChainable.then(matchList => {
+      // find the match for which we want to submit the scores
+      const thisMatchFromList = matchList.find(m => {
+        return m.player1Name == match.player1Name
+          && m.player2Name == match.player2Name
+      })
+
+      // need to get the ID for the winner
+      function getWinnerId() {
+        if (thisMatchFromList.player1Name == match.winner) {
+          return thisMatchFromList.player1Id
+        } else {
+          return thisMatchFromList.player2Id
+        }
+      }
+
+      const url = new URL(
+        `v1/tournaments/${challongeUrl}/matches/${thisMatchFromList.matchId}.json`,
+        environment.challongeHost)
+      const response = cy.request({
+        method: 'PUT',
+        url: url.toString(),
+        qs: {
+          api_key: environment.challongeApiKey
+        },
+        body: {
+          match: {
+            scores_csv: match.scores,
+            winner_id: getWinnerId()
+          }
+        }
+      })
+    })
+  }
 
   beforeEach(() => {
     deleteChallongeTournament(preliminaryGroup1.challongeUrl)
@@ -164,8 +214,21 @@ describe('ubipong-ui', () => {
     cy.get(':nth-child(5) > :nth-child(1)').should('have.text', 'A')
     cy.get(':nth-child(5) > :nth-child(2)').should('have.text', 'spongebob')
 
-    // TODO: enter some scores
+    // submit some scores
+    submitMatchResult(spongbobVsPatrick, preliminaryGroup1.challongeUrl)
+    submitMatchResult(patrickVsSquidward, preliminaryGroup1.challongeUrl)
+    submitMatchResult(squidwardVsSpongebob, preliminaryGroup1.challongeUrl)
+
     // TODO: view scores (by tournament)
+    // for now, we cheat by submitting challongeUrl
+    cy.visit({
+      url: '/rr-grid',
+      qs: {
+        eventList: JSON.stringify([preliminaryGroup1.challongeUrl])
+      }
+    })
+    
+
     // TODO: get tournament result
   })
 })
