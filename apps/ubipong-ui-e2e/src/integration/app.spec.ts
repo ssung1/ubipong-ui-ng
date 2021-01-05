@@ -99,13 +99,28 @@ describe('ubipong-ui', () => {
           participants: players
         },
         failOnStatusCode: false
-      }).then(response => true)
+      }).then(response => response.status == 200)
     },
     {
       timeout: 15000,
       interval: 5000
     })
   }
+
+  function startEvent(challongeUrl) {
+    const url = new URL(
+      `v1/tournaments/${challongeUrl}/start.json`,
+      environment.challongeHost)
+
+    return cy.request({
+      method: 'POST',
+      url: url.toString(),
+      qs: {
+        api_key: environment.challongeApiKey
+      }
+    })
+  }
+
 
   beforeEach(() => {
     deleteChallongeTournament(preliminaryGroup1.challongeUrl)
@@ -128,33 +143,26 @@ describe('ubipong-ui', () => {
     addTournament(bikiniBottomOpen)
     cy.contains('.tournament-name', bikiniBottomOpen.name).click()
     addEvent(preliminaryGroup1)
-
     addPlayerList([spongebob, patrick, squidward],
       preliminaryGroup1.challongeUrl)
-    // await addPlayerListSuper([spongebob, patrick, squidward],
-    //   preliminaryGroup1.challongeUrl)
-
-
-    // TODO: start tournament (on challonge.com)
-    //   const response = await superagent.get('https://example.com')
-    //   expect(response.status).equal(200)
+    startEvent(preliminaryGroup1.challongeUrl)
 
     // get match sheet (by tournament/event -- ui selection would be best)
     // cy.get(':nth-child(2) > a').click()
     // cheating a little to get match sheet -- fix later
-    // cy.visit('/rr-match-sheet?eventName=bb_201906_pg_rr_1')
-    // cy.reload(true)
-    // cy.get('#round-robin-match-sheet').click()
+    cy.visit('/rr-match-sheet?eventName=bb_201906_pg_rr_1')
+    cy.reload(true)
+    cy.get('#round-robin-match-sheet').click()
 
-    // cy.get('table > :nth-child(1) > :nth-child(3)').contains('Game 1')
-    // // just trying a different way to verify text
-    // cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', 'Game 2')
-    // cy.get('table > :nth-child(2) > :nth-child(1)').should('have.text', 'B')
-    // cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', 'patrick')
-    // cy.get(':nth-child(3) > :nth-child(1)').should('have.text', 'C')
-    // cy.get(':nth-child(3) > :nth-child(2)').should('have.text', 'squidward')
-    // cy.get(':nth-child(5) > :nth-child(1)').should('have.text', 'A')
-    // cy.get(':nth-child(5) > :nth-child(2)').should('have.text', 'spongebob')
+    cy.get('table > :nth-child(1) > :nth-child(3)').contains('Game 1')
+    // just trying a different way to verify text
+    cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', 'Game 2')
+    cy.get('table > :nth-child(2) > :nth-child(1)').should('have.text', 'B')
+    cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', 'patrick')
+    cy.get(':nth-child(3) > :nth-child(1)').should('have.text', 'C')
+    cy.get(':nth-child(3) > :nth-child(2)').should('have.text', 'squidward')
+    cy.get(':nth-child(5) > :nth-child(1)').should('have.text', 'A')
+    cy.get(':nth-child(5) > :nth-child(2)').should('have.text', 'spongebob')
 
     // TODO: enter some scores
     // TODO: view scores (by tournament)
