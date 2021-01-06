@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms'
 import { TournamentPageComponent } from './pages/tournament-page/tournament-page.component'
 import { TournamentListComponent } from './components/tournament-list/tournament-list.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component'
+import { RoundRobinPageComponent } from './pages/round-robin-page/round-robin-page.component'
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component'
     TournamentPageComponent,
     TournamentListComponent,
     DashboardComponent,
+    RoundRobinPageComponent,
   ],
   imports: [
     BrowserModule,

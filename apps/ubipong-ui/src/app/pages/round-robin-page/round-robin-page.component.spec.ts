@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RoundRobinGridComponent } from './round-robin-grid.component';
+import { RoundRobinPageComponent } from './round-robin-page.component';
 import { TournamentService } from '../../services/tournament.service';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 
-describe('RoundRobinGridComponent', () => {
-  let component: RoundRobinGridComponent;
-  let fixture: ComponentFixture<RoundRobinGridComponent>;
+describe('RoundRobinPageComponent', () => {
+  let component: RoundRobinPageComponent;
+  let fixture: ComponentFixture<RoundRobinPageComponent>;
 
   const eventName = "Bikini Bottom Round Robin Group 1";
   const roundRobinGrid = [["A", "B", "C"]];
@@ -27,7 +27,7 @@ describe('RoundRobinGridComponent', () => {
     getEvent.and.returnValue(of({ name: eventName }));
 
     TestBed.configureTestingModule({
-      declarations: [ RoundRobinGridComponent ],
+      declarations: [ RoundRobinPageComponent ],
       imports: [
         RouterTestingModule,
       ],
@@ -39,7 +39,7 @@ describe('RoundRobinGridComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RoundRobinGridComponent);
+    fixture = TestBed.createComponent(RoundRobinPageComponent);
     component = fixture.componentInstance;
 
     parseEventList = spyOn(component, "parseEventList");

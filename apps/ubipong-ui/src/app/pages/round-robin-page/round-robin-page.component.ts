@@ -6,11 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-round-robin-grid',
-  templateUrl: './round-robin-grid.component.html',
-  styleUrls: ['./round-robin-grid.component.scss']
+  selector: 'app-round-robin-page',
+  templateUrl: './round-robin-page.component.html',
+  styleUrls: ['./round-robin-page.component.scss']
 })
-export class RoundRobinGridComponent implements OnInit, OnDestroy {
+export class RoundRobinPageComponent implements OnInit, OnDestroy {
 
   private refreshInterval;
   refreshIntervalTime = environment.roundRobinGridRefreshInterval;
