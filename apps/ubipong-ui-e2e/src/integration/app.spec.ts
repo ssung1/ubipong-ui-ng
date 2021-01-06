@@ -70,12 +70,20 @@ describe('ubipong-ui', () => {
     })
   }
 
-  function addTournament(tournament) {
+  function goToDashboard() {
     cy.get('nav a[href="dashboard"]').click()
+  }
+
+  function addTournament(tournament) {
+    goToDashboard()
     cy.get('#accordion-add-tournament').click()
     cy.get('#input-new-name').type(tournament.name)
     cy.get('#input-new-tournament-date').type(tournament.tournamentDate)
     cy.get('#button-add-tournament').click()
+  }
+
+  function goToTournamentFromDashboard(tournamentName) {
+    cy.contains('.tournament-name', tournamentName).click()
   }
 
   function addEvent(event) {
@@ -191,7 +199,7 @@ describe('ubipong-ui', () => {
 
   it('should run a tournament', () => {
     addTournament(bikiniBottomOpen)
-    cy.contains('.tournament-name', bikiniBottomOpen.name).click()
+    goToTournamentFromDashboard(bikiniBottomOpen.name)
     addEvent(preliminaryGroup1)
     addPlayerList([spongebob, patrick, squidward],
       preliminaryGroup1.challongeUrl)
@@ -227,6 +235,10 @@ describe('ubipong-ui', () => {
         eventList: JSON.stringify([preliminaryGroup1.challongeUrl])
       }
     })
+    cy.visit('/')
+    goToDashboard()
+    goToTournamentFromDashboard(bikiniBottomOpen.name)
+    cy.contains('#view-draws', 'View Draws').click()
     cy.get('table > :nth-child(1) > :nth-child(3)').should('have.text', ' A ')
     cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', ' B ')
     cy.get('table > :nth-child(1) > :nth-child(5)').should('have.text', ' C ')
