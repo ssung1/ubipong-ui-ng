@@ -1,8 +1,9 @@
 <h1>Events for Tournament</h1>
 
 <div id="accordion-add-event" (click)="toggleNewEventForm()">
-  <p>Add Event</p>  
+  <p>Add Event</p> 
 </div>
+<a id="view-round-robin-page" (click)="navigateToRoundRobinPage()">View Round Robin</a> 
 <div id="new-event-form" *ngIf="isNewEventFormOpen">
   <p>Name: <input id="input-new-name" #inputNewName></p>
   <p>Challonge URL: <input id="input-new-challonge-url" #inputChallongeUrl></p>

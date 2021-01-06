@@ -57,6 +57,11 @@ export class TournamentPageComponent implements OnInit {
     this.errorMessage = null;
   }
 
-  navigateToRoundRobinGrid() {
+  navigateToRoundRobinPage() {
+    this.router.navigate(['/rr-grid'], {
+      queryParams: {
+        eventList: JSON.stringify(this.eventList.map(event => event.challongeUrl))
+      }
+    })
   }
 }

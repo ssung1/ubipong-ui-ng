@@ -238,7 +238,7 @@ describe('ubipong-ui', () => {
     cy.visit('/')
     goToDashboard()
     goToTournamentFromDashboard(bikiniBottomOpen.name)
-    cy.contains('#view-draws', 'View Draws').click()
+    cy.contains('#view-round-robin-page', 'View Round Robin').click()
     cy.get('table > :nth-child(1) > :nth-child(3)').should('have.text', ' A ')
     cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', ' B ')
     cy.get('table > :nth-child(1) > :nth-child(5)').should('have.text', ' C ')
