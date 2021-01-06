@@ -227,7 +227,21 @@ describe('ubipong-ui', () => {
         eventList: JSON.stringify([preliminaryGroup1.challongeUrl])
       }
     })
-    
+    cy.get('table > :nth-child(1) > :nth-child(3)').should('have.text', ' A ')
+    cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', ' B ')
+    cy.get('table > :nth-child(1) > :nth-child(5)').should('have.text', ' C ')
+    cy.get('table > :nth-child(2) > :nth-child(1)').should('have.text', ' A ')
+    cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', ' spongebob ')
+    cy.get('table > :nth-child(2) > :nth-child(4)').should('have.text', ' W 3 5 1 ')
+    cy.get('table > :nth-child(2) > :nth-child(5)').should('have.text', ' W 11 -5 9 9 ')
+    cy.get(':nth-child(3) > :nth-child(1)').should('have.text', ' B ')
+    cy.get(':nth-child(3) > :nth-child(2)').should('have.text', ' patrick ')
+    cy.get(':nth-child(3) > :nth-child(3)').should('have.text', ' L -3 -5 -1 ')
+    cy.get(':nth-child(3) > :nth-child(5)').should('have.text', ' W 3 3 3 ')
+    cy.get('table > :nth-child(4) > :nth-child(1)').should('have.text', ' C ')
+    cy.get('table > :nth-child(4) > :nth-child(2)').should('have.text', ' squidward ')
+    cy.get('table > :nth-child(4) > :nth-child(3)').should('have.text', ' L -11 5 -9 -9 ')
+    cy.get('table > :nth-child(4) > :nth-child(4)').should('have.text', ' L -3 -3 -3 ')
 
     // TODO: get tournament result
   })
