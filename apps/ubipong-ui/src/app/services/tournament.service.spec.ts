@@ -14,6 +14,7 @@ describe('TournamentService', () => {
   const eventId = 101
   const tournamentLink = "http://localhost:8080/crud/tournaments/1";
   const tournament = {
+    "tournamentId": tournamentId,
     "name": tournamentName,
     "tournamentDate": "2018-06-20T17:00:00.000+0000",
     "_links": {
@@ -65,6 +66,7 @@ describe('TournamentService', () => {
   it('can add a tournament', () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/1";
     const addTournamentRequest = {
+      "tournamentId": 0,
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": null,
@@ -116,36 +118,20 @@ describe('TournamentService', () => {
 
   it('can retrieve a tournament by ID (url)', () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/3";
-    mockHttpClient.get.mockReturnValue(tournament);
+    mockHttpClient.get.mockReturnValue(of(tournament));
 
     const tournamentResponse = tournamentService.getTournament(tournamentLink);
     expect(mockHttpClient.get).toHaveBeenCalledWith(tournamentLink);
-    expect(tournamentResponse.name).toBe(tournamentName);
+    tournamentResponse.subscribe(r => {
+      expect(r.name).toBe(tournamentName);
+    })
   });
 
   it('can update a tournament', () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/1";
-    const updateTournamentRequest = {
-      "name": tournamentName,
-      "tournamentDate": "2018-06-20T17:00:00.000+0000",
-      "_links": null,
-    };
+    mockHttpClient.put.mockReturnValue(of(tournament));
 
-    mockHttpClient.put.mockReturnValue({
-      tournamentId: 12345,
-      "name": tournamentName,
-      "tournamentDate": "2018-06-20T17:00:00.000+0000",
-      "_links": {
-        "self": {
-          "href": tournamentLink
-        },
-        "tournament": {
-          "href": tournamentLink
-        }
-      }
-    });
-
-    const response = tournamentService.updateTournament(tournament);
+    const response = tournamentService.updateTournament(tournamentLink, tournament);
     expect(mockHttpClient.put).toHaveBeenCalled();
   });
 
