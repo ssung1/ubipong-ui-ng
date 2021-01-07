@@ -227,14 +227,7 @@ describe('ubipong-ui', () => {
     submitMatchResult(patrickVsSquidward, preliminaryGroup1.challongeUrl)
     submitMatchResult(squidwardVsSpongebob, preliminaryGroup1.challongeUrl)
 
-    // TODO: view scores (by tournament)
-    // for now, we cheat by submitting challongeUrl
-    cy.visit({
-      url: '/rr-grid',
-      qs: {
-        eventList: JSON.stringify([preliminaryGroup1.challongeUrl])
-      }
-    })
+    // view scores (by tournament)
     cy.visit('/')
     goToDashboard()
     goToTournamentFromDashboard(bikiniBottomOpen.name)
