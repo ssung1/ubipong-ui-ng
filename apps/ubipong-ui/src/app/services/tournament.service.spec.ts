@@ -27,7 +27,7 @@ describe('TournamentService', () => {
   }
 
   let mockHttpClient: any;
-  let tournamentService;
+  let tournamentService: TournamentService;
   const url = environment.tournamentServiceUrl;
 
   beforeEach(() => {
