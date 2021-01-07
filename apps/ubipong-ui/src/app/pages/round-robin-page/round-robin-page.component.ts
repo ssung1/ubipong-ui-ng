@@ -12,7 +12,7 @@ import { forkJoin } from 'rxjs';
 })
 export class RoundRobinPageComponent implements OnInit, OnDestroy {
 
-  private refreshInterval;
+  private refreshInterval: number = 0;
   refreshIntervalTime = environment.roundRobinGridRefreshInterval;
   refresh = environment.roundRobinGridRefresh;
 
@@ -48,7 +48,7 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
 
   clearRefreshInterval() {
     if (this.refreshInterval) {
-      clearInterval(this.refreshInterval);
+      clearInterval(this.refreshInterval as number);
     }
   }
 

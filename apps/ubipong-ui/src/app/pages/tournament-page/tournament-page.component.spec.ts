@@ -115,17 +115,17 @@ describe('TournamentPageComponent', () => {
     expect(addedEvent.eventId).toBe(eventId)
   })
 
-  xit('should navigate to round robin grid page if user clicks on the monitor events button', () => {
+  it('should navigate to round robin grid page if user clicks on the monitor events button', () => {
     component.eventList.push(event)
 
     fixture.detectChanges();
 
-    component.navigateToRoundRobinGrid = jasmine.createSpy('navigateToRoundRobinGridSpy');
+    component.navigateToRoundRobinPage = jasmine.createSpy('navigateToRoundRobinGridSpy');
 
     const compiled = fixture.nativeElement;
 
-    compiled.querySelector('#monitor-events-button').click();
+    compiled.querySelector('#view-round-robin-page').click();
 
-    expect(component.navigateToRoundRobinGrid).toHaveBeenCalled();
+    expect(component.navigateToRoundRobinPage).toHaveBeenCalled();
   })
 })
