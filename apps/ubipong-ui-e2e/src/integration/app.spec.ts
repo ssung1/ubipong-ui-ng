@@ -71,7 +71,7 @@ describe('ubipong-ui', () => {
   }
 
   function goToDashboard() {
-    cy.get('nav a[href="dashboard"]').click()
+    cy.get('nav a[href="#dashboard"]').click()
   }
 
   function addTournament(tournament) {
@@ -208,10 +208,11 @@ describe('ubipong-ui', () => {
     // get match sheet (by tournament/event -- ui selection would be best)
     // cy.get(':nth-child(2) > a').click()
     // cheating a little to get match sheet -- fix later
-    cy.visit('/rr-match-sheet?eventName=bb_201906_pg_rr_1')
+    cy.visit('/#/rr-match-sheet?eventName=bb_201906_pg_rr_1')
     cy.reload(true)
     cy.get('#round-robin-match-sheet').click()
 
+    cy.get('h2').should('have.text', preliminaryGroup1.name)
     cy.get('table > :nth-child(1) > :nth-child(3)').contains('Game 1')
     // just trying a different way to verify text
     cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', 'Game 2')
@@ -232,6 +233,7 @@ describe('ubipong-ui', () => {
     goToDashboard()
     goToTournamentFromDashboard(bikiniBottomOpen.name)
     cy.contains('#view-round-robin-page', 'View Round Robin').click()
+    cy.get('h2').should('have.text', preliminaryGroup1.name)
     cy.get('table > :nth-child(1) > :nth-child(3)').should('have.text', ' A ')
     cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', ' B ')
     cy.get('table > :nth-child(1) > :nth-child(5)').should('have.text', ' C ')
