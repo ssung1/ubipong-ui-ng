@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 describe('RoundRobinMatchSheetComponent', () => {
-  const eventTitle = "round robin tournament for integration test";
-  const eventName = 'round-robin';
+  const eventName = "round robin tournament for integration test";
+  const challongeUrl = 'round-robin';
   const matchList = [
     {
       matchId: 1,
@@ -24,11 +24,12 @@ describe('RoundRobinMatchSheetComponent', () => {
   const event = {
     "eventId": 5090933,
     "name": eventName,
-    "tournamentId": null,
+    "tournamentId": 1,
+    "challongeUrl": challongeUrl,
     "challongeTournament": {
       "id": 5090933,
-      "name": eventTitle,
-      "url": "integration_test_rr",
+      "name": eventName,
+      "url": challongeUrl,
       "description": "",
       "subdomain": null,
       "tournament_type": "round robin",
@@ -50,7 +51,7 @@ describe('RoundRobinMatchSheetComponent', () => {
     mockActivatedRoute = {
       snapshot: {
         queryParamMap: {
-          get: jest.fn().mockReturnValue(eventName)
+          get: jest.fn().mockReturnValue(challongeUrl)
         }
       }
     };
@@ -76,8 +77,13 @@ describe('RoundRobinMatchSheetComponent', () => {
   });
 
   it('should retrieve match list', () => {
-    expect(component.eventName).toBe(eventName);
+    expect(component.challongeUrl).toBe(challongeUrl);
     expect(component.matchList).toBe(matchList);
     expect(component.event).toBe(event);
   });
+
+  it('should display event name', () => {
+    const header = fixture.nativeElement.querySelector('h2')
+    expect(header.textContent).toBe(eventName)
+  })
 });

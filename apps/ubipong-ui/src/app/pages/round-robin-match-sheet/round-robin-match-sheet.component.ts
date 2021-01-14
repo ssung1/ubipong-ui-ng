@@ -9,7 +9,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./round-robin-match-sheet.component.scss']
 })
 export class RoundRobinMatchSheetComponent implements OnInit {
-  eventName: string;
+  challongeUrl: string;
   event: any;
   matchList: any[];
   matchGroupList: any[][];
@@ -20,14 +20,15 @@ export class RoundRobinMatchSheetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.eventName = this.route.snapshot.queryParamMap.get("eventName");
+    // we are calling challongeUrl eventName for now, because eventually we will be using actual event ID or event name
+    this.challongeUrl = this.route.snapshot.queryParamMap.get("eventName");
     this.refreshData();
   }
 
   refreshData() {
     forkJoin(
-      this.tournamentService.getRoundRobinMatchList(this.eventName),
-      this.tournamentService.getEvent(this.eventName),
+      this.tournamentService.getRoundRobinMatchList(this.challongeUrl),
+      this.tournamentService.getEvent(this.challongeUrl),
     ).subscribe(v => {
       this.matchList = v[0];
       // also group the matches so we can print the match sheet

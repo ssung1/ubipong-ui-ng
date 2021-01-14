@@ -1,6 +1,6 @@
 <div id="round-robin-match-sheet">
   <div *ngFor="let mg of matchGroupList; let i = index">
-    <h2>{{event?.challongeTournament?.name}}</h2>
+    <h2>{{event?.name}}</h2>
     <table>
       <tr><th *ngFor="let gh of gameHeader()">{{gh}}</th></tr>
       <ng-container *ngFor="let m of mg">
