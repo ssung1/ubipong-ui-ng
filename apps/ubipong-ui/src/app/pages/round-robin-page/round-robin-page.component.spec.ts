@@ -87,4 +87,9 @@ describe('RoundRobinPageComponent', () => {
     component.refreshData();
     expect(component.event["name"]).toBe(eventName);
   });
+
+  it('should display event name as a header', () => {
+    const header = fixture.nativeElement.querySelector('h2')
+    expect(header.textContent).toBe(eventName)
+  })
 });

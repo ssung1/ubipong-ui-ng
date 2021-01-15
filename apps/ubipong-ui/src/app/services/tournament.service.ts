@@ -43,21 +43,6 @@ export class TournamentService {
   }
 
   getEvent(eventUrl: string): Observable<any> {
-    if (environment.mockData) {
-
-      this.eventIndex += 1;
-      if (this.eventIndex >= 2) {
-        this.eventIndex = 0;
-      }
-  
-      if (this.eventIndex == 0) {
-        return of({"name":"Group 1"});
-      }
-      else {
-        return of({"name":"Group 2"});
-      }
-    }
-
     const url = this.getUrl(`${eventRoot}/${eventUrl}`);
     return this.httpClient.get(url);
   }
