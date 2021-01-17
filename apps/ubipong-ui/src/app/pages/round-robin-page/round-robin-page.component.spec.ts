@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RoundRobinPageComponent } from './round-robin-page.component';
 import { TournamentService } from '../../services/tournament.service';
@@ -10,10 +10,11 @@ describe('RoundRobinPageComponent', () => {
   let component: RoundRobinPageComponent;
   let fixture: ComponentFixture<RoundRobinPageComponent>;
 
+  const challongeUrlList = ['bb_201906_pg_rr_1', 'bb_201906_pg_rr_2', 'bb_201906_pg_rr_3']
   const eventName = "Bikini Bottom Round Robin Group 1";
   const roundRobinGrid = [["A", "B", "C"]];
   const mockTournamentService = new TournamentService(null);
-  const mockActivatedRoute = new ActivatedRoute();
+  let mockActivatedRoute: any
 
   let getRoundRobinGrid: jasmine.Spy;
   let getEvent: jasmine.Spy;
@@ -26,13 +27,22 @@ describe('RoundRobinPageComponent', () => {
     getEvent = spyOn(mockTournamentService, "getEvent");
     getEvent.and.returnValue(of({ name: eventName }));
 
+    mockActivatedRoute = {
+      snapshot: {
+        queryParamMap: {
+          get: jest.fn().mockReturnValue(JSON.stringify(challongeUrlList))
+        }
+      }
+    };
+
     TestBed.configureTestingModule({
       declarations: [ RoundRobinPageComponent ],
       imports: [
         RouterTestingModule,
       ],
       providers: [
-        { provide: TournamentService, useValue: mockTournamentService }
+        { provide: TournamentService, useValue: mockTournamentService },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }
       ],
     })
     .compileComponents();
@@ -42,9 +52,6 @@ describe('RoundRobinPageComponent', () => {
     fixture = TestBed.createComponent(RoundRobinPageComponent);
     component = fixture.componentInstance;
 
-    parseEventList = spyOn(component, "parseEventList");
-    parseEventList.and.returnValue(["event 1", "event 2", "event 3"]);
-
     fixture.detectChanges();
   });
 
@@ -52,10 +59,14 @@ describe('RoundRobinPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should get challongeUrl from query param', () => {
+    expect(component.eventUrlList).toEqual(challongeUrlList)
+  })
+
   it('should refresh', (done) => {
     component.refreshIntervalTime = 100;
     component.initRefreshInterval();
-    const refreshData = spyOn(component, "refreshData");
+    const refreshData = jest.spyOn(component, "refreshData");
     setTimeout(() => {
       expect(refreshData).toHaveBeenCalled();
       setTimeout(() => {
@@ -68,13 +79,13 @@ describe('RoundRobinPageComponent', () => {
   it('should rotate round robin groups', () => {
     component.eventIndex = 0;
     component.refreshData();
-    expect(getRoundRobinGrid).toHaveBeenCalledWith("event 1");
+    expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[0]);
     expect(component.eventIndex).toBe(1);
     component.refreshData();
-    expect(getRoundRobinGrid).toHaveBeenCalledWith("event 2");
+    expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[1]);
     expect(component.eventIndex).toBe(2);
     component.refreshData();
-    expect(getRoundRobinGrid).toHaveBeenCalledWith("event 3");
+    expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[2]);
     expect(component.eventIndex).toBe(0);
   });
 
