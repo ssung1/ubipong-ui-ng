@@ -13,19 +13,14 @@ describe('RoundRobinPageComponent', () => {
   const challongeUrlList = ['bb_201906_pg_rr_1', 'bb_201906_pg_rr_2', 'bb_201906_pg_rr_3']
   const eventName = "Bikini Bottom Round Robin Group 1";
   const roundRobinGrid = [["A", "B", "C"]];
-  const mockTournamentService = new TournamentService(null);
+  let mockTournamentService: any
   let mockActivatedRoute: any
 
-  let getRoundRobinGrid: jasmine.Spy;
-  let getEvent: jasmine.Spy;
-  let parseEventList: jasmine.Spy;
-
   beforeEach(async () => {
-    getRoundRobinGrid = spyOn(mockTournamentService, "getRoundRobinGrid");
-    getRoundRobinGrid.and.returnValue(of(roundRobinGrid));
-
-    getEvent = spyOn(mockTournamentService, "getEvent");
-    getEvent.and.returnValue(of({ name: eventName }));
+    mockTournamentService = {
+      getRoundRobinGrid: jest.fn().mockReturnValue(of(roundRobinGrid)),
+      getEvent: jest.fn().mockReturnValue(of({name: eventName, challongeUrl: challongeUrlList[0]}))
+    }
 
     mockActivatedRoute = {
       snapshot: {
@@ -79,13 +74,18 @@ describe('RoundRobinPageComponent', () => {
   it('should rotate round robin groups', () => {
     component.eventIndex = 0;
     component.refreshData();
+    const getRoundRobinGrid = mockTournamentService.getRoundRobinGrid
+    const getEvent = mockTournamentService.getEvent
     expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[0]);
+    expect(getEvent).toHaveBeenCalledWith(challongeUrlList[0]);
     expect(component.eventIndex).toBe(1);
     component.refreshData();
     expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[1]);
+    expect(getEvent).toHaveBeenCalledWith(challongeUrlList[1]);
     expect(component.eventIndex).toBe(2);
     component.refreshData();
     expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[2]);
+    expect(getEvent).toHaveBeenCalledWith(challongeUrlList[2]);
     expect(component.eventIndex).toBe(0);
   });
 
