@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RoundRobinMatchSheetComponent } from './round-robin-match-sheet.component';
 import { TournamentService } from '../../services/tournament.service';

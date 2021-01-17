@@ -26,10 +26,10 @@ export class RoundRobinMatchSheetComponent implements OnInit {
   }
 
   refreshData() {
-    forkJoin(
+    forkJoin([
       this.tournamentService.getRoundRobinMatchList(this.challongeUrl),
       this.tournamentService.getEvent(this.challongeUrl),
-    ).subscribe(v => {
+    ]).subscribe(v => {
       this.matchList = v[0];
       // also group the matches so we can print the match sheet
       this.matchGroupList = this.groupMatchList(v[0]);

@@ -19,7 +19,7 @@ describe('RoundRobinPageComponent', () => {
   let getEvent: jasmine.Spy;
   let parseEventList: jasmine.Spy;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     getRoundRobinGrid = spyOn(mockTournamentService, "getRoundRobinGrid");
     getRoundRobinGrid.and.returnValue(of(roundRobinGrid));
 
@@ -36,7 +36,7 @@ describe('RoundRobinPageComponent', () => {
       ],
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RoundRobinPageComponent);
