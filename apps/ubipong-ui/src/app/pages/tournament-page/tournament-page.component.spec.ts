@@ -12,7 +12,7 @@ describe('TournamentPageComponent', () => {
   const tournamentId = 1
   const eventName = 'Preliminary Group 1'
   const event = {
-    "eventId": eventId,
+    "id": eventId,
     "challongeUrl": challongeUrl,
     "name": eventName,
     "tournamentId": tournamentId,
@@ -112,7 +112,7 @@ describe('TournamentPageComponent', () => {
     const addedEvent = component.eventList[1]
     expect(addedEvent.name).toBe(eventName)
     expect(addedEvent.challongeUrl).toBe(challongeUrl)
-    expect(addedEvent.eventId).toBe(eventId)
+    expect(addedEvent.id).toBe(eventId)
   })
 
   it('should navigate to round robin grid page if user clicks on the monitor events button', () => {

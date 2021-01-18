@@ -23,7 +23,7 @@ describe('RoundRobinMatchSheetComponent', () => {
     }
   ];
   const event = {
-    "eventId": eventId,
+    "id": eventId,
     "name": eventName,
     "tournamentId": 1,
     "challongeUrl": challongeUrl,

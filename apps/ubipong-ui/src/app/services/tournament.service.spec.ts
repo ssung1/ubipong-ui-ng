@@ -141,7 +141,7 @@ describe('TournamentService', () => {
       "_embedded": {
         "events": [
           {
-            "eventId": eventId,
+            "id": eventId,
             "challongeUrl": eventUrl,
             "name": "Preliminary Group 1",
             "tournamentId": tournamentId,
