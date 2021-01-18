@@ -78,6 +78,7 @@ describe('RoundRobinMatchSheetComponent', () => {
   });
 
   it('should retrieve match list', () => {
+    expect(mockActivatedRoute.snapshot.queryParamMap.get).toHaveBeenCalledWith('eventId')
     expect(component.challongeUrl).toBe(challongeUrl);
     expect(component.matchList).toBe(matchList);
     expect(component.event).toBe(event);

@@ -57,6 +57,7 @@ describe('RoundRobinPageComponent', () => {
   });
 
   it('should get challongeUrl from query param', () => {
+    expect(mockActivatedRoute.snapshot.queryParamMap.get).toHaveBeenCalledWith('eventIdList')
     expect(component.eventIdList).toEqual(eventIdList)
   })
 

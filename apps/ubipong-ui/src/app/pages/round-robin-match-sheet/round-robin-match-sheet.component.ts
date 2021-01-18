@@ -23,8 +23,8 @@ export class RoundRobinMatchSheetComponent implements OnInit {
 
   ngOnInit() {
     // we are calling challongeUrl eventName for now, because eventually we will be using actual event ID or event name
-    this.challongeUrl = this.route.snapshot.queryParamMap.get("eventName");
-    this.eventId = this.route.snapshot.queryParamMap.get("eventName")
+    this.challongeUrl = this.route.snapshot.queryParamMap.get("eventId");
+    this.eventId = this.route.snapshot.queryParamMap.get("eventId")
     this.refreshData();
   }
 

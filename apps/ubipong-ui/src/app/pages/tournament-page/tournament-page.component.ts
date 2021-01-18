@@ -68,7 +68,7 @@ export class TournamentPageComponent implements OnInit {
   navigateToRoundRobinMatchSheet(event) {
     this.router.navigate(['/rr-match-sheet'], {
       queryParams: {
-        eventName: event.eventId
+        eventId: event.eventId
       }
     })
   }
