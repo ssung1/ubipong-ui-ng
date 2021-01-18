@@ -6,8 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 describe('RoundRobinMatchSheetComponent', () => {
-  const eventName = "round robin tournament for integration test";
-  const challongeUrl = 'round-robin';
+  const eventId = 5090933
+  const eventName = "round robin tournament for integration test"
+  const challongeUrl = 'round-robin'
   const matchList = [
     {
       matchId: 1,
@@ -22,7 +23,7 @@ describe('RoundRobinMatchSheetComponent', () => {
     }
   ];
   const event = {
-    "eventId": 5090933,
+    "eventId": eventId,
     "name": eventName,
     "tournamentId": 1,
     "challongeUrl": challongeUrl,

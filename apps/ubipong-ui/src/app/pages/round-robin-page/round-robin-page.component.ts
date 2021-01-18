@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { flatMap, map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-round-robin-page',
@@ -56,7 +56,7 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
   refreshData() {
     const eventId = this.eventIdList[this.eventIndex];
 
-    this.tournamentService.getEvent(eventId).pipe(mergeMap(event => {
+    this.tournamentService.getEvent(eventId).pipe(flatMap(event => {
       this.event = event
       return this.tournamentService.getRoundRobinGrid(event.challongeUrl)
     })).subscribe(gridContent => {
