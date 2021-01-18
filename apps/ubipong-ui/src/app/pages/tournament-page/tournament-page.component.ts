@@ -60,7 +60,7 @@ export class TournamentPageComponent implements OnInit {
   navigateToRoundRobinPage() {
     this.router.navigate(['/rr-grid'], {
       queryParams: {
-        eventList: JSON.stringify(this.eventList.map(event => event.eventId))
+        eventIdList: JSON.stringify(this.eventList.map(event => event.eventId))
       }
     })
   }
