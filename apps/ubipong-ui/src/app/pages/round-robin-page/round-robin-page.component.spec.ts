@@ -10,6 +10,7 @@ describe('RoundRobinPageComponent', () => {
   let component: RoundRobinPageComponent;
   let fixture: ComponentFixture<RoundRobinPageComponent>;
 
+  const eventIdList = [1, 2, 3]
   const challongeUrlList = ['bb_201906_pg_rr_1', 'bb_201906_pg_rr_2', 'bb_201906_pg_rr_3']
   const eventName = "Bikini Bottom Round Robin Group 1";
   const roundRobinGrid = [["A", "B", "C"]];
@@ -19,13 +20,14 @@ describe('RoundRobinPageComponent', () => {
   beforeEach(async () => {
     mockTournamentService = {
       getRoundRobinGrid: jest.fn().mockReturnValue(of(roundRobinGrid)),
-      getEvent: jest.fn().mockReturnValue(of({name: eventName, challongeUrl: challongeUrlList[0]}))
+      getEvent: jest.fn()
+        .mockReturnValue(of({name: eventName, challongeUrl: challongeUrlList[0]}))
     }
 
     mockActivatedRoute = {
       snapshot: {
         queryParamMap: {
-          get: jest.fn().mockReturnValue(JSON.stringify(challongeUrlList))
+          get: jest.fn().mockReturnValue(JSON.stringify(eventIdList))
         }
       }
     };
@@ -55,7 +57,7 @@ describe('RoundRobinPageComponent', () => {
   });
 
   it('should get challongeUrl from query param', () => {
-    expect(component.eventUrlList).toEqual(challongeUrlList)
+    expect(component.eventIdList).toEqual(eventIdList)
   })
 
   it('should refresh', (done) => {
@@ -72,20 +74,28 @@ describe('RoundRobinPageComponent', () => {
   });
 
   it('should rotate round robin groups', () => {
-    component.eventIndex = 0;
-    component.refreshData();
+    mockTournamentService.getEvent.mockReset()
+    mockTournamentService.getEvent
+      .mockReturnValueOnce(of({name: eventName, challongeUrl: challongeUrlList[0]}))
+      .mockReturnValueOnce(of({name: eventName, challongeUrl: challongeUrlList[1]}))
+      .mockReturnValueOnce(of({name: eventName, challongeUrl: challongeUrlList[2]}))
+
     const getRoundRobinGrid = mockTournamentService.getRoundRobinGrid
     const getEvent = mockTournamentService.getEvent
+    
+    component.eventIndex = 0;
+
+    component.refreshData();
     expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[0]);
-    expect(getEvent).toHaveBeenCalledWith(challongeUrlList[0]);
+    expect(getEvent).toHaveBeenCalledWith(eventIdList[0]);
     expect(component.eventIndex).toBe(1);
     component.refreshData();
     expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[1]);
-    expect(getEvent).toHaveBeenCalledWith(challongeUrlList[1]);
+    expect(getEvent).toHaveBeenCalledWith(eventIdList[1]);
     expect(component.eventIndex).toBe(2);
     component.refreshData();
     expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[2]);
-    expect(getEvent).toHaveBeenCalledWith(challongeUrlList[2]);
+    expect(getEvent).toHaveBeenCalledWith(eventIdList[2]);
     expect(component.eventIndex).toBe(0);
   });
 

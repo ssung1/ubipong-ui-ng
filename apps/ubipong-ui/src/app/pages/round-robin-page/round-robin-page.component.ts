@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-round-robin-page',
@@ -17,7 +18,7 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
   refresh = environment.roundRobinGridRefresh;
 
   eventIndex: number = 0;
-  eventUrlList: string[] = ["group1", "group2"];
+  eventIdList: string[] = []
 
   gridContent: any[][] = [[]];
   event: any = {};
@@ -31,12 +32,12 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
     if (this.refresh) {
       this.initRefreshInterval();
     }
-    this.eventUrlList = this.parseEventList();
+    this.eventIdList = this.parseEventList();
     this.refreshData();
   }
 
   parseEventList(): string[] {
-    const eventListJson = this.route.snapshot.queryParamMap.get("eventList");
+    const eventListJson = this.route.snapshot.queryParamMap.get("eventIdList");
     return JSON.parse(eventListJson);
   }
 
@@ -53,18 +54,17 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
   }
 
   refreshData() {
-    const eventName = this.eventUrlList[this.eventIndex];
+    const eventId = this.eventIdList[this.eventIndex];
 
-    forkJoin([
-      this.tournamentService.getRoundRobinGrid(eventName),
-      this.tournamentService.getEvent(eventName),
-    ]).subscribe(v => {
-      this.gridContent = v[0];
-      this.event = v[1];
+    this.tournamentService.getEvent(eventId).pipe(mergeMap(event => {
+      this.event = event
+      return this.tournamentService.getRoundRobinGrid(event.challongeUrl)
+    })).subscribe(gridContent => {
+      this.gridContent = gridContent
     });
 
     this.eventIndex += 1;
-    if (this.eventIndex >= this.eventUrlList.length) {
+    if (this.eventIndex >= this.eventIdList.length) {
       this.eventIndex = 0;
     }
   }
