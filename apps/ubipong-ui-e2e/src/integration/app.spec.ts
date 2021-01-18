@@ -131,6 +131,11 @@ describe('ubipong-ui', () => {
     })
   }
 
+  function goToRoundRobinMatchSheet(eventName) {
+    const event = cy.contains('.event', eventName)
+    event.get('.button-round-robin-match-sheet').click()
+  }
+
   function getEventMatchList(challongeUrl) {
     const url = new URL(
       `${eventContext}/${challongeUrl}/roundRobinMatchList`,
@@ -204,14 +209,7 @@ describe('ubipong-ui', () => {
     addPlayerList([spongebob, patrick, squidward],
       preliminaryGroup1.challongeUrl)
     startEvent(preliminaryGroup1.challongeUrl)
-
-    // get match sheet (by tournament/event -- ui selection would be best)
-    // cy.get(':nth-child(2) > a').click()
-    // cheating a little to get match sheet -- fix later
-    cy.visit('/#/rr-match-sheet?eventName=bb_201906_pg_rr_1')
-    cy.reload(true)
-    cy.get('#round-robin-match-sheet').click()
-
+    goToRoundRobinMatchSheet(preliminaryGroup1.name)
     cy.get('h2').should('have.text', preliminaryGroup1.name)
     cy.get('table > :nth-child(1) > :nth-child(3)').contains('Game 1')
     // just trying a different way to verify text

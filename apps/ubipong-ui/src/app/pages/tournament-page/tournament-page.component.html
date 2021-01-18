@@ -15,5 +15,6 @@
   <li class="event" *ngFor="let e of eventList">
     <div class="event-name">{{e.name}}</div>
     <div class="challonge-url">{{e.challongeUrl}}</div>
+    <button class="button-round-robin-match-sheet" (click)="navigateToRoundRobinMatchSheet(e)">View Match Sheet</button>
   </li>
 </ul>

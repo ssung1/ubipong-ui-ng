@@ -123,9 +123,21 @@ describe('TournamentPageComponent', () => {
     component.navigateToRoundRobinPage = jasmine.createSpy('navigateToRoundRobinGridSpy');
 
     const compiled = fixture.nativeElement;
-
     compiled.querySelector('#view-round-robin-page').click();
 
     expect(component.navigateToRoundRobinPage).toHaveBeenCalled();
+  })
+
+  it('should navigate to round robin match list page if user clicks on the view match sheets button', () => {
+    component.eventList.push(event)
+
+    fixture.detectChanges();
+
+    const navigateToRoundRobinMatchSheetSpy = jest.spyOn(component, 'navigateToRoundRobinMatchSheet')
+
+    const compiled = fixture.nativeElement;
+    compiled.querySelector('.button-round-robin-match-sheet').click();
+
+    expect(navigateToRoundRobinMatchSheetSpy).toHaveBeenCalled();
   })
 })
