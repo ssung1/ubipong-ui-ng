@@ -76,8 +76,8 @@ describe('TournamentService', () => {
 
     const response = tournamentService.addTournament(addTournamentRequest);
 
-    //expect(mockHttpClient.post).toHaveBeenCalledWith(`${url}/crud/tournaments`, JSON.stringify(tournament), jasmine.anything());
-    expect(mockHttpClient.post).toHaveBeenCalled();
+    expect(mockHttpClient.post).toHaveBeenCalledWith(
+      `${url}/crud/tournaments`, JSON.stringify(addTournamentRequest), expect.anything());
     expect(response['_links']['self']['href']).toBe(tournamentLink);
   });
 
