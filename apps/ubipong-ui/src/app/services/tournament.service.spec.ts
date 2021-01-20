@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
 import { of } from 'rxjs';
+import { doesNotReject } from 'assert';
 
 describe('TournamentService', () => {
   const eventUrl = "bikiniBottomOpen-RoundRobin-Group-5";
@@ -38,10 +39,6 @@ describe('TournamentService', () => {
       'put': jest.fn()
     };
     tournamentService = new TournamentService(mockHttpClient);
-
-    TestBed.configureTestingModule({
-      providers: [TournamentService]
-    });
   });
 
   it('can retrieve a round robin grid by event URL', async () => {
@@ -81,8 +78,8 @@ describe('TournamentService', () => {
     expect(response['_links']['self']['href']).toBe(tournamentLink);
   });
 
-  it('can retrieve a list of tournaments', async () => {
-    mockHttpClient.get.mockReturnValue({
+  it('can retrieve a list of tournaments', (done) => {
+    mockHttpClient.get.mockReturnValue(of({
       "_embedded": {
         "tournaments": [tournament]
       },
@@ -104,19 +101,23 @@ describe('TournamentService', () => {
         "totalPages": 1,
         "number": 0
       }
-    });
+    }));
 
-    const response = tournamentService.getTournamentList();
+    const responseObservable = tournamentService.getTournamentList();
     expect(mockHttpClient.get).toHaveBeenCalled();
-    const tournamentList = response['_embedded']['tournaments'];
-    expect(tournamentList).toBeTruthy()
-    expect(typeof (tournamentList)).toBe('object')
-    expect(tournamentList.length).toBe(1)
 
-    expect(tournamentList[0].name).toBe(tournamentName)
+    responseObservable.subscribe(response => {
+      const tournamentList = response._embedded.tournaments;
+      expect(tournamentList).toBeTruthy()
+      expect(typeof (tournamentList)).toBe('object')
+      expect(tournamentList.length).toBe(1)
+  
+      expect(tournamentList[0].name).toBe(tournamentName)
+      done()
+    })
   });
 
-  it('can retrieve a tournament by ID (url)', () => {
+  it('can retrieve a tournament by ID (url)', (done) => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/3";
     mockHttpClient.get.mockReturnValue(of(tournament));
 
@@ -124,6 +125,7 @@ describe('TournamentService', () => {
     expect(mockHttpClient.get).toHaveBeenCalledWith(tournamentLink);
     tournamentResponse.subscribe(r => {
       expect(r.name).toBe(tournamentName);
+      done()
     })
   });
 
@@ -135,7 +137,7 @@ describe('TournamentService', () => {
     expect(mockHttpClient.put).toHaveBeenCalled();
   });
 
-  it('can return list of events of a given tournament', () => {
+  it('can return list of events of a given tournament', (done) => {
     const eventLink = 'http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1'
     mockHttpClient.get.mockReturnValue(of({
       "_embedded": {
@@ -169,8 +171,9 @@ describe('TournamentService', () => {
     eventListObservable.subscribe(eventList => {
       expect(mockHttpClient.get).toHaveBeenCalledWith(eventLink)
       expect(eventList.length).toBe(1)
-      expect(eventList[0].eventId).toBe(eventId)
+      expect(eventList[0].id).toBe(eventId)
       expect(eventList[0].challongeUrl).toBe(eventUrl)
+      done()
     })
   })
 });
