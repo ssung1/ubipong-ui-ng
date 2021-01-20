@@ -120,12 +120,12 @@ describe('TournamentPageComponent', () => {
 
     fixture.detectChanges();
 
-    component.navigateToRoundRobinPage = jasmine.createSpy('navigateToRoundRobinGridSpy');
+    const navigateToRoundRobinPageSpy = jest.spyOn(component, 'navigateToRoundRobinPage');
 
     const compiled = fixture.nativeElement;
     compiled.querySelector('#view-round-robin-page').click();
 
-    expect(component.navigateToRoundRobinPage).toHaveBeenCalled();
+    expect(navigateToRoundRobinPageSpy).toHaveBeenCalled();
   })
 
   it('should navigate to round robin match list page if user clicks on the view match sheets button', () => {
