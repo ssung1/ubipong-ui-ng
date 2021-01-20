@@ -1,5 +1,5 @@
 export class Tournament {
-  tournamentId: number;
+  id: number;
   name: string;
   tournamentDate: string;
   _links: object | null;

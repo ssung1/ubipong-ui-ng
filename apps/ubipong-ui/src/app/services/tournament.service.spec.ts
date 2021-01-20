@@ -15,7 +15,7 @@ describe('TournamentService', () => {
   const eventId = 101
   const tournamentLink = "http://localhost:8080/crud/tournaments/1";
   const tournament = {
-    "tournamentId": tournamentId,
+    "id": tournamentId,
     "name": tournamentName,
     "tournamentDate": "2018-06-20T17:00:00.000+0000",
     "_links": {
@@ -63,7 +63,7 @@ describe('TournamentService', () => {
   it('can add a tournament', () => {
     const tournamentLink = "http://localhost:8080/crud/tournaments/1";
     const addTournamentRequest = {
-      "tournamentId": 0,
+      "id": 0,
       "name": tournamentName,
       "tournamentDate": "2018-06-20T17:00:00.000+0000",
       "_links": null,

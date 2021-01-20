@@ -17,7 +17,7 @@ export class TournamentListComponent implements OnInit {
   
   tournamentList: Tournament[] = [
     {
-      tournamentId: 0,
+      id: 0,
       name: 'THD Summer Games 2019',
       tournamentDate: '2019-06-15',
       _links: null,
@@ -59,7 +59,7 @@ export class TournamentListComponent implements OnInit {
 
   addTournament() {
     const newTournament: Tournament = {
-      tournamentId: 0,
+      id: 0,
       name: this.inputNewName,
       tournamentDate: this.inputNewTournamentDate,
       _links: null
@@ -77,7 +77,7 @@ export class TournamentListComponent implements OnInit {
   navigateToTournamentDetails(tourament: Tournament) {
     this.router.navigate(['tournament-page'], {
       queryParams: {
-        tournamentId: tourament.tournamentId,
+        tournamentId: tourament.id,
       },
     })
     .catch((error) => {

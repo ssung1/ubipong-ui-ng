@@ -18,7 +18,7 @@ describe('TournamentListComponent', () => {
   const tournamentDate2 = '2020-06-20T12:00:00-0500';
   const tournamentId2 = 2
   const tournament: Tournament = {
-    "tournamentId": tournamentId,
+    "id": tournamentId,
     "name": tournamentName,
     "tournamentDate": tournamentDate,
     "_links": {
@@ -31,7 +31,7 @@ describe('TournamentListComponent', () => {
     }
   }
   const tournament2: Tournament = {
-    "tournamentId": tournamentId2,
+    "id": tournamentId2,
     "name": tournamentName2,
     "tournamentDate": tournamentDate2,
     "_links": {
@@ -175,7 +175,7 @@ describe('TournamentListComponent', () => {
       _links: null,
       name: tournamentName,
       tournamentDate: tournamentDate,
-      tournamentId: 0
+      id: 0
     })
   });
 
