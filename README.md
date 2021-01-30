@@ -1,6 +1,20 @@
 UbiPong
 =======
 
+## Production Environment
+
+```
+https://www.eatsleeppong.com/ubipong
+```
+
+Be sure to build with
+
+```
+npx nx build --prod --base-href '/ubipong/#'
+```
+
+or routing will fail.
+
 ## How to Deploy
 
 Run build with
