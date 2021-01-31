@@ -71,7 +71,7 @@ describe('ubipong-ui', () => {
   }
 
   function goToDashboard() {
-    cy.get('nav a[href="#dashboard"]').click()
+    cy.get('nav a[href="#/dashboard"]').click()
   }
 
   function addTournament(tournament) {
