@@ -31,7 +31,7 @@ const routes: Routes = [
   //   path: "header", component: HeaderComponent,
   // },
   {
-    path: "", component: MainMenuComponent,
+    path: "**", component: DashboardComponent,
   },
 ]
 

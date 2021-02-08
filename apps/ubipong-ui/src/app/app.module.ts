@@ -28,7 +28,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSelectModule } from '@angular/material/select'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatTableModule } from '@angular/material/table'
-import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,9 @@ import { MatToolbarModule } from '@angular/material/toolbar'
     MatSnackBarModule,
     MatTableModule,
     MatToolbarModule,
+    LayoutModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [
     TournamentService,

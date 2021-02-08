@@ -1,20 +1,22 @@
-<h1>Events for Tournament</h1>
-
-<div id="accordion-add-event" (click)="toggleNewEventForm()">
-  <p>Add Event</p> 
-</div>
-<a id="view-round-robin-page" (click)="navigateToRoundRobinPage()">View Round Robin</a> 
-<div id="new-event-form" *ngIf="isNewEventFormOpen">
-  <p>Name: <input id="input-new-name" #inputNewName></p>
-  <p>Challonge URL: <input id="input-new-challonge-url" #inputChallongeUrl></p>
-  <button id="button-add-event" (click)="addEvent(inputNewName.value, inputChallongeUrl.value)">Add</button>
-  <button id="button-add-event-canel">Cancel</button>
-</div>
-
-<ul>
-  <li class="event" *ngFor="let e of eventList">
-    <div class="event-name">{{e.name}}</div>
-    <div class="challonge-url">{{e.challongeUrl}}</div>
-    <button class="button-round-robin-match-sheet" (click)="navigateToRoundRobinMatchSheet(e)">View Match Sheet</button>
-  </li>
-</ul>
+<app-main-menu>
+  <h1>Events for Tournament</h1>
+  
+  <div id="accordion-add-event" (click)="toggleNewEventForm()">
+    <p>Add Event</p> 
+  </div>
+  <a id="view-round-robin-page" (click)="navigateToRoundRobinPage()">View Round Robin</a> 
+  <div id="new-event-form" *ngIf="isNewEventFormOpen">
+    <p>Name: <input id="input-new-name" #inputNewName></p>
+    <p>Challonge URL: <input id="input-new-challonge-url" #inputChallongeUrl></p>
+    <button id="button-add-event" (click)="addEvent(inputNewName.value, inputChallongeUrl.value)">Add</button>
+    <button id="button-add-event-canel">Cancel</button>
+  </div>
+  
+  <ul>
+    <li class="event" *ngFor="let e of eventList">
+      <div class="event-name">{{e.name}}</div>
+      <div class="challonge-url">{{e.challongeUrl}}</div>
+      <button class="button-round-robin-match-sheet" (click)="navigateToRoundRobinMatchSheet(e)">View Match Sheet</button>
+    </li>
+  </ul>
+</app-main-menu>
