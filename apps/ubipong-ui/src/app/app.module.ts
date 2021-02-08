@@ -12,6 +12,7 @@ import { TournamentPageComponent } from './pages/tournament-page/tournament-page
 import { TournamentListComponent } from './components/tournament-list/tournament-list.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component'
 import { RoundRobinPageComponent } from './pages/round-robin-page/round-robin-page.component'
+import { EventPlayerListComponent } from './components/event-player-list/event-player-list.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
@@ -42,6 +43,7 @@ import { MatListModule } from '@angular/material/list';
     TournamentListComponent,
     DashboardComponent,
     RoundRobinPageComponent,
+    EventPlayerListComponent,
   ],
   imports: [
     BrowserModule,

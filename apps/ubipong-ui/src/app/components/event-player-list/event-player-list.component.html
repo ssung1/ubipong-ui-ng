@@ -1,3 +1,5 @@
+<!-- display this as a full page for now -->
+<app-main-menu>
 <div id="event-player-list">
     <table class="full-player-list">
         <tr><th>Name</th><th>Club</th><th>Rating</th><th></th></tr>
@@ -39,6 +41,7 @@
                 <tr>
                     <th colspan="3">Group {{i}}</th>
                     <th><i class="fa fa-copy" (click)="copyGroupToClipboard(g)"></i></th>
+                    <th><span (click)="copyGroupToClipboard(g)">copy</span></th>
                 </tr>
 
                 <tr><th>Name</th><th>Club</th><th>Rating</th><th></th></tr>
@@ -53,3 +56,4 @@
         </div>
     </div>
 </div>
+</app-main-menu>

@@ -1,8 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Player } from 'src/app/models/player';
 import { FormsModule } from '@angular/forms';
-import { RoundRobinGroup } from 'src/app/models/round-robin-group';
-import { calcBindingFlags } from '@angular/core/src/view/util';
+import { Player } from '../../models/player'
+import { RoundRobinGroup } from '../../models/round-robin-group'
 
 @Component({
   selector: 'app-event-player-list',
