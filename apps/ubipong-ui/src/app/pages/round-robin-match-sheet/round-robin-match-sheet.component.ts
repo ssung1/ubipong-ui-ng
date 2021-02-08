@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { flatMap, mergeMap } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
+import { flatMap, map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-round-robin-match-sheet',
@@ -13,8 +13,7 @@ export class RoundRobinMatchSheetComponent implements OnInit {
   eventId: string;
   challongeUrl: string;
   event: any;
-  matchList: any[];
-  matchGroupList: any[][];
+  matchGroupList: Observable<any[][]>;
 
   constructor(
     private tournamentService: TournamentService,
@@ -29,14 +28,13 @@ export class RoundRobinMatchSheetComponent implements OnInit {
   }
 
   refreshData() {
-    this.tournamentService.getEvent(this.eventId).pipe(flatMap(event => {
-      this.event = event
-      return this.tournamentService.getRoundRobinMatchList(event.challongeUrl)
-    })).subscribe(matchList => {
-      this.matchList = matchList;
-      // also group the matches so we can print the match sheet
-      this.matchGroupList = this.groupMatchList(matchList);
-    })
+    this.matchGroupList = this.tournamentService.getEvent(this.eventId).pipe(
+      flatMap(event => {
+        this.event = event
+        return this.tournamentService.getRoundRobinMatchList(event.challongeUrl)
+      }),
+      map(this.groupMatchList)
+    )
   }
 
   /**
