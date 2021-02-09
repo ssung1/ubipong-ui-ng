@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
-import { flatMap, map, mergeMap } from 'rxjs/operators';
+import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-round-robin-match-sheet',
