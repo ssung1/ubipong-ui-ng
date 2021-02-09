@@ -71,7 +71,7 @@ describe('ubipong-ui', () => {
   }
 
   function goToDashboard() {
-    cy.get('nav a[href="#/dashboard"]').click()
+    cy.get('[routerlink="/dashboard"] > .mat-list-item-content').click()
   }
 
   function addTournament(tournament) {
@@ -199,7 +199,7 @@ describe('ubipong-ui', () => {
     cy.login('my-email@something.com', 'myPassword')
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome to ubipong-ui!')
+    getGreeting().contains('Ubipong Tournament Manager')
   })
 
   it('should run a tournament', () => {
@@ -216,10 +216,10 @@ describe('ubipong-ui', () => {
     cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', 'Game 2')
     cy.get('table > :nth-child(2) > :nth-child(1)').should('have.text', 'B')
     cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', 'patrick')
-    cy.get(':nth-child(3) > :nth-child(1)').should('have.text', 'C')
-    cy.get(':nth-child(3) > :nth-child(2)').should('have.text', 'squidward')
-    cy.get(':nth-child(5) > :nth-child(1)').should('have.text', 'A')
-    cy.get(':nth-child(5) > :nth-child(2)').should('have.text', 'spongebob')
+    cy.get('table > :nth-child(3) > :nth-child(1)').should('have.text', 'C')
+    cy.get('table > :nth-child(3) > :nth-child(2)').should('have.text', 'squidward')
+    cy.get('table > :nth-child(5) > :nth-child(1)').should('have.text', 'A')
+    cy.get('table > :nth-child(5) > :nth-child(2)').should('have.text', 'spongebob')
 
     // submit some scores
     submitMatchResult(spongbobVsPatrick, preliminaryGroup1.challongeUrl)
@@ -239,10 +239,10 @@ describe('ubipong-ui', () => {
     cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', ' spongebob ')
     cy.get('table > :nth-child(2) > :nth-child(4)').should('have.text', ' W 3 5 1 ')
     cy.get('table > :nth-child(2) > :nth-child(5)').should('have.text', ' W 11 -5 9 9 ')
-    cy.get(':nth-child(3) > :nth-child(1)').should('have.text', ' B ')
-    cy.get(':nth-child(3) > :nth-child(2)').should('have.text', ' patrick ')
-    cy.get(':nth-child(3) > :nth-child(3)').should('have.text', ' L -3 -5 -1 ')
-    cy.get(':nth-child(3) > :nth-child(5)').should('have.text', ' W 3 3 3 ')
+    cy.get('table > :nth-child(3) > :nth-child(1)').should('have.text', ' B ')
+    cy.get('table > :nth-child(3) > :nth-child(2)').should('have.text', ' patrick ')
+    cy.get('table > :nth-child(3) > :nth-child(3)').should('have.text', ' L -3 -5 -1 ')
+    cy.get('table > :nth-child(3) > :nth-child(5)').should('have.text', ' W 3 3 3 ')
     cy.get('table > :nth-child(4) > :nth-child(1)').should('have.text', ' C ')
     cy.get('table > :nth-child(4) > :nth-child(2)').should('have.text', ' squidward ')
     cy.get('table > :nth-child(4) > :nth-child(3)').should('have.text', ' L -11 5 -9 -9 ')
