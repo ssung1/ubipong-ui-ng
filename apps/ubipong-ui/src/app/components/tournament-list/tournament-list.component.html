@@ -1,38 +1,39 @@
 <div id="tournament-list">
-    <h1>Tournaments</h1>
-    <div id="input-error-message">
-        <div class="lcars-element lcars-u-5" *ngIf="hasError()">{{errorMessage}}</div>
+  <h1>Tournaments</h1>
+  <div id="input-error-message">
+    <div class="lcars-element lcars-u-5" *ngIf="hasError()">{{errorMessage}}</div>
+  </div>
+  <div id="new-tournament-box">
+    <div id="accordion-add-tournament" class="button" (click)="toggleNewTournamentForm()">
+      <i class="fa fa-plus-circle"></i> Add Tournament
     </div>
-
-    <div id="new-tournament-box">
-        <div id="accordion-add-tournament" class="button" (click)="toggleNewTournamentForm()">
-            <i class="fa fa-plus-circle"></i> Add Tournament
-        </div>
-        <div id="new-tournament-form" class="lcars-column" *ngIf="isNewTournamentFormOpen">
-            <p>
-                Name:
-                <input id="input-new-name" class="lcars-element left lcars-u-2 lcars-periwinkle-bg" type="text" size="48" [(ngModel)]="inputNewName">
-            </p>
-            <p>
-                Date:
-                <input id="input-new-tournament-date" class="lcars-element lcars-u-2  lcars-periwinkle-bg" type="text" size="10" placeholder="yyyy-MM-dd" [(ngModel)]="inputNewTournamentDate">
-            </p>
-            <p>
-                <button id="button-add-tournament" (click)="addTournament()">Add</button>
-                <button id="button-add-tournament-cancel" (click)="toggleNewTournamentForm()">Cancel</button>
-            </p>
-        </div>
+    <div id="new-tournament-form" class="lcars-column" *ngIf="isNewTournamentFormOpen">
+      <p>
+        Name:
+        <input id="input-new-name" class="lcars-element left lcars-u-2 lcars-periwinkle-bg" type="text" size="48" [(ngModel)]="inputNewName">
+      </p>
+      <p>
+        Date:
+        <input id="input-new-tournament-date" class="lcars-element lcars-u-2  lcars-periwinkle-bg" type="text" size="10" placeholder="yyyy-MM-dd" [(ngModel)]="inputNewTournamentDate">
+      </p>
+      <p>
+        <button id="button-add-tournament" (click)="addTournament()">Add</button>
+        <button id="button-add-tournament-cancel" (click)="toggleNewTournamentForm()">Cancel</button>
+      </p>
     </div>
+  </div>
 
-    <ul class="lcars-column">
-        <li class="tournament-item" 
-            *ngFor="let tournament of tournamentList"
-            (click)="navigateToTournamentDetails(tournament)">
-
-            <div>
-                <h2 class="tournament-name">{{tournament.name}}</h2>
-                <p class="tournament-date">{{tournament.tournamentDate}}</p>
-            </div>
-        </li>
-    </ul>
+  <section class="tournament-card-list">
+    <mat-card class="tournament-card" *ngFor="let tournament of tournamentList">
+      <mat-card-header>
+        <mat-card-title>{{tournament.name}}</mat-card-title>
+        <mat-card-subtitle>{{tournament.tournamentDate}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
+      <mat-card-actions>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+  
 </div>
