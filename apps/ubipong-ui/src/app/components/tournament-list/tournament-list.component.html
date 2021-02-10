@@ -23,11 +23,36 @@
     </div>
   </div>
 
+  <mat-accordion class="new-tournament-panel" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Add Tournament
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon orange600>face</mat-icon>hi there
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field>
+        <mat-label>First name</mat-label>
+        <input matInput>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Age</mat-label>
+        <input matInput type="number" min="1">
+      </mat-form-field>
+  
+    </mat-expansion-panel>
+  </mat-accordion>
+
   <section class="tournament-card-list">
-    <mat-card class="tournament-card" *ngFor="let tournament of tournamentList">
+    <mat-card *ngFor="let tournament of tournamentList"
+      class="tournament-card" (click)="navigateToTournamentDetails(tournament)">
       <mat-card-header>
         <mat-card-title>{{tournament.name}}</mat-card-title>
-        <mat-card-subtitle>{{tournament.tournamentDate}}</mat-card-subtitle>
+        <mat-card-subtitle>{{tournament.tournamentDate | slice:0:10}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
       </mat-card-content>
