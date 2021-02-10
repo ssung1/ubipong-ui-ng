@@ -3,47 +3,33 @@
   <div id="input-error-message">
     <div class="lcars-element lcars-u-5" *ngIf="hasError()">{{errorMessage}}</div>
   </div>
-  <div id="new-tournament-box">
-    <div id="accordion-add-tournament" class="button" (click)="toggleNewTournamentForm()">
-      <i class="fa fa-plus-circle"></i> Add Tournament
-    </div>
-    <div id="new-tournament-form" class="lcars-column" *ngIf="isNewTournamentFormOpen">
-      <p>
-        Name:
-        <input id="input-new-name" class="lcars-element left lcars-u-2 lcars-periwinkle-bg" type="text" size="48" [(ngModel)]="inputNewName">
-      </p>
-      <p>
-        Date:
-        <input id="input-new-tournament-date" class="lcars-element lcars-u-2  lcars-periwinkle-bg" type="text" size="10" placeholder="yyyy-MM-dd" [(ngModel)]="inputNewTournamentDate">
-      </p>
-      <p>
-        <button id="button-add-tournament" (click)="addTournament()">Add</button>
-        <button id="button-add-tournament-cancel" (click)="toggleNewTournamentForm()">Cancel</button>
-      </p>
-    </div>
-  </div>
 
-  <mat-accordion class="new-tournament-panel" multi>
-    <mat-expansion-panel>
+  <mat-accordion id="accordion-add-tournament" #accordionAddTournament>
+    <mat-expansion-panel [(expanded)]="isNewTournamentFormOpen">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Add Tournament
         </mat-panel-title>
         <mat-panel-description>
-          <mat-icon orange600>face</mat-icon>hi there
         </mat-panel-description>
       </mat-expansion-panel-header>
+
+      <div id="new-tournament-form">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput id="input-new-name" type="text" size="48" [(ngModel)]="inputNewName">
+        </mat-form-field>
+    
+        <mat-form-field>
+          <mat-label>Date</mat-label>
+          <input matInput id="input-new-tournament-date" type="text" size="10" placeholder="yyyy-MM-dd" [(ngModel)]="inputNewTournamentDate">
+        </mat-form-field>
   
-      <mat-form-field>
-        <mat-label>First name</mat-label>
-        <input matInput>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Age</mat-label>
-        <input matInput type="number" min="1">
-      </mat-form-field>
-  
+        <p>
+          <button mat-button color="primary" id="button-add-tournament" (click)="addTournament()">Add</button>
+          <button mat-button colod="secondary" id="button-add-tournament-cancel" (click)="toggleNewTournamentForm()">Cancel</button>
+        </p>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 

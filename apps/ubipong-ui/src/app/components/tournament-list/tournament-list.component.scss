@@ -17,9 +17,9 @@ div#tournament-list {
     }
   }
 
-  .new-tournament-panel {
+  #accordion-add-tournament {
     mat-panel-description {
-      text-align: right;
+      flex-direction: row-reverse;
     }
   }
 }
