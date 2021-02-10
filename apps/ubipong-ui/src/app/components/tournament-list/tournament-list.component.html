@@ -51,7 +51,7 @@
     <mat-card *ngFor="let tournament of tournamentList"
       class="tournament-card" (click)="navigateToTournamentDetails(tournament)">
       <mat-card-header>
-        <mat-card-title>{{tournament.name}}</mat-card-title>
+        <mat-card-title class="tournament-name">{{tournament.name}}</mat-card-title>
         <mat-card-subtitle>{{tournament.tournamentDate | slice:0:10}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>

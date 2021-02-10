@@ -155,7 +155,7 @@ describe('TournamentListComponent', () => {
     fixture.detectChanges();
     
     const compiled = fixture.nativeElement;
-    const tournamentItem = compiled.querySelector('.tournament-item');
+    const tournamentItem = compiled.querySelector('.tournament-card');
 
     expect(tournamentItem).toBeTruthy();
     expect(tournamentItem.textContent).toContain(tournamentName);
@@ -282,7 +282,7 @@ describe('TournamentListComponent', () => {
     fixture.detectChanges();
     
     const compiled = fixture.nativeElement;
-    const tournamentItem = compiled.querySelector('.tournament-item');
+    const tournamentItem = compiled.querySelector('.tournament-card');
 
     expect(tournamentItem).toBeTruthy();
 
