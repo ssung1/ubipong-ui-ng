@@ -34,7 +34,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { MatNativeDateModule } from '@angular/material/core'
+import { MatNativeDateModule } from '@angular/material/core';
+import { EventListComponent } from './components/event-list/event-list.component'
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MatNativeDateModule } from '@angular/material/core'
     DashboardComponent,
     RoundRobinPageComponent,
     EventPlayerListComponent,
+    EventListComponent,
   ],
   imports: [
     BrowserModule,
