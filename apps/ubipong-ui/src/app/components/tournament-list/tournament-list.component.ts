@@ -3,6 +3,7 @@ import { MatAccordion } from '@angular/material/expansion';
 import { Router } from '@angular/router';
 import { Tournament } from '../../models/tournament';
 import { TournamentService } from '../../services/tournament.service';
+import { FormGroup, Validators, FormControl, FormBuilder} from '@angular/forms'
 
 @Component({
   selector: 'app-tournament-list',
@@ -12,27 +13,46 @@ import { TournamentService } from '../../services/tournament.service';
 export class TournamentListComponent implements OnInit {
 
   isNewTournamentFormOpen = false;
-  inputNewName: string = null;
-  inputNewTournamentDate: string = null;
   errorMessage: string = null;
-  
-  tournamentList: Tournament[] = [
-    {
-      id: 0,
-      name: 'THD Summer Games 2019',
-      tournamentDate: '2019-06-15',
-      _links: null,
-    }
-  ];
+
+  requiredForm: FormGroup
+
+  inputNewName = new FormControl('', [Validators.required, Validators.maxLength(60)])
+  inputNewTournamentDate = new FormControl('', [Validators.required])
+
+  tournamentList: Tournament[] = [];
 
   constructor(
     private tournamentService: TournamentService,
     public router: Router,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.resetInputNewTournament();
     this.refreshTournamentList();
+  }
+
+  get inputNewNameErrorMessage() {
+    if (this.inputNewName.hasError('required')) {
+      return 'Name cannot be empty';
+    }
+    if (this.inputNewName.hasError('maxlength')) {
+      return 'Name is too long';
+    }
+    return JSON.stringify(this.inputNewName.errors);
+  }
+
+  get inputNewTournamentDateErrorMessage() {
+    if (this.inputNewTournamentDate.hasError('required')) {
+      return 'Must have tournament date';
+    }
+    return JSON.stringify(this.inputNewTournamentDate.errors);
+  }
+
+  get isNewTournamentFormInvalid() {
+    return this.inputNewName.invalid ||
+        this.inputNewTournamentDate.invalid
   }
 
   refreshTournamentList() {
@@ -49,8 +69,6 @@ export class TournamentListComponent implements OnInit {
   }
 
   private resetInputNewTournament() {
-    this.inputNewName = null;
-    this.inputNewTournamentDate = null;
     this.errorMessage = null;
   }
 
@@ -61,8 +79,8 @@ export class TournamentListComponent implements OnInit {
   addTournament() {
     const newTournament: Tournament = {
       id: 0,
-      name: this.inputNewName,
-      tournamentDate: this.inputNewTournamentDate,
+      name: this.inputNewName.value,
+      tournamentDate: this.inputNewTournamentDate.value,
       _links: null
     };
 

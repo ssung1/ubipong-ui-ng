@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/round-robin-match-sheet.component'
 import { TournamentService } from './services/tournament.service'
 import { HttpClientModule } from '@angular/common/http'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { TournamentPageComponent } from './pages/tournament-page/tournament-page.component'
 import { TournamentListComponent } from './components/tournament-list/tournament-list.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component'
@@ -34,6 +34,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatNativeDateModule } from '@angular/material/core'
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { MatListModule } from '@angular/material/list';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatMenuModule,
     MatButtonModule,
@@ -72,6 +74,7 @@ import { MatListModule } from '@angular/material/list';
     LayoutModule,
     MatSidenavModule,
     MatListModule,
+    MatNativeDateModule,
   ],
   providers: [
     TournamentService,

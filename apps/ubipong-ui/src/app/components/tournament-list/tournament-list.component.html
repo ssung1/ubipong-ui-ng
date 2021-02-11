@@ -15,18 +15,26 @@
       </mat-expansion-panel-header>
 
       <div id="new-tournament-form">
-        <mat-form-field>
+        <mat-form-field id="form-field-new-name">
           <mat-label>Name</mat-label>
-          <input matInput id="input-new-name" type="text" size="48" [(ngModel)]="inputNewName">
+          <input matInput id="input-new-name" type="text" size="48" [formControl]="inputNewName">
+          <mat-error *ngIf="inputNewName.invalid">{{inputNewNameErrorMessage}}</mat-error>
         </mat-form-field>
     
-        <mat-form-field>
+        <mat-form-field id="form-field-new-tournament-date">
           <mat-label>Date</mat-label>
-          <input matInput id="input-new-tournament-date" type="text" size="10" placeholder="yyyy-MM-dd" [(ngModel)]="inputNewTournamentDate">
+          <input matInput id="input-new-tournament-date" placeholder="yyyy-MM-dd" [matDatepicker]="datepicker" [formControl]="inputNewTournamentDate">
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
         </mat-form-field>
   
         <p>
-          <button mat-button color="primary" id="button-add-tournament" (click)="addTournament()">Add</button>
+          <button mat-button color="primary" id="button-add-tournament" [disabled]="isNewTournamentFormInvalid" (click)="addTournament()">Add</button>
           <button mat-button colod="secondary" id="button-add-tournament-cancel" (click)="toggleNewTournamentForm()">Cancel</button>
         </p>
       </div>
