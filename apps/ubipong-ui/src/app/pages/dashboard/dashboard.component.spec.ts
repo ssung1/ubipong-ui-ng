@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { DashboardComponent } from './dashboard.component'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
 import { TournamentListComponent } from '../../components/tournament-list/tournament-list.component'
@@ -27,6 +27,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatNativeDateModule } from '@angular/material/core'
 import { MainMenuComponent } from '../../components/main-menu/main-menu.component'
 
 describe('DashboardComponent', () => {
@@ -90,6 +91,7 @@ describe('DashboardComponent', () => {
       ],
       imports: [
         FormsModule,
+        ReactiveFormsModule,
         RouterTestingModule,
         NoopAnimationsModule,
         MatMenuModule,
@@ -112,6 +114,7 @@ describe('DashboardComponent', () => {
         LayoutModule,
         MatSidenavModule,
         MatListModule,
+        MatNativeDateModule,
       ],
     })
     .compileComponents();

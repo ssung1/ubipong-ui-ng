@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { TournamentListComponent } from './tournament-list.component'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { of, throwError } from 'rxjs'
 import { Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -27,6 +27,7 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { LayoutModule } from '@angular/cdk/layout'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list'
+import { MatNativeDateModule } from '@angular/material/core'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('TournamentListComponent', () => {
@@ -110,6 +111,7 @@ describe('TournamentListComponent', () => {
       ],
       imports: [ 
         FormsModule,
+        ReactiveFormsModule,
         RouterTestingModule.withRoutes([]),
         NoopAnimationsModule,
         MatMenuModule,
@@ -132,6 +134,7 @@ describe('TournamentListComponent', () => {
         LayoutModule,
         MatSidenavModule,
         MatListModule,
+        MatNativeDateModule,
       ],
     })
     .compileComponents();
@@ -193,6 +196,10 @@ describe('TournamentListComponent', () => {
     const tournamentForm = compiled.querySelector('#new-tournament-form');
     expect(tournamentForm).toBeTruthy();
 
+    const buttonAddTournament = compiled.querySelector('#button-add-tournament');
+    // add button is disabled before input is validated
+    expect(buttonAddTournament.disabled).toBe(true)
+
     const inputNewName = compiled.querySelector('#input-new-name');
     inputNewName.value = tournamentName;
     inputNewName.dispatchEvent(new Event('input'));
@@ -201,7 +208,9 @@ describe('TournamentListComponent', () => {
     inputNewTournamentDate.value = tournamentDate;
     inputNewTournamentDate.dispatchEvent(new Event('input'));
 
-    const buttonAddTournament = compiled.querySelector('#button-add-tournament');
+    // add button is disabled before input is validated
+    fixture.detectChanges()
+    expect(buttonAddTournament.disabled).toBe(false)
     buttonAddTournament.click();
 
     expect(component.tournamentList.length).toBe(1);
@@ -210,13 +219,13 @@ describe('TournamentListComponent', () => {
     expect(addedTournament.tournamentDate).toBe(tournamentDate);
     expect(addedTournament['_links']['self']['href']).toBeTruthy();
 
-    expect(component.inputNewName).toBe(null);
-    expect(component.inputNewTournamentDate).toBe(null);
+    expect(component.inputNewName.value).toBe(null);
+    expect(component.inputNewTournamentDate.value).toBe(null);
 
     expect(mockTournamentService.addTournament).toHaveBeenCalledWith({
       _links: null,
       name: tournamentName,
-      tournamentDate: tournamentDate,
+      tournamentDate: new Date(tournamentDate),
       id: 0
     })
   });

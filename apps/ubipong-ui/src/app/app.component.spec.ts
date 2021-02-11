@@ -4,7 +4,7 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component'
 import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/round-robin-match-sheet.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component'
 import { TournamentListComponent } from './components/tournament-list/tournament-list.component'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterTestingModule } from '@angular/router/testing'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
@@ -34,6 +34,7 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         FormsModule,
+        ReactiveFormsModule,
         NoopAnimationsModule,
         MatMenuModule,
         MatButtonModule,
