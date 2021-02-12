@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TournamentPageComponent } from './tournament-page.component';
 import { of } from 'rxjs';
 import { TournamentService } from '../../services/tournament.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MainMenuComponent } from '../../components/main-menu/main-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -53,6 +53,7 @@ describe('TournamentPageComponent', () => {
 
   let mockActivatedRoute: any
   let mockTournamentService: any
+  let mockRouter: any
 
   beforeEach(async () => {
     mockActivatedRoute = {
@@ -67,6 +68,10 @@ describe('TournamentPageComponent', () => {
       getEventList: jest.fn().mockReturnValue(of([event])),
       addEvent: jest.fn().mockReturnValue(of(event))
     }
+    
+    mockRouter = {
+      navigate: jest.fn()
+    }
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -75,7 +80,6 @@ describe('TournamentPageComponent', () => {
         EventListComponent,
       ],
       imports: [
-        RouterTestingModule.withRoutes([]),
         NoopAnimationsModule,
         MatMenuModule,
         MatButtonModule,
@@ -100,6 +104,7 @@ describe('TournamentPageComponent', () => {
       providers: [
         { provide: TournamentService, useValue: mockTournamentService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: Router, useValue: mockRouter },
       ]
     })
     .compileComponents();
@@ -179,11 +184,11 @@ describe('TournamentPageComponent', () => {
 
     fixture.detectChanges();
 
-    const navigateToRoundRobinMatchSheetSpy = jest.spyOn(component, 'navigateToRoundRobinMatchSheet')
+    //const navigateToRoundRobinMatchSheetSpy = jest.spyOn(component, 'navigateToRoundRobinMatchSheet')
 
     const compiled = fixture.nativeElement;
     compiled.querySelector('.button-round-robin-match-sheet').click();
 
-    expect(navigateToRoundRobinMatchSheetSpy).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalled();
   })
 })

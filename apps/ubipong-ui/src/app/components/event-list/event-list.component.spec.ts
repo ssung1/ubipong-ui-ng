@@ -89,4 +89,20 @@ describe('EventListComponent', () => {
 
     expect(compiled.querySelector('.event-card-list .event-name').textContent.trim()).toBe(event.name)
   })
+
+  it('should emit event to view round robin match sheet', () => {
+    component.eventList = [event]
+    fixture.detectChanges()
+
+    const compiled = fixture.nativeElement
+
+    const buttonRoundRobinMatchSheet = compiled.querySelector('.button-round-robin-match-sheet')
+
+    const viewRoundRobinMatchSheetEventSpy = jest.spyOn(component.viewRoundRobinMatchSheetEvent, 'emit')
+
+    expect(buttonRoundRobinMatchSheet.disabled).toBe(false)
+    buttonRoundRobinMatchSheet.click()
+
+    expect(viewRoundRobinMatchSheetEventSpy).toHaveBeenCalled()
+  })
 });

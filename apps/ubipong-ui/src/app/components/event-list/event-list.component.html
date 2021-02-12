@@ -2,7 +2,7 @@
   <mat-card class="event" *ngFor="let event of eventList">
     <mat-card-header>
       <mat-card-title class="event-name">{{event.name}}</mat-card-title>
-      <mat-card-subtitle>{{event.challongeUrl}}</mat-card-subtitle>
+      <mat-card-subtitle class="challonge-url">{{event.challongeUrl}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
       <button mat-button class="button-round-robin-match-sheet"

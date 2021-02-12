@@ -12,14 +12,6 @@
     <button id="button-add-event-canel">Cancel</button>
   </div>
 
-  <app-event-list [eventList]="eventList">
+  <app-event-list [eventList]="eventList" (viewRoundRobinMatchSheet)="navigateToRoundRobinMatchSheet($event)">
   </app-event-list>
-
-  <ul>
-    <li class="event" *ngFor="let e of eventList">
-      <div class="event-name">{{e.name}}</div>
-      <div class="challonge-url">{{e.challongeUrl}}</div>
-      <button class="button-round-robin-match-sheet" (click)="navigateToRoundRobinMatchSheet(e)">View Match Sheet</button>
-    </li>
-  </ul>
 </app-main-menu>

@@ -65,12 +65,15 @@ export class TournamentPageComponent implements OnInit {
     })
   }
 
+  /**
+   * this "event" here is the tournament event, not
+   * the angular/javascript "event"
+   */
   navigateToRoundRobinMatchSheet(event) {
-    console.log(event)
-    // this.router.navigate(['/rr-match-sheet'], {
-    //   queryParams: {
-    //     eventId: event.id
-    //   }
-    // })
+    this.router.navigate(['/rr-match-sheet'], {
+      queryParams: {
+        eventId: event.id
+      }
+    })
   }
 }

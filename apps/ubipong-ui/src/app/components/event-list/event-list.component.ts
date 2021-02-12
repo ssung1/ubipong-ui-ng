@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { EventEmitter } from 'events';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-event-list',
@@ -12,7 +11,7 @@ export class EventListComponent implements OnInit {
   eventList: any[]
 
   @Output('viewRoundRobinMatchSheet')
-  viewRoundRobinMatchSheetEvent: EventEmitter = new EventEmitter()
+  viewRoundRobinMatchSheetEvent: EventEmitter<any> = new EventEmitter<any>()
 
   constructor() { }
 
@@ -20,6 +19,6 @@ export class EventListComponent implements OnInit {
   }
 
   viewRoundRobinMatchSheet(event: any) {
-    this.viewRoundRobinMatchSheetEvent.emit('wha')
+    this.viewRoundRobinMatchSheetEvent.emit(event)
   }
 }
