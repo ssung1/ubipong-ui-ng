@@ -31,6 +31,12 @@ describe('EventListComponent', () => {
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
 
+  let event = {
+    id: 123,
+    name: 'Bikini Bottom Open 2019',
+    challongeUrl: 'bb_201906_rr_pg_1'
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ EventListComponent ],
@@ -74,4 +80,13 @@ describe('EventListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
+  it('should display events', () => {
+    component.eventList = [event]
+    fixture.detectChanges()
+
+    const compiled = fixture.nativeElement
+
+    expect(compile.querySelector('xxx').textContent).toBe(event.name)
+  })
 });
