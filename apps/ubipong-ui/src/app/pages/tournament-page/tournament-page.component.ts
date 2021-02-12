@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'ubipong-ui-ng-tournament-page',
@@ -14,6 +15,9 @@ export class TournamentPageComponent implements OnInit {
   eventList: any[] = []
   isNewEventFormOpen: boolean = false
   errorMessage: string | null = ""
+  
+  inputNewName = new FormControl('', null)
+  inputNewChallongeUrl = new FormControl('', null)
 
   constructor(
     private tournamentService: TournamentService,

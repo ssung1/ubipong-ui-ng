@@ -12,6 +12,40 @@
     <button id="button-add-event-canel">Cancel</button>
   </div>
 
+
+
+  <mat-accordion id="accordion-add-event" #accordionAddEvent>
+    <mat-expansion-panel [(expanded)]="isNewEventFormOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Add Event
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div id="new-event-form">
+        <mat-form-field id="form-field-new-name">
+          <mat-label>Name</mat-label>
+          <input matInput id="input-new-name" type="text" size="48" [formControl]="inputNewName">
+          <mat-error *ngIf="inputNewName.invalid">{{inputNewNameErrorMessage}}</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field id="form-field-new-event-date">
+          <mat-label>Date</mat-label>
+          <input matInput id="input-new-challonge-url" type="text" size="48" [formControl]="inputNewChallongeUrl">
+          <mat-error *ngIf="inputNewChallongeUrl.invalid">{{inputNewChallongeUrlErrorMessage}}</mat-error>
+        </mat-form-field>
+  
+        <p>
+          <button mat-button color="primary" id="button-add-event" [disabled]="isNewEventFormInvalid" (click)="addEvent()">Add</button>
+          <button mat-button color="secondary" id="button-add-event-cancel" (click)="toggleNewEventForm()">Cancel</button>
+        </p>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
   <app-event-list [eventList]="eventList" (viewRoundRobinMatchSheet)="navigateToRoundRobinMatchSheet($event)">
   </app-event-list>
 </app-main-menu>
