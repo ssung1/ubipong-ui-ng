@@ -87,6 +87,6 @@ describe('EventListComponent', () => {
 
     const compiled = fixture.nativeElement
 
-    expect(compile.querySelector('xxx').textContent).toBe(event.name)
+    expect(compiled.querySelector('.event-card-list .event-name').textContent.trim()).toBe(event.name)
   })
 });

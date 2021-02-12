@@ -26,6 +26,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { EventListComponent } from '../../components/event-list/event-list.component';
 
 describe('TournamentPageComponent', () => {
   const eventId = 101
@@ -71,6 +72,7 @@ describe('TournamentPageComponent', () => {
       declarations: [
         TournamentPageComponent,
         MainMenuComponent,
+        EventListComponent,
       ],
       imports: [
         RouterTestingModule.withRoutes([]),

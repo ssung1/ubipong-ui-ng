@@ -11,7 +11,10 @@
     <button id="button-add-event" (click)="addEvent(inputNewName.value, inputChallongeUrl.value)">Add</button>
     <button id="button-add-event-canel">Cancel</button>
   </div>
-  
+
+  <app-event-list [eventList]="eventList">
+  </app-event-list>
+
   <ul>
     <li class="event" *ngFor="let e of eventList">
       <div class="event-name">{{e.name}}</div>
