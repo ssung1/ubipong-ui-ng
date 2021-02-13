@@ -1,0 +1,16 @@
+div#tournament-list {
+  padding: 1rem;
+
+  #accordion-add-tournament {
+    mat-panel-description {
+      flex-direction: row-reverse;
+    }
+
+    #form-field-new-name {
+      width: 30rem;
+    }
+    #input-new-tournament-date {
+      width: 10rem;
+    }
+  }
+}

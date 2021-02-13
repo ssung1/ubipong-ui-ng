@@ -98,7 +98,8 @@ describe('EventListComponent', () => {
 
     const buttonRoundRobinMatchSheet = compiled.querySelector('.button-round-robin-match-sheet')
 
-    const viewRoundRobinMatchSheetEventSpy = jest.spyOn(component.viewRoundRobinMatchSheetEvent, 'emit')
+    const viewRoundRobinMatchSheetEventSpy = jest.spyOn(
+      component.viewRoundRobinMatchSheetEventEmitter, 'emit')
 
     expect(buttonRoundRobinMatchSheet.disabled).toBe(false)
     buttonRoundRobinMatchSheet.click()

@@ -1,3 +1,50 @@
 <app-main-menu>
-  <app-tournament-list></app-tournament-list>
+
+  <div id="tournament-list">
+    <h1>Tournaments</h1>
+    <div id="input-error-message">
+      <div class="lcars-element lcars-u-5" *ngIf="hasError()">{{errorMessage}}</div>
+    </div>
+  
+    <mat-accordion id="accordion-add-tournament" #accordionAddTournament>
+      <mat-expansion-panel [(expanded)]="isNewTournamentFormOpen">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Add Tournament
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+  
+        <div id="new-tournament-form">
+          <mat-form-field id="form-field-new-name">
+            <mat-label>Name</mat-label>
+            <input matInput id="input-new-name" type="text" size="48" [formControl]="inputNewName">
+            <mat-error *ngIf="inputNewName.invalid">{{inputNewNameErrorMessage}}</mat-error>
+          </mat-form-field>
+      
+          <mat-form-field id="form-field-new-tournament-date">
+            <mat-label>Date</mat-label>
+            <input matInput id="input-new-tournament-date" placeholder="yyyy-MM-dd" [matDatepicker]="datepicker" [formControl]="inputNewTournamentDate">
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker>
+              <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+    
+          <p>
+            <button mat-button color="primary" id="button-add-tournament" [disabled]="isNewTournamentFormInvalid" (click)="addTournament()">Add</button>
+            <button mat-button color="secondary" id="button-add-tournament-cancel" (click)="toggleNewTournamentForm()">Cancel</button>
+          </p>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  
+    <app-tournament-list [tournamentList]="tournamentList"
+      (viewTournamentPage)="navigateToTournamentPage($event)">
+    </app-tournament-list>
+  </div>
 </app-main-menu>

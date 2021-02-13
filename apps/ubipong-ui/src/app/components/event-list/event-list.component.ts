@@ -11,7 +11,7 @@ export class EventListComponent implements OnInit {
   eventList: any[]
 
   @Output('viewRoundRobinMatchSheet')
-  viewRoundRobinMatchSheetEvent: EventEmitter<any> = new EventEmitter<any>()
+  viewRoundRobinMatchSheetEventEmitter: EventEmitter<any> = new EventEmitter<any>()
 
   constructor() { }
 
@@ -19,6 +19,6 @@ export class EventListComponent implements OnInit {
   }
 
   viewRoundRobinMatchSheet(event: any) {
-    this.viewRoundRobinMatchSheetEvent.emit(event)
+    this.viewRoundRobinMatchSheetEventEmitter.emit(event)
   }
 }

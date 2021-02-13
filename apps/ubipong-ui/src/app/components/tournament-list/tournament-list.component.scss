@@ -1,32 +1,15 @@
-div#tournament-list {
-  padding: 1rem;
+section.tournament-card-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
 
-  section.tournament-card-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: stretch;
+  mat-card.tournament-card {
+    margin: 1rem;
+    flex: 1 1 0;
 
-    mat-card.tournament-card {
-      margin: 1rem;
-      flex: 1 1 0;
-
-      :hover {
-        cursor: pointer;        
-      }
-    }
-  }
-
-  #accordion-add-tournament {
-    mat-panel-description {
-      flex-direction: row-reverse;
-    }
-
-    #form-field-new-name {
-      width: 30rem;
-    }
-    #input-new-tournament-date {
-      width: 10rem;
+    :hover {
+      cursor: pointer;
     }
   }
 }

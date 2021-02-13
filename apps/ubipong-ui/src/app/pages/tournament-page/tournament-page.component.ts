@@ -42,6 +42,10 @@ export class TournamentPageComponent implements OnInit {
       })
   }
 
+  get isNewEventFormInvalid() {
+    return false
+  }
+
   addEvent() {
     this.tournamentService
       .addEvent({
