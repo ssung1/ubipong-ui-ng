@@ -42,12 +42,12 @@ export class TournamentPageComponent implements OnInit {
       })
   }
 
-  addEvent(name: string, challongeUrl: string) {
+  addEvent() {
     this.tournamentService
       .addEvent({
         tournamentId: this.tournamentId,
-        name,
-        challongeUrl,
+        name: this.inputNewName.value,
+        challongeUrl: this.inputNewChallongeUrl.value,
       })
       .pipe(map(addedEvent => this.refreshData()))
       .subscribe(() => {},
