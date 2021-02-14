@@ -50,6 +50,12 @@ describe('TournamentPageComponent', () => {
       }
     }
   }
+  const tournament = {
+    id: tournamentId,
+    name: "Eat Sleep Pong 2019",
+    tournamentDate: "2019-06-23T00:00:00Z"
+  }
+
   let component: TournamentPageComponent;
   let fixture: ComponentFixture<TournamentPageComponent>;
 
@@ -68,11 +74,12 @@ describe('TournamentPageComponent', () => {
 
     mockTournamentService = {
       getEventList: jest.fn().mockReturnValue(of([event])),
-      addEvent: jest.fn().mockReturnValue(of(event))
+      addEvent: jest.fn().mockReturnValue(of(event)),
+      getTournamentById: jest.fn().mockReturnValue(of(tournament)),
     }
     
     mockRouter = {
-      navigate: jest.fn().mockReturnValue(Promise.resolve(true))
+      navigate: jest.fn().mockReturnValue(Promise.resolve(true)),
     }
 
     await TestBed.configureTestingModule({
@@ -133,6 +140,14 @@ describe('TournamentPageComponent', () => {
     expect(eventNameElement.textContent).toBe(eventName)
     const challongeUrlElement = fixture.nativeElement.querySelector('.challonge-url')
     expect(challongeUrlElement.textContent).toBe(challongeUrl)
+  })
+
+  it('should display tournament name as header', () => {
+    component.refreshData()
+    fixture.detectChanges()
+
+    const header = fixture.nativeElement.querySelector('#tournament-page h1')
+    expect(header.textContent).toBe(tournament.name)
   })
 
   it('should be able to add new event', () => {

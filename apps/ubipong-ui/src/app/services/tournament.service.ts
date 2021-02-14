@@ -8,6 +8,7 @@ import { AddEventRequest } from '../models/add-event-request';
 
 const eventRoot = '/rest/v0/events';
 const crudEventRoot = '/crud/events'
+const tournamentRoot = '/rest/v0/tournaments'
 
 @Injectable({
   providedIn: 'root'
@@ -70,9 +71,14 @@ export class TournamentService {
     return <Observable<any>>this.httpClient.get(url);
   }
 
-  getTournament(tournamentLink: string): Observable<any> {
+  getTournament(tournamentLink: string): Observable<Tournament> {
     const url = tournamentLink;
-    return <Observable<any>>this.httpClient.get(url);
+    return <Observable<Tournament>>this.httpClient.get(url);
+  }
+
+  getTournamentById(tournamentId: number): Observable<Tournament> {
+    const url = this.getUrl(`${tournamentRoot}/${tournamentId}`)
+    return <Observable<Tournament>>this.httpClient.get(url);
   }
 
   updateTournament(tournamentLink: string, tournament: Tournament): Observable<any> {

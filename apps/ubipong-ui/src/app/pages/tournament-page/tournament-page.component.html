@@ -1,6 +1,6 @@
 <app-main-menu>
   <section id="tournament-page">
-    <h1>Events for Tournament</h1>
+    <h1>{{tournament.name}}</h1>
     
     <a id="view-round-robin-page" (click)="navigateToRoundRobinPage()">View Round Robin</a> 
 
@@ -21,8 +21,8 @@
             <mat-error *ngIf="inputNewName.invalid">{{inputNewNameErrorMessage}}</mat-error>
           </mat-form-field>
       
-          <mat-form-field id="form-field-new-event-date">
-            <mat-label>Date</mat-label>
+          <mat-form-field id="form-field-new-challonge-url">
+            <mat-label>Challonge URL</mat-label>
             <input matInput id="input-new-challonge-url" type="text" size="48" [formControl]="inputNewChallongeUrl">
             <mat-error *ngIf="inputNewChallongeUrl.invalid">{{inputNewChallongeUrlErrorMessage}}</mat-error>
           </mat-form-field>

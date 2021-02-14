@@ -3,6 +3,8 @@ import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
+import {Tournament} from '../../models/tournament';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'ubipong-ui-ng-tournament-page',
@@ -12,6 +14,7 @@ import {FormControl} from '@angular/forms';
 export class TournamentPageComponent implements OnInit {
 
   tournamentId: number = NaN
+  tournament: Tournament = new Tournament()
   eventList: any[] = []
   isNewEventFormOpen: boolean = false
   errorMessage: string | null = ""
@@ -36,6 +39,11 @@ export class TournamentPageComponent implements OnInit {
   }
 
   refreshData() {
+    this.tournamentService.getTournamentById(this.tournamentId)
+      .subscribe(tournament => {
+        this.tournament = tournament
+      })
+
     this.tournamentService.getEventList(this.tournamentId)
       .subscribe(eventList => {
         this.eventList = eventList
