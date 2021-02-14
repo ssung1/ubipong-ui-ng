@@ -74,7 +74,7 @@ describe('ubipong-ui', () => {
     cy.get('[routerlink="/dashboard"] > .mat-list-item-content').click()
   }
 
-  function addTournament(tournament) {
+  function addTournament(tournament: any) {
     goToDashboard()
     cy.get('#accordion-add-tournament').click()
     cy.get('#input-new-name').type(tournament.name)
@@ -86,8 +86,8 @@ describe('ubipong-ui', () => {
     cy.contains('.tournament-name', tournamentName).click()
   }
 
-  function addEvent(event) {
-    cy.get('p').click()
+  function addEvent(event: any) {
+    cy.get('#accordion-add-event').click()
     cy.get('#input-new-name').type(event.name)
     cy.get('#input-new-challonge-url').type(event.challongeUrl)
     cy.get('#button-add-event').click()

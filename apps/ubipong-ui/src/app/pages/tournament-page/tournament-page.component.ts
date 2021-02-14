@@ -53,7 +53,7 @@ export class TournamentPageComponent implements OnInit {
         name: this.inputNewName.value,
         challongeUrl: this.inputNewChallongeUrl.value,
       })
-      .pipe(map(addedEvent => this.refreshData()))
+      .pipe(map(() => this.refreshData()))
       .subscribe(() => {},
         error => {
           this.errorMessage = "System error: " + error.message;
@@ -77,11 +77,14 @@ export class TournamentPageComponent implements OnInit {
    * this "event" here is the tournament event, not
    * the angular/javascript "event"
    */
-  navigateToRoundRobinMatchSheet(event) {
+  navigateToRoundRobinMatchSheet(event: any) {
     this.router.navigate(['/rr-match-sheet'], {
       queryParams: {
         eventId: event.id
       }
+    })
+    .catch(error => {
+      console.log(error)
     })
   }
 }

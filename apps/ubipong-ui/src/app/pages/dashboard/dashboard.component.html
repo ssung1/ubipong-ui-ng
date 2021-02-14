@@ -2,9 +2,6 @@
 
   <div id="tournament-list">
     <h1>Tournaments</h1>
-    <div id="input-error-message">
-      <div class="lcars-element lcars-u-5" *ngIf="hasError()">{{errorMessage}}</div>
-    </div>
   
     <mat-accordion id="accordion-add-tournament" #accordionAddTournament>
       <mat-expansion-panel [(expanded)]="isNewTournamentFormOpen">

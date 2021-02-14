@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Tournament } from '../../models/tournament';
 import { Validators, FormControl } from '@angular/forms'
-import {TournamentService} from '../../services/tournament.service';
-import {Router} from '@angular/router';
+import { TournamentService } from '../../services/tournament.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,6 @@ import {Router} from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   isNewTournamentFormOpen = false;
-  errorMessage: string = null;
 
   inputNewName = new FormControl('', [Validators.required, Validators.maxLength(60)])
   inputNewTournamentDate = new FormControl('', [Validators.required])
@@ -21,7 +21,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private tournamentService: TournamentService,
-    public router: Router,
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -55,23 +56,17 @@ export class DashboardComponent implements OnInit {
     this.tournamentService.getTournamentList().subscribe(response => {
       this.tournamentList = response['_embedded']['tournaments'];
     }, error => {
-      this.errorMessage = error.message;
+      this.snackBar.open(`System error: ${error.message}`, "Ok", {duration: 2000})
     });
   }
 
   toggleNewTournamentForm() {
     this.isNewTournamentFormOpen = !this.isNewTournamentFormOpen;
-    this.errorMessage = null;
   }
 
   private resetInputNewTournament() {
     this.inputNewName.reset()
     this.inputNewTournamentDate.reset()
-    this.errorMessage = null;
-  }
-
-  hasError() {
-    return this.errorMessage !== null;
   }
 
   addTournament() {
@@ -87,7 +82,7 @@ export class DashboardComponent implements OnInit {
       this.tournamentList.push(addedTournament);
       this.resetInputNewTournament();
     }, error => {
-      this.errorMessage = "System error: " + error.message;
+      this.snackBar.open(`System error: ${error.message}`, "Ok", {duration: 2000})
     });
   }
 
@@ -98,7 +93,7 @@ export class DashboardComponent implements OnInit {
       },
     })
     .catch((error) => {
-      this.errorMessage = "Fatal error: " + error.message;
+      this.snackBar.open(`System error: ${error.message}`, "Ok", {duration: 2000})
     });
   }
 }

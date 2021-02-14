@@ -72,7 +72,7 @@ describe('TournamentPageComponent', () => {
     }
     
     mockRouter = {
-      navigate: jest.fn()
+      navigate: jest.fn().mockReturnValue(Promise.resolve(true))
     }
 
     await TestBed.configureTestingModule({
@@ -192,6 +192,10 @@ describe('TournamentPageComponent', () => {
     const compiled = fixture.nativeElement;
     compiled.querySelector('.button-round-robin-match-sheet').click();
 
-    expect(mockRouter.navigate).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/rr-match-sheet'], {
+      queryParams: {
+        eventId: event.id
+      }
+    });
   })
 })

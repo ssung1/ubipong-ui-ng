@@ -21,15 +21,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSelectModule } from '@angular/material/select'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatTableModule } from '@angular/material/table'
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { LayoutModule } from '@angular/cdk/layout'
+import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatListModule } from '@angular/material/list'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MainMenuComponent } from '../../components/main-menu/main-menu.component'
 import { Tournament } from '../../models/tournament'
-import {Router} from '@angular/router'
+import { Router } from '@angular/router'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 describe('DashboardComponent', () => {
   const tournamentLink = "http://localhost:8080/crud/tournaments/1";
@@ -71,6 +72,7 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   let mockTournamentService: any;
   let mockRouter: any;
+  let mockSnackBar: any;
 
   beforeEach(async () => {
     mockTournamentService = {
@@ -110,6 +112,10 @@ describe('DashboardComponent', () => {
       navigate: jest.fn().mockReturnValue(Promise.resolve(true))
     }
 
+    mockSnackBar = {
+      open: jest.fn()
+    }
+
     TestBed.configureTestingModule({
       declarations: [
         DashboardComponent,
@@ -119,6 +125,7 @@ describe('DashboardComponent', () => {
       providers: [
         { provide: TournamentService, useValue: mockTournamentService },
         { provide: Router, useValue: mockRouter },
+        { provide: MatSnackBar, useValue: mockSnackBar },
       ],
       imports: [
         FormsModule,
@@ -271,14 +278,9 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
 
     component.addTournament();
-    expect(component.errorMessage).toContain(errorMessage);
 
-    const compiled = fixture.nativeElement;
     fixture.detectChanges();
-    const errorMessageBox = compiled.querySelector('#input-error-message > div');
-  
-    expect(errorMessageBox).toBeTruthy();
-    expect(errorMessageBox.textContent).toContain(errorMessage);
+    expect(mockSnackBar.open).toHaveBeenCalled()
   });
 
   it('should navigate to the event list page when a tournament is selected', () => {
