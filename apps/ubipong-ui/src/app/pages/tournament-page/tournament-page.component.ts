@@ -54,6 +54,10 @@ export class TournamentPageComponent implements OnInit {
     return false
   }
 
+  get hasEvents() {
+    return this.eventList.length > 0
+  }
+
   addEvent() {
     this.tournamentService
       .addEvent({

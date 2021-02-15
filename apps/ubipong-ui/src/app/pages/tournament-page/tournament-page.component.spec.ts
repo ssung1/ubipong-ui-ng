@@ -191,12 +191,25 @@ describe('TournamentPageComponent', () => {
 
     fixture.detectChanges();
 
-    const navigateToRoundRobinPageSpy = jest.spyOn(component, 'navigateToRoundRobinPage');
+    expect(component.hasEvents).toBe(true)
 
     const compiled = fixture.nativeElement;
-    compiled.querySelector('#view-round-robin-page').click();
+    const buttonRoundRobinPage = compiled.querySelector('#view-round-robin-page')
+    expect(buttonRoundRobinPage.disabled).toBe(false)
+    buttonRoundRobinPage.click();
 
-    expect(navigateToRoundRobinPageSpy).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalled()
+  })
+
+  it('should not allow user to monitor events if there are no events', () => {
+    component.eventList = []
+
+    fixture.detectChanges();
+    
+    expect(component.hasEvents).toBe(false)
+
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('#view-round-robin-page').disabled).toBe(true)
   })
 
   it('should navigate to round robin match list page if user clicks on the view match sheets button', () => {
