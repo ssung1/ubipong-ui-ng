@@ -1,51 +1,55 @@
 #round-robin-grid {
-    width: 100%;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
 
-    box-sizing: border-box;
-    background: black;
-    color: #ffff99;
+  box-sizing: border-box;
 
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 #grid-content {
-    font-size: 2vw;
+  font-size: 2vw;
 
-    padding: 1ex 0;
+  padding: 1em 0;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    div {
-        width: 95%;
-        margin: auto;
+  div {
+    width: 95%;
+    margin: auto;
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            table-layout: fixed;
-    
-            td {
-                text-transform: uppercase;
-                width: 5ex;
-                text-overflow: clip;
-                padding: .5em;
-                border: 1px solid #3366cc;
-            }
-    
-            td:nth-child(1) {
-                width: 2ex;
-            }
-    
-            td:nth-child(2) {
-                width: 12ex;
-            }
-        }
+    h2 {
+      font-size: 4vw;
+      margin: 1em 0;
     }
+
+    table {
+      box-shadow: .1em .1em .1em;
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    
+      td {
+        text-transform: uppercase;
+        width: 5ex;
+        text-overflow: clip;
+        padding: .5em;
+        border: 1px solid;
+      }
+    
+      td:nth-child(1) {
+          width: 2ex;
+      }
+    
+      td:nth-child(2) {
+          width: 12ex;
+      }
+    }
+  }
 }
