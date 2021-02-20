@@ -8,6 +8,7 @@ import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/r
 import { TournamentService } from './services/tournament.service'
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { OAuthModule } from 'angular-oauth2-oidc'
 import { TournamentPageComponent } from './pages/tournament-page/tournament-page.component'
 import { TournamentListComponent } from './components/tournament-list/tournament-list.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component'
@@ -55,6 +56,7 @@ import { EventListComponent } from './components/event-list/event-list.component
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    OAuthModule.forRoot(),
     BrowserAnimationsModule,
     MatMenuModule,
     MatButtonModule,
