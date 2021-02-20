@@ -9,7 +9,9 @@ export const environment = {
 
   oauthIssuer: oauthHost,
   oauthAuthorizationEndpoint: `${oauthHost}/oauth2/v1/authorize`,
+  oauthEndSessionEndpoint: `${oauthHost}/oauth2/v1/logout`,
   oauthTokenEndpoint: `${oauthHost}/oauth2/v1/token`,
   oauthClientId: '0oa6wkbc4W96SCbyC5d6',
   oauthRequireHttps: false,
+  oauthEnabled: true,
 };

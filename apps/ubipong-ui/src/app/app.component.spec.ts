@@ -5,6 +5,7 @@ import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/r
 import { DashboardComponent } from './pages/dashboard/dashboard.component'
 import { TournamentListComponent } from './components/tournament-list/tournament-list.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { OAuthService } from 'angular-oauth2-oidc'
 import { RouterTestingModule } from '@angular/router/testing'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
@@ -29,7 +30,17 @@ import { MatListModule } from '@angular/material/list'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('AppComponent', () => {
+  let mockOAuthService
+
   beforeEach(async () => {
+    mockOAuthService = {
+      configure: jest.fn(),
+      tryLogin: jest.fn().mockResolvedValue(true),
+      hasValidAccessToken: jest.fn().mockReturnValue(true),
+      hasValidIdToken: jest.fn().mockReturnValue(true),
+      initLoginFlow: jest.fn(),
+    }
+
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -63,6 +74,9 @@ describe('AppComponent', () => {
         RoundRobinMatchSheetComponent,
         DashboardComponent,
         TournamentListComponent,
+      ],
+      providers: [
+        { provide: OAuthService, useValue: mockOAuthService },
       ],
     }).compileComponents();
   });

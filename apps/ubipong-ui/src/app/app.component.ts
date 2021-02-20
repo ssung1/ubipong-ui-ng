@@ -32,6 +32,7 @@ export class AppComponent {
     // for SPAs, the only flow that makes sense is the authcode flow
   
     loginUrl: environment.oauthAuthorizationEndpoint,
+    logoutUrl: environment.oauthAuthorizationEndpoint
   
     // URL of the SPA to redirect the user to after login
     redirectUri: window.location.origin + '/login/callback',
@@ -78,6 +79,7 @@ export class AppComponent {
     this.oauthService.configure(this.authCodeFlowConfig)
     this.oauthService.tryLogin().then(() => {
       const isLoggedIn = this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken()
+      console.log(this.oauthService.getIdentityClaims())
       if (!isLoggedIn) {
         this.oauthService.initLoginFlow()
       }
