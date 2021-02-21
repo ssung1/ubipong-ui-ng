@@ -32,7 +32,7 @@ export class AppComponent {
     // for SPAs, the only flow that makes sense is the authcode flow
   
     loginUrl: environment.oauthAuthorizationEndpoint,
-    logoutUrl: environment.oauthAuthorizationEndpoint
+    logoutUrl: environment.oauthEndSessionEndpoint,
   
     // URL of the SPA to redirect the user to after login
     redirectUri: window.location.origin + '/login/callback',

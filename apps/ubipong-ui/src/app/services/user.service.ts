@@ -23,15 +23,26 @@ export class UserService {
     this.oauthEnabled = environment.oauthEnabled
   }
 
-  get userId() {
+  get isLoggedIn() {
+    return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken()
+  }
+
+  login() {
+    this.oauthService.initLoginFlow()
+  }
+
+  async getUserId() {
     if (!this.oauthEnabled) {
-      return UserService.TEST_USER_ID
+      return Promise.resolve(UserService.TEST_USER_ID)
     } else {
+      if (!this.isLoggedIn) {
+        await this.login()
+      }
       return this.oauthService.getIdentityClaims()['email']
     }
   }
 
-  get hasWriteAccess() {
-    return true
+  async hasWriteAccess() {
+    return Promise.resolve(true)
   }
 }

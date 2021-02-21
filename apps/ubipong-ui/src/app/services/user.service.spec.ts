@@ -10,11 +10,11 @@ describe('UserService', () => {
   beforeEach(() => {
     mockOAuthService = {
       configure: jest.fn(),
-      tryLogin: jest.fn().mockResolvedValue(true),
-      hasValidAccessToken: jest.fn().mockReturnValueOnce(false).mockReturnValue(true),
-      hasValidIdToken: jest.fn().mockReturnValueOnce(false).mockReturnValue(true),
-      initLoginFlow: jest.fn(),
+      tryLogin: jest.fn(),
+      hasValidAccessToken: jest.fn(),
+      hasValidIdToken: jest.fn(),
       getIdentityClaims: jest.fn(),
+      initLoginFlow: jest.fn(),
     }
     TestBed.configureTestingModule({
       providers: [
@@ -32,33 +32,56 @@ describe('UserService', () => {
     beforeEach(() => {
       service.oauthEnabled = false
     })
-    it('should return user email as form of ID', () => {
-      expect(service.userId).toBe(UserService.TEST_USER_ID);
+    it('should return user email as form of ID', async () => {
+      expect(await service.getUserId()).toBe(UserService.TEST_USER_ID);
     })
 
-    it('should know if the user has write access', () => {
-      expect(service.hasWriteAccess).toBe(true);
+    it('should know if the user has write access', async () => {
+      expect(await service.hasWriteAccess()).toBe(true);
     })
   })
 
-  describe('in qa/prod environment', () => {
+  describe('in qa/prod environment with successful login', () => {
     const email = 'realuser@email.com'
     beforeEach(() => {
       service.oauthEnabled = true
-      mockOAuthService.getIdentityClaims.mockReturnValue({
-        email
-      })
-    })
-    it('should return user email as form of ID', () => {
-      // before loggin in
-      expect(oAuthService.hasValidAccessToken: jest.fn().mockReturnValueOnce(false).mockReturnValue(true),
-      expect(oAuthService.hasValidIdToken: jest.fn().mockReturnValueOnce(false).mockReturnValue(true),
-      expect(service.initLoginFlow).toHaveBeenCalled()
-      expect(service.userId).toBe(email)
+      tryLogin: jest.fn().mockResolvedValue(true),
+      mockOAuthService.getIdentityClaims.mockReturnValue({email})
+      mockOAuthService.hasValidAccessToken.mockReturnValueOnce(false).mockReturnValue(true)
+      mockOAuthService.hasValidIdToken.mockReturnValueOnce(false).mockReturnValue(true)
     })
 
-    it('should know if the user has write access', () => {
-      expect(service.hasWriteAccess).toBe(true);
+    it('should return user email as form of ID', async () => {
+      expect(await service.getUserId()).toBe(email)
+      expect(mockOAuthService.initLoginFlow).toHaveBeenCalled()
+    })
+
+    it('should know if the user has write access', async () => {
+      expect(await service.hasWriteAccess()).toBe(true)
+      expect(mockOAuthService.initLoginFlow).toHaveBeenCalled()
+    })
+  })
+
+  describe('in qa/prod environment with failed login', () => {
+    const email = 'realuser@email.com'
+    beforeEach(() => {
+      service.oauthEnabled = true
+      tryLogin: jest.fn().mockRejectedValue(false),
+      mockOAuthService.getIdentityClaims.mockReturnValue({email})
+      mockOAuthService.hasValidAccessToken.mockReturnValue(false)
+      mockOAuthService.hasValidIdToken.mockReturnValue(false)
+    })
+
+    it('should return user email as form of ID', async () => {
+      // not sure what we would get...
+      await service.getUserId()
+      // expect(await service.getUserId()).toBeFalsy()
+      expect(mockOAuthService.initLoginFlow).toHaveBeenCalled()
+    })
+
+    it('should know if the user has write access', async () => {
+      expect(await service.hasWriteAccess()).toBe(false)
+      expect(mockOAuthService.initLoginFlow).toHaveBeenCalled()
     })
   })
 });
