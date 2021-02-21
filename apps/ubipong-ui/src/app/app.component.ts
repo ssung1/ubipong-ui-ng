@@ -77,12 +77,17 @@ export class AppComponent {
     private oauthService: OAuthService
   ) {
     this.oauthService.configure(this.authCodeFlowConfig)
-    this.oauthService.tryLogin().then(() => {
+    this.oauthService.tryLogin().then((resolve) => {
+      // console.log(resolve)
       const isLoggedIn = this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken()
-      console.log(this.oauthService.getIdentityClaims())
-      if (!isLoggedIn) {
-        this.oauthService.initLoginFlow()
-      }
+      // console.log(isLoggedIn)
+      // console.log(this.oauthService.getIdentityClaims())
+      // if (!isLoggedIn) {
+      //   this.oauthService.initLoginFlow()
+      // }
+    },
+    (reject) => {
+      // console.log('rejected! ', reject)
     })
   }
 }
