@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventListComponent } from './event-list.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
@@ -24,10 +26,9 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list'
 import { MatNativeDateModule } from '@angular/material/core'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterTestingModule} from '@angular/router/testing';
 
 describe('EventListComponent', () => {
+  let mockUserService: any
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
 
@@ -38,12 +39,16 @@ describe('EventListComponent', () => {
   }
 
   beforeEach(async () => {
+    mockUserService = {
+      getUserId: jest.fn().mockResolvedValue(UserService.TEST_USER_ID),
+      isLoggedIn: jest.fn().mockResolvedValue(true),
+      login: jest.fn().mockResolvedValue('done')
+    }
     await TestBed.configureTestingModule({
       declarations: [ EventListComponent ],
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        RouterTestingModule.withRoutes([]),
         NoopAnimationsModule,
         MatMenuModule,
         MatButtonModule,
@@ -66,6 +71,9 @@ describe('EventListComponent', () => {
         MatSidenavModule,
         MatListModule,
         MatNativeDateModule,
+      ],
+      providers: [
+        { provide: UserService, useValue: mockUserService },
       ],
     })
     .compileComponents();

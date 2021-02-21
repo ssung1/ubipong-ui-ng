@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { UserService } from '../../services/user.service'
 
 @Component({
   selector: 'app-main-menu',
@@ -16,7 +17,33 @@ export class MainMenuComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  loggedIn = false
+  userId = ''
 
-  ngOnInit() { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private userService: UserService,
+  ) {
+  }
+
+  ngOnInit() {
+    this.refreshUser()
+  }
+
+  refreshUser() {
+    this.userService.isLoggedIn().then((loggedIn) => {
+      this.loggedIn = loggedIn
+      if (this.loggedIn) {
+        this.userService.getUserId().then((userId) => {
+          this.userId = userId
+        })
+      }
+    })
+  }
+
+  login() {
+    this.userService.login().then(() => {
+      this.refreshUser()
+    })
+  }
 }

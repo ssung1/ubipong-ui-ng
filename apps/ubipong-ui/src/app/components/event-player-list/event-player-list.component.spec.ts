@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventPlayerListComponent } from './event-player-list.component';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../../services/user.service'
+
 import { Player } from '../../models/player';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { MatMenuModule } from '@angular/material/menu'
@@ -26,6 +28,8 @@ import { MatListModule } from '@angular/material/list'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('EventPlayerListComponent', () => {
+  let mockUserService: any
+
   let component: EventPlayerListComponent;
   let fixture: ComponentFixture<EventPlayerListComponent>;
 
@@ -54,6 +58,11 @@ describe('EventPlayerListComponent', () => {
   };
 
   beforeEach(async () => {
+    mockUserService = {
+      getUserId: jest.fn().mockResolvedValue(UserService.TEST_USER_ID),
+      isLoggedIn: jest.fn().mockResolvedValue(true),
+      login: jest.fn().mockResolvedValue('done')
+    }
     TestBed.configureTestingModule({
       declarations: [
         EventPlayerListComponent,
@@ -81,6 +90,9 @@ describe('EventPlayerListComponent', () => {
         LayoutModule,
         MatSidenavModule,
         MatListModule,
+      ],
+      providers: [
+        { provide: UserService, useValue: mockUserService }
       ],
     })
     .compileComponents();

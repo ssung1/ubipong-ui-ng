@@ -142,6 +142,10 @@ export class UserService {
    * 2. we have an authcode to exchange for a valid token
    */
   async isLoggedIn() {
+    if (!this.oauthEnabled) {
+      return true
+    }
+
     if (this.hasToken) {
       return true
     }
@@ -183,10 +187,6 @@ export class UserService {
   }
 
   async hasWriteAccess() {
-    if (!this.oauthEnabled) {
-      return true
-    } else {
-      return this.isLoggedIn()
-    }
+    return this.isLoggedIn()
   }
 }

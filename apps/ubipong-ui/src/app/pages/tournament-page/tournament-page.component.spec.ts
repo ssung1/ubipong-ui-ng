@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventListComponent } from '../../components/event-list/event-list.component';
 import { of } from 'rxjs';
 import { TournamentService } from '../../services/tournament.service';
+import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MainMenuComponent } from '../../components/main-menu/main-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button'
@@ -62,6 +62,7 @@ describe('TournamentPageComponent', () => {
   let mockActivatedRoute: any
   let mockTournamentService: any
   let mockRouter: any
+  let mockUserService: any
 
   beforeEach(async () => {
     mockActivatedRoute = {
@@ -80,6 +81,12 @@ describe('TournamentPageComponent', () => {
     
     mockRouter = {
       navigate: jest.fn().mockReturnValue(Promise.resolve(true)),
+    }
+
+    mockUserService = {
+      getUserId: jest.fn().mockResolvedValue(UserService.TEST_USER_ID),
+      isLoggedIn: jest.fn().mockResolvedValue(true),
+      login: jest.fn().mockResolvedValue('done')
     }
 
     await TestBed.configureTestingModule({
@@ -117,6 +124,7 @@ describe('TournamentPageComponent', () => {
         { provide: TournamentService, useValue: mockTournamentService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: Router, useValue: mockRouter },
+        { provide: UserService, useValue: mockUserService },
       ]
     })
     .compileComponents();

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { of, throwError } from 'rxjs'
 import { TournamentListComponent } from '../../components/tournament-list/tournament-list.component'
 import { TournamentService } from '../../services/tournament.service'
+import { UserService } from '../../services/user.service'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
@@ -73,6 +74,7 @@ describe('DashboardComponent', () => {
   let mockTournamentService: any;
   let mockRouter: any;
   let mockSnackBar: any;
+  let mockUserService: any;
 
   beforeEach(async () => {
     mockTournamentService = {
@@ -116,6 +118,12 @@ describe('DashboardComponent', () => {
       open: jest.fn()
     }
 
+    mockUserService = {
+      getUserId: jest.fn().mockResolvedValue(UserService.TEST_USER_ID),
+      isLoggedIn: jest.fn().mockResolvedValue(true),
+      login: jest.fn().mockResolvedValue('done')
+    }
+
     TestBed.configureTestingModule({
       declarations: [
         DashboardComponent,
@@ -126,6 +134,7 @@ describe('DashboardComponent', () => {
         { provide: TournamentService, useValue: mockTournamentService },
         { provide: Router, useValue: mockRouter },
         { provide: MatSnackBar, useValue: mockSnackBar },
+        { provide: UserService, useValue: mockUserService },
       ],
       imports: [
         FormsModule,
