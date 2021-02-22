@@ -30,7 +30,20 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { useHash: true })
+    // because we are using hash routing, we encouter two problems:
+    //
+    // 1. we cannot specify a page with a hash as redirect_url, so we need
+    // to specify some dummy url as redirect_url and set a default routing
+    // "**"
+    //
+    // 2. our app.component then serves as the callback handler
+    //
+    // 3. however, the way Angular does things, we end up routing to
+    // our page before token can be retrieved by app.component
+    //
+    // 4. so, we need to disable navigation; instead, we let app.component
+    // navigate to the default page after token is retrieved
+    RouterModule.forRoot(routes, { useHash: true, initialNavigation: 'disabled' })
   ],
   exports: [ RouterModule ]
 })

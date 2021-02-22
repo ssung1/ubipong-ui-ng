@@ -170,6 +170,8 @@ export class UserService {
     if (!(await this.isLoggedIn())) {
       // if we are not called back from authorization_endpoint, then we have to redirect to authorization_endpoint
       // and since we redirect, there's no awaiting on this...we pretty much quit the app
+
+      // when authorization server calls back, we handle the callback in app.component.ts
       this.oAuthService.initLoginFlow()
     }
   }
