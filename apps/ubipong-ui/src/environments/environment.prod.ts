@@ -7,11 +7,11 @@ export const environment = {
   roundRobinGridRefreshInterval: 15000,
   tournamentServiceUrl: "https://ubipong-api.herokuapp.com",
 
-  oauthIssuer: oauthHost,
-  oauthAuthorizationEndpoint: `${oauthHost}/oauth2/v1/authorize`,
-  oauthEndSessionEndpoint: `${oauthHost}/oauth2/v1/logout`,
-  oauthTokenEndpoint: `${oauthHost}/oauth2/v1/token`,
-  oauthClientId: '0oa6wkbc4W96SCbyC5d6',
-  oauthRequireHttps: false,
-  oauthEnabled: true,
+  oAuthIssuer: oauthHost,
+  oAuthAuthorizationEndpoint: `${oauthHost}/oauth2/v1/authorize`,
+  oAuthEndSessionEndpoint: `${oauthHost}/oauth2/v1/logout`,
+  oAuthTokenEndpoint: `${oauthHost}/oauth2/v1/token`,
+  oAuthClientId: '0oa6wkbc4W96SCbyC5d6',
+  oAuthRequireHttps: false,
+  oAuthEnabled: true,
 };

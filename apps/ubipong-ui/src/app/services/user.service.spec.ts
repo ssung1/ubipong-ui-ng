@@ -30,7 +30,7 @@ describe('UserService', () => {
 
   describe('in dev environment', () => {
     beforeEach(() => {
-      service.oauthEnabled = false
+      service.oAuthEnabled = false
     })
     it('should return user email as form of ID', async () => {
       expect(await service.getUserId()).toBe(UserService.TEST_USER_ID);
@@ -49,7 +49,7 @@ describe('UserService', () => {
   describe('in qa/prod environment, with authcode and successful token retrieval', () => {
     const email = 'realuser@email.com'
     beforeEach(() => {
-      service.oauthEnabled = true
+      service.oAuthEnabled = true
       mockOAuthService.tryLogin.mockResolvedValue(true)
       mockOAuthService.getIdentityClaims.mockReturnValue({email})
       // we do not have access token the first time we check, but after we call tryLogin, we would have it
@@ -78,7 +78,7 @@ describe('UserService', () => {
    */
   describe('in qa/prod environment, without authcode', () => {
     beforeEach(() => {
-      service.oauthEnabled = true
+      service.oAuthEnabled = true
       // tryLogin always returns true even if token is not retrieved
       mockOAuthService.tryLogin.mockResolvedValue(true)
       mockOAuthService.hasValidAccessToken.mockReturnValue(false)
@@ -110,7 +110,7 @@ describe('UserService', () => {
   describe('in qa/prod environment, failed to get authcode', () => {
     const errorMessage = 'cannot get token'
     beforeEach(() => {
-      service.oauthEnabled = true
+      service.oAuthEnabled = true
       // tryLogin always returns true even if token is not retrieved
       mockOAuthService.tryLogin.mockRejectedValue(new Error(errorMessage))
       mockOAuthService.hasValidAccessToken.mockReturnValue(false)

@@ -28,17 +28,14 @@ import { LayoutModule } from '@angular/cdk/layout'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { UserService } from './services/user.service'
 
 describe('AppComponent', () => {
-  let mockOAuthService
+  let mockUserService: any
 
   beforeEach(async () => {
-    mockOAuthService = {
-      configure: jest.fn(),
-      tryLogin: jest.fn().mockResolvedValue(true),
-      hasValidAccessToken: jest.fn().mockReturnValue(true),
-      hasValidIdToken: jest.fn().mockReturnValue(true),
-      initLoginFlow: jest.fn(),
+    mockUserService = {
+      isLoggedIn: jest.fn(),
     }
 
     await TestBed.configureTestingModule({
@@ -76,7 +73,7 @@ describe('AppComponent', () => {
         TournamentListComponent,
       ],
       providers: [
-        { provide: OAuthService, useValue: mockOAuthService },
+        { provide: UserService, useValue: mockUserService },
       ],
     }).compileComponents();
   });

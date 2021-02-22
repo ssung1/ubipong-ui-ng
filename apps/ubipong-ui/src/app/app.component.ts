@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'ubipong-ui-ng-root',
@@ -9,6 +10,10 @@ export class AppComponent {
   title = 'ubipong-ui';
 
   constructor(
+    private userService: UserService,
   ) {
+    this.userService.isLoggedIn().then(() => {
+      // handle oauth redirect_uri callback
+    })
   }
 }

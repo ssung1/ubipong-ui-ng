@@ -70,7 +70,7 @@ export class UserService {
     // often using issuer will not work because the .../openid-configuration has a blocks
     // CORS requests.
     
-    issuer: environment.oauthIssuer,
+    issuer: environment.oAuthIssuer,
     // if issuer in the response is different, set this to true
     skipIssuerCheck: false,
   
@@ -78,15 +78,15 @@ export class UserService {
     //
     // for SPAs, the only flow that makes sense is the authcode flow
   
-    loginUrl: environment.oauthAuthorizationEndpoint,
-    logoutUrl: environment.oauthEndSessionEndpoint,
+    loginUrl: environment.oAuthAuthorizationEndpoint,
+    logoutUrl: environment.oAuthEndSessionEndpoint,
   
     // URL of the SPA to redirect the user to after login
     redirectUri: window.location.origin + '/login/callback',
   
     // The SPA's id. The SPA is registered with this id at the auth-server
     // clientId: 'server.code',
-    clientId: environment.oauthClientId,
+    clientId: environment.oAuthClientId,
   
     // Just needed if your auth server demands a secret. In general, this
     // is a sign that the auth server is not configured with SPAs in mind
@@ -101,7 +101,7 @@ export class UserService {
     // this is used to exchange an authcode for an access token
     //
     // this part usually fails because authorization server blocks CORS
-    tokenEndpoint: environment.oauthTokenEndpoint,
+    tokenEndpoint: environment.oAuthTokenEndpoint,
   
     // set the scope for the permissions the client should request
     // The first four are defined by OIDC.
@@ -117,23 +117,23 @@ export class UserService {
     strictDiscoveryDocumentValidation: false,
   
     // for non-prod, if we don't want to use https, set this to false
-    requireHttps: environment.oauthRequireHttps,
+    requireHttps: environment.oAuthRequireHttps,
   }
 
   /**
    * making it public here so we can turn off/on oauth for testing
    */
-  public oauthEnabled: boolean
+  public oAuthEnabled: boolean
 
   constructor(
-    private oauthService: OAuthService
+    private oAuthService: OAuthService
   ) {
-    this.oauthEnabled = environment.oauthEnabled
-    this.oauthService.configure(this.authCodeFlowConfig)
+    this.oAuthEnabled = environment.oAuthEnabled
+    this.oAuthService.configure(this.authCodeFlowConfig)
   }
 
   get hasToken() {
-    return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken()
+    return this.oAuthService.hasValidAccessToken() && this.oAuthService.hasValidIdToken()
   }
 
   /**
@@ -142,7 +142,7 @@ export class UserService {
    * 2. we have an authcode to exchange for a valid token
    */
   async isLoggedIn() {
-    if (!this.oauthEnabled) {
+    if (!this.oAuthEnabled) {
       return true
     }
 
@@ -150,7 +150,7 @@ export class UserService {
       return true
     }
 
-    await this.oauthService.tryLogin()
+    await this.oAuthService.tryLogin()
 
     return this.hasToken
   }
@@ -161,7 +161,7 @@ export class UserService {
     // this call succeeds as long as call was complete, even if we did not have authcode
     //
     // if we fail here (due to incorrect configuration or network error), an error is thrown
-    await this.oauthService.tryLogin()
+    await this.oAuthService.tryLogin()
 
     // if we are called back from authorization_endpoint (meaning we have authcode),
     // then then above should get token successfully
@@ -170,17 +170,17 @@ export class UserService {
     if (!(await this.isLoggedIn())) {
       // if we are not called back from authorization_endpoint, then we have to redirect to authorization_endpoint
       // and since we redirect, there's no awaiting on this...we pretty much quit the app
-      this.oauthService.initLoginFlow()
+      this.oAuthService.initLoginFlow()
     }
   }
 
   async getUserId() {
-    if (!this.oauthEnabled) {
+    if (!this.oAuthEnabled) {
       return UserService.TEST_USER_ID
     }
 
     if (await this.isLoggedIn()) {
-      return this.oauthService.getIdentityClaims()['email']
+      return this.oAuthService.getIdentityClaims()['email']
     } else {
       throw new Error('User is not logged in.')
     }

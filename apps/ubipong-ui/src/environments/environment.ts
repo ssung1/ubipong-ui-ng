@@ -11,13 +11,13 @@ export const environment = {
   roundRobinGridRefreshInterval: 5000,
   tournamentServiceUrl: "http://localhost:8080",
 
-  oauthIssuer: oauthHost,
-  oauthAuthorizationEndpoint: `${oauthHost}/oauth2/v1/authorize`,
-  oauthEndSessionEndpoint: `${oauthHost}/oauth2/v1/logout`,
-  oauthTokenEndpoint: `${oauthHost}/oauth2/v1/token`,
-  oauthClientId: '0oa6wkbc4W96SCbyC5d6',
-  oauthRequireHttps: false,
-  oauthEnabled: false,
+  oAuthIssuer: oauthHost,
+  oAuthAuthorizationEndpoint: `${oauthHost}/oauth2/v1/authorize`,
+  oAuthEndSessionEndpoint: `${oauthHost}/oauth2/v1/logout`,
+  oAuthTokenEndpoint: `${oauthHost}/oauth2/v1/token`,
+  oAuthClientId: '0oa6wkbc4W96SCbyC5d6',
+  oAuthRequireHttps: false,
+  oAuthEnabled: false,
 };
 
 /*
