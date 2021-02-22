@@ -46,4 +46,8 @@ export class MainMenuComponent implements OnInit {
       this.refreshUser()
     })
   }
+
+  logout() {
+    this.userService.logout()
+  }
 }

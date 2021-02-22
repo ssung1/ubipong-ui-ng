@@ -83,6 +83,7 @@ export class UserService {
   
     // URL of the SPA to redirect the user to after login
     redirectUri: window.location.origin + '/login/callback',
+    postLogoutRedirectUri: window.location.origin,
   
     // The SPA's id. The SPA is registered with this id at the auth-server
     // clientId: 'server.code',
@@ -174,6 +175,10 @@ export class UserService {
       // when authorization server calls back, we handle the callback in app.component.ts
       this.oAuthService.initLoginFlow()
     }
+  }
+
+  logout() {
+    this.oAuthService.logOut()
   }
 
   async getUserId() {

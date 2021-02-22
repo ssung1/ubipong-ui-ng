@@ -21,6 +21,8 @@
       </button>
       <span>Ubipong Tournament Manager</span>
 
+      <button mat-button (click)="logout()">Log Out</button>
+
       <span *ngIf="loggedIn; else buttonLogin"
         class="user-control">{{userId}}</span>
       <ng-template #buttonLogin>
