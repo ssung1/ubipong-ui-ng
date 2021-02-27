@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, NgZone } from '@angular/core'
 import { Router } from '@angular/router';
 import { UserService } from './services/user.service';
 
@@ -13,6 +13,7 @@ export class AppComponent {
   constructor(
     private userService: UserService,
     private router: Router,
+    private ngZone: NgZone,
   ) {
     // a bit of hack? here
     //
@@ -27,7 +28,8 @@ export class AppComponent {
       // contains the login information
       //
       // (also see app-routing.module)
-      router.navigate(['/'])
+
+      this.ngZone.run(() => router.navigate(['/']))
     })
   }
 }

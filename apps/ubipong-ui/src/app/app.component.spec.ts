@@ -1,12 +1,6 @@
-import { TestBed } from '@angular/core/testing'
-import { AppComponent } from './app.component'
-import { MainMenuComponent } from './components/main-menu/main-menu.component'
-import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/round-robin-match-sheet.component'
-import { DashboardComponent } from './pages/dashboard/dashboard.component'
-import { TournamentListComponent } from './components/tournament-list/tournament-list.component'
+import { BrowserModule } from '@angular/platform-browser'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { OAuthService } from 'angular-oauth2-oidc'
-import { RouterTestingModule } from '@angular/router/testing'
+
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
@@ -28,6 +22,15 @@ import { LayoutModule } from '@angular/cdk/layout'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+
+import { RouterTestingModule } from '@angular/router/testing'
+
+import { TestBed } from '@angular/core/testing'
+import { AppComponent } from './app.component'
+import { MainMenuComponent } from './components/main-menu/main-menu.component'
+import { RoundRobinMatchSheetComponent } from './pages/round-robin-match-sheet/round-robin-match-sheet.component'
+import { DashboardComponent } from './pages/dashboard/dashboard.component'
+import { TournamentListComponent } from './components/tournament-list/tournament-list.component'
 import { UserService } from './services/user.service'
 
 describe('AppComponent', () => {
@@ -35,14 +38,15 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     mockUserService = {
-      isLoggedIn: jest.fn(),
+      isLoggedIn: jest.fn().mockResolvedValue(false),
     }
 
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+        BrowserModule,
         FormsModule,
         ReactiveFormsModule,
+
         NoopAnimationsModule,
         MatMenuModule,
         MatButtonModule,
@@ -64,6 +68,8 @@ describe('AppComponent', () => {
         LayoutModule,
         MatSidenavModule,
         MatListModule,
+
+        RouterTestingModule,
       ],
       declarations: [
         AppComponent,

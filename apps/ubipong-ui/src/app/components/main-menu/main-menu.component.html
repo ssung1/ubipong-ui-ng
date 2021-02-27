@@ -21,10 +21,14 @@
       </button>
       <span>Ubipong Tournament Manager</span>
 
+      <!-- experimental -->
       <button mat-button (click)="logout()">Log Out</button>
+      <!-- experimental -->
 
       <span *ngIf="loggedIn; else buttonLogin"
-        class="user-control">{{userId}}</span>
+        class="user-control">{{userId}} <mat-icon>arrow_drop_down</mat-icon></span>
+
+        
       <ng-template #buttonLogin>
         <button mat-button class="user-control" (click)="login()">Log In</button>
       </ng-template>
