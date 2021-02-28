@@ -310,4 +310,19 @@ describe('DashboardComponent', () => {
       }
     });
   });
+
+  it('should allow user to add tournament if user is logged in', () => {
+    const addTournament = fixture.nativeElement.querySelector('#accordion-add-tournament')
+    expect(addTournament).toBeTruthy()
+  })
+
+  it('should not allow user to add tournament if user is not logged in', async () => {
+    mockUserService.isLoggedIn.mockResolvedValue(false)
+    component.ngOnInit()
+    await fixture.whenStable()
+    fixture.detectChanges()
+
+    const addTournament = fixture.nativeElement.querySelector('#accordion-add-tournament')
+    expect(addTournament).toBeFalsy()
+  })
 });

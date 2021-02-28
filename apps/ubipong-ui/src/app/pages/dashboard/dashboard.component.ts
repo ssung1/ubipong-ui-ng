@@ -4,6 +4,7 @@ import { Validators, FormControl } from '@angular/forms'
 import { TournamentService } from '../../services/tournament.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class DashboardComponent implements OnInit {
 
   isNewTournamentFormOpen = false;
+  isLoggedIn = false;
 
   inputNewName = new FormControl('', [Validators.required, Validators.maxLength(60)])
   inputNewTournamentDate = new FormControl('', [Validators.required])
@@ -22,10 +24,12 @@ export class DashboardComponent implements OnInit {
   constructor(
     private tournamentService: TournamentService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
+    this.refreshUser()
     this.refreshTournamentList()
     this.resetInputNewTournament()
   }
@@ -95,5 +99,11 @@ export class DashboardComponent implements OnInit {
     .catch((error) => {
       this.snackBar.open(`System error: ${error.message}`, "Ok", {duration: 2000})
     });
+  }
+
+  refreshUser() {
+    this.userService.isLoggedIn().then(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn
+    })
   }
 }

@@ -3,7 +3,7 @@
   <div id="tournament-list">
     <h1>Tournaments</h1>
   
-    <mat-accordion id="accordion-add-tournament" #accordionAddTournament>
+    <mat-accordion *ngIf="isLoggedIn" id="accordion-add-tournament">
       <mat-expansion-panel [(expanded)]="isNewTournamentFormOpen">
         <mat-expansion-panel-header>
           <mat-panel-title>
