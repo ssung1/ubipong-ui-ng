@@ -43,12 +43,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MainMenuComponent } from './main-menu.component';
 import { UserService } from '../../services/user.service';
 
+import { HarnessLoader } from '@angular/cdk/testing'
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
+import { MatMenuHarness } from '@angular/material/menu/testing'
+
 describe('MainMenuComponent', () => {
   let mockUserServiceLogin: any
   let mockUserService: any
 
   let component: MainMenuComponent;
-  let fixture: ComponentFixture<MainMenuComponent>;
+  let fixture: ComponentFixture<MainMenuComponent>
+  let loader: HarnessLoader
 
   beforeEach(async () => {
     mockUserServiceLogin = {
@@ -58,6 +63,7 @@ describe('MainMenuComponent', () => {
       getUserId: jest.fn().mockResolvedValue(UserService.TEST_USER_ID),
       isLoggedIn: jest.fn().mockResolvedValue(true),
       login: jest.fn().mockReturnValue(mockUserServiceLogin),
+      logout: jest.fn(),
     }
 
     TestBed.configureTestingModule({
@@ -115,6 +121,8 @@ describe('MainMenuComponent', () => {
     fixture = TestBed.createComponent(MainMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    loader = TestbedHarnessEnvironment.loader(fixture)
   });
 
   afterEach(() => {
@@ -139,7 +147,24 @@ describe('MainMenuComponent', () => {
     fixture.detectChanges()
 
     const userControl = fixture.nativeElement.querySelector('.mat-toolbar .user-control')
-    expect(userControl.textContent).toBe(UserService.TEST_USER_ID + ' arrow_drop_down')
+    expect(userControl).toBeTruthy()
+    const userControlMenu = userControl.querySelector('button')
+    expect(userControlMenu.textContent.trim()).toBe(UserService.TEST_USER_ID + ' arrow_drop_down')
+  })
+
+  it('should allow user to log out if user is logged in', async () => {
+    const menu = await loader.getHarness(MatMenuHarness.with({
+      triggerText: UserService.TEST_USER_ID + ' arrow_drop_down'
+    }))
+    expect(menu).toBeTruthy()
+    await menu.open()
+    const logout = await menu.getItems({
+      text: 'Log Out'
+    })
+
+    expect(logout.length).toBe(1)
+    await logout[0].click()
+    expect(mockUserService.logout).toHaveBeenCalled()
   })
 
   it('should login if user wants to', async () => {

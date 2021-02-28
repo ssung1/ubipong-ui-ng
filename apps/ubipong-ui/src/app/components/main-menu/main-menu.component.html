@@ -22,12 +22,21 @@
       <span>Ubipong Tournament Manager</span>
 
       <!-- experimental -->
-      <button mat-button (click)="logout()">Log Out</button>
+      <!-- <button mat-button (click)="logout()">Log Out</button> -->
       <!-- experimental -->
 
-      <span *ngIf="loggedIn; else buttonLogin"
-        class="user-control">{{userId}} <mat-icon>arrow_drop_down</mat-icon></span>
+      <!-- <span *ngIf="loggedIn; else buttonLogin"
+        class="user-control">{{userId}} <mat-icon>arrow_drop_down</mat-icon>
+      </span> -->
 
+      <div *ngIf="loggedIn; else buttonLogin" class="user-control">
+        <button mat-button [matMenuTriggerFor]="userMenu">
+          {{userId}} <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="logout()">Log Out</button>
+        </mat-menu>      
+      </div>
         
       <ng-template #buttonLogin>
         <button mat-button class="user-control" (click)="login()">Log In</button>
