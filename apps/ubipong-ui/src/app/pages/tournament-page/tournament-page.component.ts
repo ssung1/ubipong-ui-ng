@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {Tournament} from '../../models/tournament';
 import {Observable, of} from 'rxjs';
 import { UserService } from '../../services/user.service';
@@ -22,8 +22,8 @@ export class TournamentPageComponent implements OnInit {
   isNewEventFormOpen: boolean = false
   errorMessage: string | null = ""
   
-  inputNewName = new FormControl('', null)
-  inputNewChallongeUrl = new FormControl('', null)
+  inputNewName = new FormControl('', [Validators.required, Validators.maxLength(60)])
+  inputNewChallongeUrl = new FormControl('', [Validators.required])
 
   constructor(
     private tournamentService: TournamentService,
@@ -55,8 +55,26 @@ export class TournamentPageComponent implements OnInit {
       })
   }
 
+  get inputNewNameErrorMessage() {
+    if (this.inputNewName.hasError('required')) {
+      return 'Name cannot be empty';
+    }
+    if (this.inputNewName.hasError('maxlength')) {
+      return 'Name is too long';
+    }
+    return JSON.stringify(this.inputNewName.errors);
+  }
+
+  get inputNewChallongeUrlErrorMessage() {
+    if (this.inputNewChallongeUrl.hasError('required')) {
+      return 'Must have challonge.com URL';
+    }
+    return JSON.stringify(this.inputNewChallongeUrl.errors);
+  }
+
   get isNewEventFormInvalid() {
-    return false
+    return this.inputNewName.invalid ||
+      this.inputNewChallongeUrl.invalid
   }
 
   get hasEvents() {
