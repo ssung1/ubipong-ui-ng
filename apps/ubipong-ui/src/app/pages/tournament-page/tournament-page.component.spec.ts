@@ -158,7 +158,10 @@ describe('TournamentPageComponent', () => {
     expect(header.textContent).toBe(tournament.name)
   })
 
-  it('should be able to add new event', () => {
+  it('should be able to add new event', async () => {
+    await fixture.whenStable()
+    fixture.detectChanges()
+
     const nativeElement = fixture.nativeElement
     nativeElement.querySelector('#accordion-add-event').click()
     fixture.detectChanges()
@@ -235,7 +238,10 @@ describe('TournamentPageComponent', () => {
     });
   })
 
-  it('should allow user to add event if user is logged in', () => {
+  it('should allow user to add event if user is logged in', async () => {
+    await fixture.whenStable()
+    fixture.detectChanges()
+
     const addEvent = fixture.nativeElement.querySelector('#accordion-add-event')
     expect(addEvent).toBeTruthy()
   })
