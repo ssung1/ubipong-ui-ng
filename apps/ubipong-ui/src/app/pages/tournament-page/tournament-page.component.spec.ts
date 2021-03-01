@@ -234,4 +234,19 @@ describe('TournamentPageComponent', () => {
       }
     });
   })
+
+  it('should allow user to add event if user is logged in', () => {
+    const addEvent = fixture.nativeElement.querySelector('#accordion-add-event')
+    expect(addEvent).toBeTruthy()
+  })
+
+  it('should not allow user to add events if user is not logged in', async () => {
+    mockUserService.isLoggedIn.mockResolvedValue(false)
+    component.ngOnInit()
+    await fixture.whenStable()
+    fixture.detectChanges()
+
+    const addTournament = fixture.nativeElement.querySelector('#accordion-add-event')
+    expect(addTournament).toBeFalsy()
+  })
 })

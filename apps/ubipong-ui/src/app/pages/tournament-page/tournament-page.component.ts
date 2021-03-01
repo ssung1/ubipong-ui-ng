@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 import {Tournament} from '../../models/tournament';
 import {Observable, of} from 'rxjs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'ubipong-ui-ng-tournament-page',
@@ -12,6 +13,8 @@ import {Observable, of} from 'rxjs';
   styleUrls: ['./tournament-page.component.scss']
 })
 export class TournamentPageComponent implements OnInit {
+
+  isLoggedIn = false
 
   tournamentId: number = NaN
   tournament: Tournament = new Tournament()
@@ -26,9 +29,11 @@ export class TournamentPageComponent implements OnInit {
     private tournamentService: TournamentService,
     private route: ActivatedRoute,
     private router: Router,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
+    this.refreshUser()
     const tournamentIdParam = this.route.snapshot.queryParamMap.get('tournamentId')
     this.tournamentId = Number(tournamentIdParam)
     if (!tournamentIdParam || isNaN(this.tournamentId)) {
@@ -97,6 +102,12 @@ export class TournamentPageComponent implements OnInit {
     })
     .catch(error => {
       console.log(error)
+    })
+  }
+
+  refreshUser() {
+    this.userService.isLoggedIn().then(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn
     })
   }
 }
