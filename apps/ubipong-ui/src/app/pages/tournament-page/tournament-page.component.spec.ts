@@ -174,6 +174,10 @@ describe('TournamentPageComponent', () => {
     const newEventForm = nativeElement.querySelector('#new-event-form')
     expect(newEventForm).toBeTruthy()
 
+    const buttonAddEvent = nativeElement.querySelector('#button-add-event')
+    // no input, so the add button is disabled
+    expect(buttonAddEvent.disabled).toBe(true)
+
     const inputNewName = nativeElement.querySelector('#input-new-name')
     inputNewName.value = eventName
     inputNewName.dispatchEvent(new Event('input'))
@@ -181,7 +185,9 @@ describe('TournamentPageComponent', () => {
     inputNewChallongeUrl.value = challongeUrl
     inputNewChallongeUrl.dispatchEvent(new Event('input'))
 
-    const buttonAddEvent = nativeElement.querySelector('#button-add-event')
+    fixture.detectChanges()
+    // with valid input, add button is enabled
+    expect(buttonAddEvent.disabled).toBe(false)
     buttonAddEvent.click()
 
     expect(mockTournamentService.addEvent).toHaveBeenCalledWith({
