@@ -62,12 +62,13 @@ export class TournamentService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-    const url = this.getUrl('/crud/tournaments');
-    return <Observable<any>>this.httpClient.post(url, JSON.stringify(tournament), { headers: headers });
+    const url = this.getUrl(tournamentRoot);
+
+    return <Observable<any>>this.httpClient.post(url, tournament, { headers: headers });
   }
 
   getTournamentList(): Observable<any> {
-    const url = this.getUrl('/crud/tournaments');
+    const url = this.getUrl('/crud/tournaments');    
     return <Observable<any>>this.httpClient.get(url);
   }
 
