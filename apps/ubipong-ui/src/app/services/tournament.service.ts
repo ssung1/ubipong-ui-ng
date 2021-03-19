@@ -68,7 +68,7 @@ export class TournamentService {
   }
 
   getTournamentList(): Observable<any> {
-    const url = this.getUrl('/crud/tournaments');    
+    const url = this.getUrl(tournamentRoot);
     return <Observable<any>>this.httpClient.get(url);
   }
 
