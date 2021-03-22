@@ -10,7 +10,7 @@ https://www.eatsleeppong.com/ubipong
 Be sure to build with
 
 ```
-npx nx build --prod --base-href '/ubipong/#'
+npx nx build --prod --base-href /ubipong/
 ```
 
 or routing will fail.
@@ -20,8 +20,10 @@ or routing will fail.
 Run build with
 
 ```bash
-npx nx build --prod --base-href {base-href}
+npx nx build --prod --base-href {base-href}/
 ```
+
+where base-href is the context path between host name and the `index.html` of the application.  _It must have an ending slash (if using hash navigation?)._
 
 Then copy the contents in dist/apps/ubipong-ui to the server.
 
