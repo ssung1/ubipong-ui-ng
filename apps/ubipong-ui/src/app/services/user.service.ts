@@ -84,8 +84,10 @@ export class UserService {
       logoutUrl: environment.oAuthEndSessionEndpoint,
 
       // URL of the SPA to redirect the user to after login
-      redirectUri: window.location.origin + baseHref + 'index.html',
-      postLogoutRedirectUri: window.location.origin + baseHref + 'index.html',
+      // use just the baseHref because inmotion HTTP server does not work well when /index.html is on the URL
+      redirectUri: window.location.origin + baseHref,
+      // if not specified, postLogoutRedirectUri is the same as redirectUri
+      // postLogoutRedirectUri: window.location.origin + baseHref,
 
       // The SPA's id. The SPA is registered with this id at the auth-server
       // clientId: 'server.code',
