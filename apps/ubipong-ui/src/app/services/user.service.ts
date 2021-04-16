@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { environment } from '../../environments/environment';
+import { Inject, Injectable } from '@angular/core'
+import { AuthConfig, OAuthService } from 'angular-oauth2-oidc'
+import { environment } from '../../environments/environment'
+import { DOCUMENT } from '@angular/common'
 
 /**
  * more like a wrapper for OAuthService that can be disabled in dev environment
@@ -59,7 +60,7 @@ export class UserService {
   public static TEST_USER_ID = 'testuser'
 
   get authCodeFlowConfig(): AuthConfig {
-    const baseHref = document.querySelector('html head base').getAttribute('href')
+    const baseHref = this.document.querySelector('html head base').getAttribute('href')
     return {
       // Url of the Identity Provider
       //
@@ -132,7 +133,8 @@ export class UserService {
   public oAuthEnabled: boolean
 
   constructor(
-    private oAuthService: OAuthService
+    private oAuthService: OAuthService,
+    @Inject(DOCUMENT) private document: Document,
   ) {
     this.oAuthEnabled = environment.oAuthEnabled
     this.oAuthService.configure(this.authCodeFlowConfig)

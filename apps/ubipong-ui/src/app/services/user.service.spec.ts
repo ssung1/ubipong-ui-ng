@@ -1,13 +1,21 @@
+import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import {OAuthService} from 'angular-oauth2-oidc';
 
 import { UserService } from './user.service';
 
 describe('UserService', () => {
+  const baseHref = 'baseHref'
   let mockOAuthService: any
+  let mockDocument: any
   let service: UserService
 
   beforeEach(() => {
+    mockDocument = {
+      querySelector: jest.fn().mockReturnValue({
+        getAttribute: jest.fn().mockReturnValue(baseHref)
+      })
+    }
     mockOAuthService = {
       configure: jest.fn(),
       tryLogin: jest.fn(),
@@ -19,6 +27,7 @@ describe('UserService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: OAuthService, useValue: mockOAuthService },
+        { provide: DOCUMENT, useValue: mockDocument },
       ],
     });
     service = TestBed.inject(UserService);
