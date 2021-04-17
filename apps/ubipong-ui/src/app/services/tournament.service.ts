@@ -49,8 +49,8 @@ export class TournamentService {
   }
 
   getEventList(tournamentId: number): Observable<any[]> {
-    const url = this.getUrl(`${crudEventRoot}/search/findByTournamentId?tournamentId=${tournamentId}`)
-    return <Observable<any[]>>this.httpClient.get(url).pipe(map((response: any) => response._embedded.events));
+    const url = this.getUrl(`${eventRoot}/search/find-by-tournament-id?tournament-id=${tournamentId}`)
+    return <Observable<any[]>>this.httpClient.get(url);
   }
 
   getRoundRobinMatchList(eventUrl: string): Observable<any[]> {

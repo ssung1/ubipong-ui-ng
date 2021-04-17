@@ -133,33 +133,17 @@ describe('TournamentService', () => {
   });
 
   it('can return list of events of a given tournament', async () => {
-    const eventLink = 'http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1'
-    mockHttpClient.get.mockReturnValue(of({
-      "_embedded": {
-        "events": [
-          {
-            "id": eventId,
-            "challongeUrl": eventUrl,
-            "name": "Preliminary Group 1",
-            "tournamentId": tournamentId,
-            "challongeTournament": null,
-            "_links": {
-              "self": {
-                "href": "http://localhost:8080/crud/events/1"
-              },
-              "event": {
-                "href": "http://localhost:8080/crud/events/1"
-              }
-            }
-          }
-        ]
-      },
-      "_links": {
-        "self": {
-          "href": "http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1"
-        }
+    // const eventLink = 'http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1'
+    const eventLink = 'http://localhost:8080/rest/v0/events/search/find-by-tournament-id?tournament-id=1'
+    mockHttpClient.get.mockReturnValue(of([
+      {
+        "id": eventId,
+        "challongeUrl": eventUrl,
+        "name": "Preliminary Group 1",
+        "tournamentId": tournamentId,
+        "challongeTournament": null,
       }
-    }))
+    ]))
 
     const eventList = await tournamentService.getEventList(1).toPromise()
 
