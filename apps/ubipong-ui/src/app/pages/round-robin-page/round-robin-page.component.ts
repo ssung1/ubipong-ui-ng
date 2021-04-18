@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
+import { interval, Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-round-robin-page',
@@ -12,7 +13,7 @@ import { mergeMap } from 'rxjs/operators';
 })
 export class RoundRobinPageComponent implements OnInit, OnDestroy {
 
-  private refreshInterval: number = 0;
+  private refreshInterval: Subscription;
   refreshIntervalTime = environment.roundRobinGridRefreshInterval;
   refresh = environment.roundRobinGridRefresh;
 
@@ -41,15 +42,13 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
   }
 
   initRefreshInterval() {
-    this.refreshInterval = setInterval(() => {
-      this.refreshData();
-    }, this.refreshIntervalTime);
+    this.refreshInterval = interval(this.refreshIntervalTime).subscribe(() => {
+      this.refreshData()
+    })
   }
 
   clearRefreshInterval() {
-    if (this.refreshInterval) {
-      clearInterval(this.refreshInterval as number);
-    }
+    this.refreshInterval?.unsubscribe()
   }
 
   refreshData() {
