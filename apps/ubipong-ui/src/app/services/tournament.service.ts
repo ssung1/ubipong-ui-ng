@@ -43,8 +43,8 @@ export class TournamentService {
     return <Observable<any[][]>>this.httpClient.get(url);
   }
 
-  getEvent(eventUrl: string): Observable<any> {
-    const url = this.getUrl(`${eventRoot}/${eventUrl}`);
+  getEvent(eventId: number): Observable<any> {
+    const url = this.getUrl(`${eventRoot}/${eventId}`);
     return this.httpClient.get(url);
   }
 

@@ -53,10 +53,10 @@ describe('TournamentService', () => {
 
   it('can retrieve event information by event URL', async () => {
     mockHttpClient.get.mockReturnValue(of({ name: eventName }));
-    const response = await tournamentService.getEvent(eventUrl).toPromise();
+    const response = await tournamentService.getEvent(eventId).toPromise();
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(
-      `${url}/rest/v0/events/${eventUrl}`);
+      `${url}/rest/v0/events/${eventId}`);
     expect(response["name"]).toBe(eventName);
   });
 

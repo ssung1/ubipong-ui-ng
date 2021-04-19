@@ -10,7 +10,7 @@ import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
   styleUrls: ['./round-robin-match-sheet.component.scss']
 })
 export class RoundRobinMatchSheetComponent implements OnInit {
-  eventId: string;
+  eventId: number;
   challongeUrl: string;
   event: any;
   matchGroupList: Observable<any[][]>;
@@ -23,7 +23,7 @@ export class RoundRobinMatchSheetComponent implements OnInit {
   ngOnInit() {
     // we are calling challongeUrl eventName for now, because eventually we will be using actual event ID or event name
     this.challongeUrl = this.route.snapshot.queryParamMap.get("eventId");
-    this.eventId = this.route.snapshot.queryParamMap.get("eventId")
+    this.eventId = Number(this.route.snapshot.queryParamMap.get("eventId"))
     this.refreshData();
   }
 

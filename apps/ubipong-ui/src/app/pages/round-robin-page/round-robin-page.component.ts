@@ -18,7 +18,7 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
   refresh = environment.roundRobinGridRefresh;
 
   eventIndex: number = 0;
-  eventIdList: string[] = []
+  eventIdList: number[] = []
 
   gridContent: any[][] = [[]];
   event: any = {};
@@ -36,9 +36,9 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
     this.refreshData();
   }
 
-  parseEventList(): string[] {
+  parseEventList(): number[] {
     const eventListJson = this.route.snapshot.queryParamMap.get("eventIdList");
-    return JSON.parse(eventListJson);
+    return JSON.parse(eventListJson)
   }
 
   initRefreshInterval() {
