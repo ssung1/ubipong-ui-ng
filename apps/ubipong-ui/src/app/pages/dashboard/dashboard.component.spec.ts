@@ -183,7 +183,10 @@ describe('DashboardComponent', () => {
     expect(tournamentForm).toBeFalsy();
   });
 
-  it('should be able to activate the new tournament form', () => {
+  it('should be able to activate the new tournament form', async () => {
+    await fixture.whenStable()
+    fixture.detectChanges()
+
     const compiled = fixture.nativeElement;
 
     const accordionAddTournament = compiled.querySelector('#accordion-add-tournament');
@@ -311,7 +314,10 @@ describe('DashboardComponent', () => {
     });
   });
 
-  it('should allow user to add tournament if user is logged in', () => {
+  it('should allow user to add tournament if user is logged in', async () => {
+    await fixture.whenStable()
+    fixture.detectChanges()
+
     const addTournament = fixture.nativeElement.querySelector('#accordion-add-tournament')
     expect(addTournament).toBeTruthy()
   })

@@ -53,10 +53,10 @@ describe('TournamentService', () => {
 
   it('can retrieve event information by event URL', async () => {
     mockHttpClient.get.mockReturnValue(of({ name: eventName }));
-    const response = await tournamentService.getEvent(eventUrl).toPromise();
+    const response = await tournamentService.getEvent(eventId).toPromise();
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(
-      `${url}/rest/v0/events/${eventUrl}`);
+      `${url}/rest/v0/events/${eventId}`);
     expect(response["name"]).toBe(eventName);
   });
 
@@ -74,7 +74,7 @@ describe('TournamentService', () => {
     const response = await tournamentService.addTournament(addTournamentRequest).toPromise();
 
     expect(mockHttpClient.post).toHaveBeenCalledWith(
-      `${url}/crud/tournaments`, JSON.stringify(addTournamentRequest), expect.anything());
+      `${url}/rest/v0/tournaments`, addTournamentRequest, expect.anything());
     expect(response['_links']['self']['href']).toBe(tournamentLink);
   });
 
@@ -133,33 +133,17 @@ describe('TournamentService', () => {
   });
 
   it('can return list of events of a given tournament', async () => {
-    const eventLink = 'http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1'
-    mockHttpClient.get.mockReturnValue(of({
-      "_embedded": {
-        "events": [
-          {
-            "id": eventId,
-            "challongeUrl": eventUrl,
-            "name": "Preliminary Group 1",
-            "tournamentId": tournamentId,
-            "challongeTournament": null,
-            "_links": {
-              "self": {
-                "href": "http://localhost:8080/crud/events/1"
-              },
-              "event": {
-                "href": "http://localhost:8080/crud/events/1"
-              }
-            }
-          }
-        ]
-      },
-      "_links": {
-        "self": {
-          "href": "http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1"
-        }
+    // const eventLink = 'http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1'
+    const eventLink = 'http://localhost:8080/rest/v0/events/search/find-by-tournament-id?tournament-id=1'
+    mockHttpClient.get.mockReturnValue(of([
+      {
+        "id": eventId,
+        "challongeUrl": eventUrl,
+        "name": "Preliminary Group 1",
+        "tournamentId": tournamentId,
+        "challongeTournament": null,
       }
-    }))
+    ]))
 
     const eventList = await tournamentService.getEventList(1).toPromise()
 

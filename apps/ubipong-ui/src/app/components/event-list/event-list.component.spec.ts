@@ -32,11 +32,12 @@ describe('EventListComponent', () => {
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
 
-  let event = {
+  let event = Object.freeze({
     id: 123,
     name: 'Bikini Bottom Open 2019',
-    challongeUrl: 'bb_201906_rr_pg_1'
-  }
+    challongeUrl: 'bb_201906_rr_pg_1',
+    status: 'started',
+  })
 
   beforeEach(async () => {
     mockUserService = {
@@ -96,6 +97,7 @@ describe('EventListComponent', () => {
     const compiled = fixture.nativeElement
 
     expect(compiled.querySelector('.event-card-list .event-name').textContent.trim()).toBe(event.name)
+    expect(compiled.querySelector('.event-card-list .event-status').textContent.trim()).toBe(event.status)
   })
 
   it('should emit event to view round robin match sheet', () => {

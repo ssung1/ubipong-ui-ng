@@ -3,7 +3,8 @@ import { OnDestroy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
-import { mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
+import { interval, Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-round-robin-page',
@@ -12,12 +13,12 @@ import { mergeMap } from 'rxjs/operators';
 })
 export class RoundRobinPageComponent implements OnInit, OnDestroy {
 
-  private refreshInterval: number = 0;
+  private refreshInterval: Subscription;
   refreshIntervalTime = environment.roundRobinGridRefreshInterval;
   refresh = environment.roundRobinGridRefresh;
 
   eventIndex: number = 0;
-  eventIdList: string[] = []
+  eventIdList: number[] = []
 
   gridContent: any[][] = [[]];
   event: any = {};
@@ -35,30 +36,34 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
     this.refreshData();
   }
 
-  parseEventList(): string[] {
+  parseEventList(): number[] {
     const eventListJson = this.route.snapshot.queryParamMap.get("eventIdList");
-    return JSON.parse(eventListJson);
+    return JSON.parse(eventListJson)
   }
 
   initRefreshInterval() {
-    this.refreshInterval = setInterval(() => {
-      this.refreshData();
-    }, this.refreshIntervalTime);
+    this.refreshInterval = interval(this.refreshIntervalTime).subscribe(() => {
+      this.refreshData()
+    })
   }
 
   clearRefreshInterval() {
-    if (this.refreshInterval) {
-      clearInterval(this.refreshInterval as number);
-    }
+    this.refreshInterval?.unsubscribe()
   }
 
   refreshData() {
     const eventId = this.eventIdList[this.eventIndex];
 
     this.tournamentService.getEvent(eventId).pipe(mergeMap(event => {
+      // instead of setting this.event = event,
+      // we combine event with the output of getRoundRobinGrid
+      //
+      // this way, this.event and this.gridContent can be updated at the
+      // same time in the subscribe block
+      return this.tournamentService.getRoundRobinGrid(event.challongeUrl).pipe(map(
+        gridContent => [event, gridContent]))
+    })).subscribe(([event, gridContent]) => {
       this.event = event
-      return this.tournamentService.getRoundRobinGrid(event.challongeUrl)
-    })).subscribe(gridContent => {
       this.gridContent = gridContent
     });
 

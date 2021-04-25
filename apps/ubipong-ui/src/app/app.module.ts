@@ -56,7 +56,11 @@ import { EventListComponent } from './components/event-list/event-list.component
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    OAuthModule.forRoot(),
+    OAuthModule.forRoot({
+      resourceServer: {
+        sendAccessToken: true
+      }
+    }),
     BrowserAnimationsModule,
     MatMenuModule,
     MatButtonModule,

@@ -43,14 +43,14 @@ export class TournamentService {
     return <Observable<any[][]>>this.httpClient.get(url);
   }
 
-  getEvent(eventUrl: string): Observable<any> {
-    const url = this.getUrl(`${eventRoot}/${eventUrl}`);
+  getEvent(eventId: number): Observable<any> {
+    const url = this.getUrl(`${eventRoot}/${eventId}`);
     return this.httpClient.get(url);
   }
 
   getEventList(tournamentId: number): Observable<any[]> {
-    const url = this.getUrl(`${crudEventRoot}/search/findByTournamentId?tournamentId=${tournamentId}`)
-    return <Observable<any[]>>this.httpClient.get(url).pipe(map((response: any) => response._embedded.events));
+    const url = this.getUrl(`${eventRoot}/search/find-by-tournament-id?tournament-id=${tournamentId}`)
+    return <Observable<any[]>>this.httpClient.get(url);
   }
 
   getRoundRobinMatchList(eventUrl: string): Observable<any[]> {
@@ -62,12 +62,13 @@ export class TournamentService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-    const url = this.getUrl('/crud/tournaments');
-    return <Observable<any>>this.httpClient.post(url, JSON.stringify(tournament), { headers: headers });
+    const url = this.getUrl(tournamentRoot);
+
+    return <Observable<any>>this.httpClient.post(url, tournament, { headers: headers });
   }
 
   getTournamentList(): Observable<any> {
-    const url = this.getUrl('/crud/tournaments');
+    const url = this.getUrl(tournamentRoot);
     return <Observable<any>>this.httpClient.get(url);
   }
 

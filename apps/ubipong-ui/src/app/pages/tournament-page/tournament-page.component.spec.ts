@@ -158,7 +158,10 @@ describe('TournamentPageComponent', () => {
     expect(header.textContent).toBe(tournament.name)
   })
 
-  it('should be able to add new event', () => {
+  it('should be able to add new event', async () => {
+    await fixture.whenStable()
+    fixture.detectChanges()
+
     const nativeElement = fixture.nativeElement
     nativeElement.querySelector('#accordion-add-event').click()
     fixture.detectChanges()
@@ -171,6 +174,10 @@ describe('TournamentPageComponent', () => {
     const newEventForm = nativeElement.querySelector('#new-event-form')
     expect(newEventForm).toBeTruthy()
 
+    const buttonAddEvent = nativeElement.querySelector('#button-add-event')
+    // no input, so the add button is disabled
+    expect(buttonAddEvent.disabled).toBe(true)
+
     const inputNewName = nativeElement.querySelector('#input-new-name')
     inputNewName.value = eventName
     inputNewName.dispatchEvent(new Event('input'))
@@ -178,7 +185,9 @@ describe('TournamentPageComponent', () => {
     inputNewChallongeUrl.value = challongeUrl
     inputNewChallongeUrl.dispatchEvent(new Event('input'))
 
-    const buttonAddEvent = nativeElement.querySelector('#button-add-event')
+    fixture.detectChanges()
+    // with valid input, add button is enabled
+    expect(buttonAddEvent.disabled).toBe(false)
     buttonAddEvent.click()
 
     expect(mockTournamentService.addEvent).toHaveBeenCalledWith({
@@ -235,7 +244,10 @@ describe('TournamentPageComponent', () => {
     });
   })
 
-  it('should allow user to add event if user is logged in', () => {
+  it('should allow user to add event if user is logged in', async () => {
+    await fixture.whenStable()
+    fixture.detectChanges()
+
     const addEvent = fixture.nativeElement.querySelector('#accordion-add-event')
     expect(addEvent).toBeTruthy()
   })

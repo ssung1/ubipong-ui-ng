@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { environment } from '../../environments/environment';
+import { Inject, Injectable } from '@angular/core'
+import { AuthConfig, OAuthService } from 'angular-oauth2-oidc'
+import { environment } from '../../environments/environment'
+import { DOCUMENT } from '@angular/common'
 
 /**
  * more like a wrapper for OAuthService that can be disabled in dev environment
@@ -50,7 +51,7 @@ import { environment } from '../../environments/environment';
  *
  *                          return user id                               return error
  *
- *                          
+ *
  */
 @Injectable({
   providedIn: 'root'
@@ -58,67 +59,72 @@ import { environment } from '../../environments/environment';
 export class UserService {
   public static TEST_USER_ID = 'testuser'
 
-  readonly authCodeFlowConfig: AuthConfig = {
-    // Url of the Identity Provider
-    //
-    // angular-oauth2-odic will try to call ${issuer}/.well-known/openid-configuration
-    //
-    // if the issuer of the returned value from .../openid-configuration does not match
-    // the issuer specified here, then angular-oauth2-odic will refuse to accept the
-    // configuration, unless skipIssuerCheck is true
-    //
-    // often using issuer will not work because the .../openid-configuration has a blocks
-    // CORS requests.
-    
-    issuer: environment.oAuthIssuer,
-    // if issuer in the response is different, set this to true
-    skipIssuerCheck: false,
-  
-    // if using issuer does not work, set the authorization_endpoint here
-    //
-    // for SPAs, the only flow that makes sense is the authcode flow
-  
-    loginUrl: environment.oAuthAuthorizationEndpoint,
-    logoutUrl: environment.oAuthEndSessionEndpoint,
-  
-    // URL of the SPA to redirect the user to after login
-    redirectUri: window.location.origin + '/login/callback',
-    postLogoutRedirectUri: window.location.origin,
-  
-    // The SPA's id. The SPA is registered with this id at the auth-server
-    // clientId: 'server.code',
-    clientId: environment.oAuthClientId,
-  
-    // Just needed if your auth server demands a secret. In general, this
-    // is a sign that the auth server is not configured with SPAs in mind
-    // and it might not enforce further best practices vital for security
-    // such applications.
-    // dummyClientSecret: 'secret',
-  
-    // needs to be 'code' for authcode flow.  angular-oauth2-oidc uses this
-    // to determine if the flow is authcode or implicit
-    responseType: 'code',
-  
-    // this is used to exchange an authcode for an access token
-    //
-    // this part usually fails because authorization server blocks CORS
-    tokenEndpoint: environment.oAuthTokenEndpoint,
-  
-    // set the scope for the permissions the client should request
-    // The first four are defined by OIDC.
-    // Important: Request offline_access to get a refresh token
-    // The api scope is a usecase specific one
-    // scope: 'openid profile email offline_access api',
-    scope: 'openid profile email',
-  
-    showDebugInformation: true,
-  
-    // if endpoints from the discovery endpoint have different host, then
-    // set this to false
-    strictDiscoveryDocumentValidation: false,
-  
-    // for non-prod, if we don't want to use https, set this to false
-    requireHttps: environment.oAuthRequireHttps,
+  get authCodeFlowConfig(): AuthConfig {
+    const baseHref = this.document.querySelector('html head base').getAttribute('href')
+    return {
+      // Url of the Identity Provider
+      //
+      // angular-oauth2-odic will try to call ${issuer}/.well-known/openid-configuration
+      //
+      // if the issuer of the returned value from .../openid-configuration does not match
+      // the issuer specified here, then angular-oauth2-odic will refuse to accept the
+      // configuration, unless skipIssuerCheck is true
+      //
+      // often using issuer will not work because the .../openid-configuration has a blocks
+      // CORS requests.
+
+      issuer: environment.oAuthIssuer,
+      // if issuer in the response is different, set this to true
+      skipIssuerCheck: false,
+
+      // if using issuer does not work, set the authorization_endpoint here
+      //
+      // for SPAs, the only flow that makes sense is the authcode flow
+
+      loginUrl: environment.oAuthAuthorizationEndpoint,
+      logoutUrl: environment.oAuthEndSessionEndpoint,
+
+      // URL of the SPA to redirect the user to after login
+      // use just the baseHref because inmotion HTTP server does not work well when /index.html is on the URL
+      redirectUri: window.location.origin + baseHref,
+      // if not specified, postLogoutRedirectUri is the same as redirectUri
+      // postLogoutRedirectUri: window.location.origin + baseHref,
+
+      // The SPA's id. The SPA is registered with this id at the auth-server
+      // clientId: 'server.code',
+      clientId: environment.oAuthClientId,
+
+      // Just needed if your auth server demands a secret. In general, this
+      // is a sign that the auth server is not configured with SPAs in mind
+      // and it might not enforce further best practices vital for security
+      // such applications.
+      // dummyClientSecret: 'secret',
+
+      // needs to be 'code' for authcode flow.  angular-oauth2-oidc uses this
+      // to determine if the flow is authcode or implicit
+      responseType: 'code',
+
+      // this is used to exchange an authcode for an access token
+      //
+      // this part usually fails because authorization server blocks CORS
+      tokenEndpoint: environment.oAuthTokenEndpoint,
+
+      // set the scope for the permissions the client should request
+      // The first four are defined by OIDC.
+      // Important: Request offline_access to get a refresh token
+      // The api scope is a usecase specific one
+      // scope: 'openid profile email offline_access api',
+      scope: 'openid profile email',
+
+      showDebugInformation: true,
+
+      // if endpoints from the discovery endpoint have different host, then
+      // set this to false
+      strictDiscoveryDocumentValidation: false,
+
+      // for non-prod, if we don't want to use https, set this to false
+      requireHttps: environment.oAuthRequireHttps,
+    }
   }
 
   /**
@@ -127,7 +133,8 @@ export class UserService {
   public oAuthEnabled: boolean
 
   constructor(
-    private oAuthService: OAuthService
+    private oAuthService: OAuthService,
+    @Inject(DOCUMENT) private document: Document,
   ) {
     this.oAuthEnabled = environment.oAuthEnabled
     this.oAuthService.configure(this.authCodeFlowConfig)
