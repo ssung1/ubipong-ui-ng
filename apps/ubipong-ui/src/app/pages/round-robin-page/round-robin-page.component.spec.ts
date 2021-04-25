@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RoundRobinPageComponent } from './round-robin-page.component';
 import { TournamentService } from '../../services/tournament.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 
@@ -14,14 +14,14 @@ describe('RoundRobinPageComponent', () => {
   const challongeUrlList = ['bb_201906_pg_rr_1', 'bb_201906_pg_rr_2', 'bb_201906_pg_rr_3']
   const eventName = "Bikini Bottom Round Robin Group 1";
   const roundRobinGrid = [["A", "B", "C"]];
+  const event = {name: eventName, challongeUrl: challongeUrlList[0]}
   let mockTournamentService: any
   let mockActivatedRoute: any
 
   beforeEach(async () => {
     mockTournamentService = {
       getRoundRobinGrid: jest.fn().mockReturnValue(of(roundRobinGrid)),
-      getEvent: jest.fn()
-        .mockReturnValue(of({name: eventName, challongeUrl: challongeUrlList[0]}))
+      getEvent: jest.fn().mockReturnValue(of(event))
     }
 
     mockActivatedRoute = {
@@ -113,5 +113,16 @@ describe('RoundRobinPageComponent', () => {
   it('should display event name as a header', () => {
     const header = fixture.nativeElement.querySelector('h2')
     expect(header.textContent).toBe(eventName)
+  })
+
+  it('should not update event name if round robin grid is not available', () => {
+    component.event = null
+    component.gridContent = null
+
+    mockTournamentService.getRoundRobinGrid = jest.fn().mockReturnValue(throwError('error'))
+    component.refreshData()
+
+    expect(component.event).toBeFalsy()
+    expect(component.gridContent).toBeFalsy();
   })
 });
