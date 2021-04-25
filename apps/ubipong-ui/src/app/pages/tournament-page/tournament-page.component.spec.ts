@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TournamentPageComponent } from './tournament-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventListComponent } from '../../components/event-list/event-list.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { TournamentService } from '../../services/tournament.service';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSelectModule } from '@angular/material/select'
-import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatTableModule } from '@angular/material/table'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -63,6 +63,7 @@ describe('TournamentPageComponent', () => {
   let mockTournamentService: any
   let mockRouter: any
   let mockUserService: any
+  let mockSnackBar: any
 
   beforeEach(async () => {
     mockActivatedRoute = {
@@ -87,6 +88,10 @@ describe('TournamentPageComponent', () => {
       getUserId: jest.fn().mockResolvedValue(UserService.TEST_USER_ID),
       isLoggedIn: jest.fn().mockResolvedValue(true),
       login: jest.fn().mockResolvedValue('done')
+    }
+
+    mockSnackBar = {
+      open: jest.fn()
     }
 
     await TestBed.configureTestingModule({
@@ -125,6 +130,7 @@ describe('TournamentPageComponent', () => {
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: Router, useValue: mockRouter },
         { provide: UserService, useValue: mockUserService },
+        { provide: MatSnackBar, useValue: mockSnackBar },
       ]
     })
     .compileComponents();
@@ -260,5 +266,22 @@ describe('TournamentPageComponent', () => {
 
     const addTournament = fixture.nativeElement.querySelector('#accordion-add-event')
     expect(addTournament).toBeFalsy()
+  })
+
+  it('should display error message if event addition fails', () => {
+    const errorMessage = 'System Error: Please Try Again Later'
+
+    mockTournamentService.addEvent.mockReturnValue(throwError({
+      message: errorMessage
+    }))
+
+    component.toggleNewEventForm()
+
+    fixture.detectChanges()
+
+    component.addEvent()
+
+    fixture.detectChanges()
+    expect(mockSnackBar.open).toHaveBeenCalled()
   })
 })

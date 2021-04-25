@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import {FormControl, Validators} from '@angular/forms';
-import {Tournament} from '../../models/tournament';
-import {Observable, of} from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
+import { Tournament } from '../../models/tournament';
+import { Observable, of } from 'rxjs';
 import { UserService } from '../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'ubipong-ui-ng-tournament-page',
@@ -20,7 +21,6 @@ export class TournamentPageComponent implements OnInit {
   tournament: Tournament = new Tournament()
   eventList: any[] = []
   isNewEventFormOpen: boolean = false
-  errorMessage: string | null = ""
   
   inputNewName = new FormControl('', [Validators.required, Validators.maxLength(60)])
   inputNewChallongeUrl = new FormControl('', [Validators.required])
@@ -30,6 +30,7 @@ export class TournamentPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -47,11 +48,15 @@ export class TournamentPageComponent implements OnInit {
     this.tournamentService.getTournamentById(this.tournamentId)
       .subscribe(tournament => {
         this.tournament = tournament
+      }, error => {
+        this.snackBar.open(`Cound not get tournament info: ${error.message}`, 'Ok', {duration: 2000})
       })
 
     this.tournamentService.getEventList(this.tournamentId)
       .subscribe(eventList => {
         this.eventList = eventList
+      }, error => {
+        this.snackBar.open(`Cound not get event list: ${error.message}`, 'Ok', {duration: 2000})
       })
   }
 
@@ -89,15 +94,14 @@ export class TournamentPageComponent implements OnInit {
         challongeUrl: this.inputNewChallongeUrl.value,
       })
       .pipe(map(() => this.refreshData()))
-      .subscribe(() => {},
-        error => {
-          this.errorMessage = "System error: " + error.message;
+      .subscribe(() => {
+      }, error => {
+        this.snackBar.open(`System error: ${error.message}`, "Ok", {duration: 2000})
       });
   }
 
   toggleNewEventForm() {
     this.isNewEventFormOpen = !this.isNewEventFormOpen;
-    this.errorMessage = null;
   }
 
   navigateToRoundRobinPage() {
