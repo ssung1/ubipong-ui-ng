@@ -18,12 +18,28 @@ export class TournamentPageComponent implements OnInit {
   isLoggedIn = false
 
   tournamentId: number = NaN
-  tournament: Tournament = new Tournament()
+  tournament: Tournament | null = null
   eventList: any[] = []
   isNewEventFormOpen: boolean = false
   
   inputNewName = new FormControl('', [Validators.required, Validators.maxLength(60)])
   inputNewChallongeUrl = new FormControl('', [Validators.required])
+  inputNewStartTime = new FormControl()
+
+  // cannot use `get timeOptionList()`.  not sure why yet, but material does not like it
+  // when used as mat-option inside a mat-select
+  readonly timeOptionList = Object.freeze([
+    {hour: 8, minute: 0, display: "8:00am"},
+    {hour: 9, minute: 0, display: "9:00am"},
+    {hour: 10, minute: 0, display: "10:00am"},
+    {hour: 11, minute: 0, display: "11:00am"},
+    {hour: 12, minute: 0, display: "12:00pm"},
+    {hour: 13, minute: 0, display: "1:00pm"},
+    {hour: 14, minute: 0, display: "2:00pm"},
+    {hour: 15, minute: 0, display: "3:00pm"},
+    {hour: 16, minute: 0, display: "4:00pm"},
+    {hour: 17, minute: 0, display: "5:00pm"},
+  ])
 
   constructor(
     private tournamentService: TournamentService,
@@ -72,9 +88,9 @@ export class TournamentPageComponent implements OnInit {
 
   get inputNewChallongeUrlErrorMessage() {
     if (this.inputNewChallongeUrl.hasError('required')) {
-      return 'Must have challonge.com URL';
+      return 'Must have challonge.com URL'
     }
-    return JSON.stringify(this.inputNewChallongeUrl.errors);
+    return JSON.stringify(this.inputNewChallongeUrl.errors)
   }
 
   get isNewEventFormInvalid() {
@@ -87,11 +103,20 @@ export class TournamentPageComponent implements OnInit {
   }
 
   addEvent() {
+    // offset in milliseconds for easy conversion
+    const offset = new Date().getTimezoneOffset() * 60 * 1000
+    // set clock to local time
+    const tournamentDate = new Date(new Date(this.tournament.tournamentDate).getTime() + offset)
+    // so that we can use setHours to get the right hours
+    tournamentDate.setHours(this.inputNewStartTime.value?.hour,
+      this.inputNewStartTime.value?.minute, 0)
+
     this.tournamentService
       .addEvent({
         tournamentId: this.tournamentId,
         name: this.inputNewName.value,
         challongeUrl: this.inputNewChallongeUrl.value,
+        startTime: tournamentDate.toJSON(),
       })
       .pipe(map(() => this.refreshData()))
       .subscribe(() => {
@@ -131,5 +156,9 @@ export class TournamentPageComponent implements OnInit {
     this.userService.isLoggedIn().then(isLoggedIn => {
       this.isLoggedIn = isLoggedIn
     })
+  }
+
+  get isReadyForEditing() {
+    return this.tournament && this.isLoggedIn
   }
 }

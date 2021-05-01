@@ -1,13 +1,13 @@
 <app-main-menu>
   <section id="tournament-page">
-    <h1>{{tournament.name}}</h1>
+    <h1>{{tournament?.name}}</h1>
 
     <section class="tournament-actions">
       <button mat-raised-button color="primary" id="view-round-robin-page"
         [disabled]="!hasEvents" (click)="navigateToRoundRobinPage()">View Round Robin</button> 
     </section>
 
-    <mat-accordion *ngIf="isLoggedIn" id="accordion-add-event">
+    <mat-accordion *ngIf="isReadyForEditing" id="accordion-add-event">
       <mat-expansion-panel [(expanded)]="isNewEventFormOpen">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -18,17 +18,29 @@
         </mat-expansion-panel-header>
 
         <div id="new-event-form">
-          <mat-form-field id="form-field-new-name">
-            <mat-label>Name</mat-label>
-            <input matInput id="input-new-name" type="text" size="48" [formControl]="inputNewName">
-            <mat-error *ngIf="inputNewName.invalid">{{inputNewNameErrorMessage}}</mat-error>
-          </mat-form-field>
+          <p>
+            <mat-form-field id="form-field-new-name">
+              <mat-label>Name</mat-label>
+              <input matInput id="input-new-name" type="text" size="48" [formControl]="inputNewName">
+              <mat-error *ngIf="inputNewName.invalid">{{inputNewNameErrorMessage}}</mat-error>
+            </mat-form-field>
       
-          <mat-form-field id="form-field-new-challonge-url">
-            <mat-label>Challonge URL</mat-label>
-            <input matInput id="input-new-challonge-url" type="text" size="48" [formControl]="inputNewChallongeUrl">
-            <mat-error *ngIf="inputNewChallongeUrl.invalid">{{inputNewChallongeUrlErrorMessage}}</mat-error>
-          </mat-form-field>
+            <mat-form-field id="form-field-new-challonge-url">
+              <mat-label>Challonge URL</mat-label>
+              <input matInput id="input-new-challonge-url" type="text" size="48" [formControl]="inputNewChallongeUrl">
+              <mat-error *ngIf="inputNewChallongeUrl.invalid">{{inputNewChallongeUrlErrorMessage}}</mat-error>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field id="form-field-new-start-time">
+              <mat-label>Start Time</mat-label>
+              <mat-select id="input-new-start-time" [formControl]="inputNewStartTime">
+                <mat-option *ngFor="let timeOption of timeOptionList" [value]="timeOption">{{timeOption.display}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="inputNewStartTime.invalid">{{inputNewStartTimeErrorMessage}}</mat-error>
+            </mat-form-field>
+          </p>
     
           <p>
             <button mat-button color="primary" id="button-add-event" [disabled]="isNewEventFormInvalid" (click)="addEvent()">Add</button>

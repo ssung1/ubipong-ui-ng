@@ -28,18 +28,24 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+
+import { HarnessLoader } from '@angular/cdk/testing'
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
+import { MatSelectHarness } from '@angular/material/select/testing'
 
 describe('TournamentPageComponent', () => {
   const eventId = 101
   const challongeUrl = 'rr_201903_pg_1'
   const tournamentId = 1
   const eventName = 'Preliminary Group 1'
+  const startTime = '2019-06-23T14:00:00.000Z'
   const event = {
     "id": eventId,
     "challongeUrl": challongeUrl,
     "name": eventName,
     "tournamentId": tournamentId,
+    startTime,
     "challongeTournament": null,
     "_links": {
       "self": {
@@ -58,6 +64,7 @@ describe('TournamentPageComponent', () => {
 
   let component: TournamentPageComponent;
   let fixture: ComponentFixture<TournamentPageComponent>;
+  let loader: HarnessLoader
 
   let mockActivatedRoute: any
   let mockTournamentService: any
@@ -140,6 +147,8 @@ describe('TournamentPageComponent', () => {
     fixture = TestBed.createComponent(TournamentPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    loader = TestbedHarnessEnvironment.loader(fixture)
   });
 
   it('should create', () => {
@@ -185,11 +194,29 @@ describe('TournamentPageComponent', () => {
     expect(buttonAddEvent.disabled).toBe(true)
 
     const inputNewName = nativeElement.querySelector('#input-new-name')
+    expect(inputNewName).toBeTruthy()
     inputNewName.value = eventName
     inputNewName.dispatchEvent(new Event('input'))
+
     const inputNewChallongeUrl = nativeElement.querySelector('#input-new-challonge-url')
+    expect(inputNewChallongeUrl).toBeTruthy()
     inputNewChallongeUrl.value = challongeUrl
     inputNewChallongeUrl.dispatchEvent(new Event('input'))
+
+    const inputNewStartTime = await loader.getHarness(MatSelectHarness.with({
+      selector: '#input-new-start-time'
+    }))
+    expect(inputNewStartTime).toBeTruthy()
+    await inputNewStartTime.open()
+    const inputNewStartTimeOptionHarnesses = await inputNewStartTime.getOptions()
+    const inputNewStartTimeOptions = await Promise.all(
+      inputNewStartTimeOptionHarnesses.map(o => o.getText()))
+    expect(inputNewStartTimeOptions).toContainEqual('8:00am')
+    expect(inputNewStartTimeOptions).toContainEqual('12:00pm')
+    expect(inputNewStartTimeOptions).toContainEqual('5:00pm')
+    await inputNewStartTime.clickOptions({
+      text: '10:00am'
+    })
 
     fixture.detectChanges()
     // with valid input, add button is enabled
@@ -200,6 +227,7 @@ describe('TournamentPageComponent', () => {
       challongeUrl,
       name: eventName,
       tournamentId,
+      startTime: startTime,
     })
 
     expect(component.eventList.length).toBe(2)
@@ -207,6 +235,7 @@ describe('TournamentPageComponent', () => {
     expect(addedEvent.name).toBe(eventName)
     expect(addedEvent.challongeUrl).toBe(challongeUrl)
     expect(addedEvent.id).toBe(eventId)
+    expect(addedEvent.startTime).toBe(startTime)
   })
 
   it('should navigate to round robin grid page if user clicks on the monitor events button', () => {
@@ -283,5 +312,15 @@ describe('TournamentPageComponent', () => {
 
     fixture.detectChanges()
     expect(mockSnackBar.open).toHaveBeenCalled()
+  })
+
+  it('should not display event form until tournament information is retrieved', () => {
+    // await fixture.whenStable()
+    component.tournament = null
+    fixture.detectChanges()
+
+    const nativeElement = fixture.nativeElement
+    const accordianAddEvent = nativeElement.querySelector('#accordion-add-event')
+    expect(accordianAddEvent).toBeFalsy()
   })
 })
