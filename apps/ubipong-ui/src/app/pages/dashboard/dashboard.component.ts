@@ -5,6 +5,7 @@ import { TournamentService } from '../../services/tournament.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -58,7 +59,7 @@ export class DashboardComponent implements OnInit {
 
   refreshTournamentList() {
     this.tournamentService.getTournamentList().subscribe(response => {
-      this.tournamentList = response['_embedded']['tournaments'];
+      this.tournamentList = response?._embedded?.tournaments;
     }, error => {
       this.snackBar.open(`System error: ${error.message}`, "Ok", {duration: 2000})
     });
@@ -82,12 +83,13 @@ export class DashboardComponent implements OnInit {
     };
 
     const response = this.tournamentService.addTournament(newTournament);
-    response.subscribe(addedTournament => {
-      this.tournamentList.push(addedTournament);
-      this.resetInputNewTournament();
-    }, error => {
-      this.snackBar.open(`System error: ${error.message}`, "Ok", {duration: 2000})
-    });
+    response.pipe(
+      map(() => this.refreshTournamentList()))
+      .subscribe(() => {
+        this.resetInputNewTournament();
+      }, error => {
+        this.snackBar.open(`System error: ${error.message}`, "Ok", {duration: 2000})
+      });
   }
 
   navigateToTournamentPage(touramentId: number) {

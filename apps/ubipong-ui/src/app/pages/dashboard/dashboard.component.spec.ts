@@ -109,7 +109,6 @@ describe('DashboardComponent', () => {
       }
     }));
 
-
     mockRouter = {
       navigate: jest.fn().mockReturnValue(Promise.resolve(true))
     }
@@ -228,7 +227,8 @@ describe('DashboardComponent', () => {
     expect(buttonAddTournament.disabled).toBe(false)
     buttonAddTournament.click();
 
-    expect(component.tournamentList.length).toBe(1);
+    // tournamentList is refreshed by calling service
+    expect(component.tournamentList.length).toBe(2);
     const addedTournament = component.tournamentList[0];
     expect(addedTournament.name).toBe(tournamentName);
     expect(addedTournament.tournamentDate).toBe(tournamentDate);
