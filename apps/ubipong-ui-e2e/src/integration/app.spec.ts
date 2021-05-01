@@ -4,6 +4,7 @@ import { getGreeting } from '../support/app.po'
 import { environment } from '../config/environment'
 import 'cypress-wait-until'
 import { Util } from '../support/util'
+import { eventNames } from 'process'
 
 describe('ubipong-ui', () => {
   // Tournament Setup:
@@ -90,7 +91,16 @@ describe('ubipong-ui', () => {
     cy.get('#accordion-add-event').click()
     cy.get('#input-new-name').type(event.name)
     cy.get('#input-new-challonge-url').type(event.challongeUrl)
+
+    cy.get('#form-field-new-start-time').click()
+    cy.contains('.mat-option-text', '10:00am').click()
+
     cy.get('#button-add-event').click()
+  }
+
+  function verifyAddedEvent(event: any) {
+    const eventElement = cy.contains('.event', preliminaryGroup1.name)
+    eventElement.contains('.event-status', 'created')
   }
 
   function addPlayerList(players, challongeUrl: string) {
@@ -134,6 +144,22 @@ describe('ubipong-ui', () => {
   function goToRoundRobinMatchSheet(eventName) {
     const event = cy.contains('.event', eventName)
     event.get('.button-round-robin-match-sheet').click()
+  }
+
+  /**
+   * After we are already viewing round robin match sheet
+   */
+  function verifyRoundRobinMatchSheet() {
+    cy.get('h2').should('have.text', preliminaryGroup1.name)
+    cy.get('table > :nth-child(1) > :nth-child(3)').contains('Game 1')
+    // just trying a different way to verify text
+    cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', 'Game 2')
+    cy.get('table > :nth-child(2) > :nth-child(1)').should('have.text', 'B')
+    cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', 'patrick')
+    cy.get('table > :nth-child(3) > :nth-child(1)').should('have.text', 'C')
+    cy.get('table > :nth-child(3) > :nth-child(2)').should('have.text', 'squidward')
+    cy.get('table > :nth-child(5) > :nth-child(1)').should('have.text', 'A')
+    cy.get('table > :nth-child(5) > :nth-child(2)').should('have.text', 'spongebob')
   }
 
   function getEventMatchList(challongeUrl) {
@@ -185,6 +211,29 @@ describe('ubipong-ui', () => {
     })
   }
 
+  function goToRoundRobinPage() {
+    cy.contains('#view-round-robin-page', 'View Round Robin').click()
+  }
+
+  function verifyRoundRobinPage() {
+    cy.get('h2').should('have.text', preliminaryGroup1.name)
+    cy.get('table > :nth-child(1) > :nth-child(3)').should('have.text', ' A ')
+    cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', ' B ')
+    cy.get('table > :nth-child(1) > :nth-child(5)').should('have.text', ' C ')
+    cy.get('table > :nth-child(2) > :nth-child(1)').should('have.text', ' A ')
+    cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', ' spongebob ')
+    cy.get('table > :nth-child(2) > :nth-child(4)').should('have.text', ' W 3 5 1 ')
+    cy.get('table > :nth-child(2) > :nth-child(5)').should('have.text', ' W 11 -5 9 9 ')
+    cy.get('table > :nth-child(3) > :nth-child(1)').should('have.text', ' B ')
+    cy.get('table > :nth-child(3) > :nth-child(2)').should('have.text', ' patrick ')
+    cy.get('table > :nth-child(3) > :nth-child(3)').should('have.text', ' L -3 -5 -1 ')
+    cy.get('table > :nth-child(3) > :nth-child(5)').should('have.text', ' W 3 3 3 ')
+    cy.get('table > :nth-child(4) > :nth-child(1)').should('have.text', ' C ')
+    cy.get('table > :nth-child(4) > :nth-child(2)').should('have.text', ' squidward ')
+    cy.get('table > :nth-child(4) > :nth-child(3)').should('have.text', ' L -11 5 -9 -9 ')
+    cy.get('table > :nth-child(4) > :nth-child(4)').should('have.text', ' L -3 -3 -3 ')
+  }
+
   beforeEach(() => {
     deleteChallongeTournament(preliminaryGroup1.challongeUrl)
     bikiniBottomOpen = {
@@ -206,20 +255,12 @@ describe('ubipong-ui', () => {
     addTournament(bikiniBottomOpen)
     goToTournamentFromDashboard(bikiniBottomOpen.name)
     addEvent(preliminaryGroup1)
+    verifyAddedEvent(preliminaryGroup1)
     addPlayerList([spongebob, patrick, squidward],
       preliminaryGroup1.challongeUrl)
     startEvent(preliminaryGroup1.challongeUrl)
     goToRoundRobinMatchSheet(preliminaryGroup1.name)
-    cy.get('h2').should('have.text', preliminaryGroup1.name)
-    cy.get('table > :nth-child(1) > :nth-child(3)').contains('Game 1')
-    // just trying a different way to verify text
-    cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', 'Game 2')
-    cy.get('table > :nth-child(2) > :nth-child(1)').should('have.text', 'B')
-    cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', 'patrick')
-    cy.get('table > :nth-child(3) > :nth-child(1)').should('have.text', 'C')
-    cy.get('table > :nth-child(3) > :nth-child(2)').should('have.text', 'squidward')
-    cy.get('table > :nth-child(5) > :nth-child(1)').should('have.text', 'A')
-    cy.get('table > :nth-child(5) > :nth-child(2)').should('have.text', 'spongebob')
+    verifyRoundRobinMatchSheet()
 
     // submit some scores
     submitMatchResult(spongbobVsPatrick, preliminaryGroup1.challongeUrl)
@@ -230,23 +271,8 @@ describe('ubipong-ui', () => {
     cy.visit('/')
     goToDashboard()
     goToTournamentFromDashboard(bikiniBottomOpen.name)
-    cy.contains('#view-round-robin-page', 'View Round Robin').click()
-    cy.get('h2').should('have.text', preliminaryGroup1.name)
-    cy.get('table > :nth-child(1) > :nth-child(3)').should('have.text', ' A ')
-    cy.get('table > :nth-child(1) > :nth-child(4)').should('have.text', ' B ')
-    cy.get('table > :nth-child(1) > :nth-child(5)').should('have.text', ' C ')
-    cy.get('table > :nth-child(2) > :nth-child(1)').should('have.text', ' A ')
-    cy.get('table > :nth-child(2) > :nth-child(2)').should('have.text', ' spongebob ')
-    cy.get('table > :nth-child(2) > :nth-child(4)').should('have.text', ' W 3 5 1 ')
-    cy.get('table > :nth-child(2) > :nth-child(5)').should('have.text', ' W 11 -5 9 9 ')
-    cy.get('table > :nth-child(3) > :nth-child(1)').should('have.text', ' B ')
-    cy.get('table > :nth-child(3) > :nth-child(2)').should('have.text', ' patrick ')
-    cy.get('table > :nth-child(3) > :nth-child(3)').should('have.text', ' L -3 -5 -1 ')
-    cy.get('table > :nth-child(3) > :nth-child(5)').should('have.text', ' W 3 3 3 ')
-    cy.get('table > :nth-child(4) > :nth-child(1)').should('have.text', ' C ')
-    cy.get('table > :nth-child(4) > :nth-child(2)').should('have.text', ' squidward ')
-    cy.get('table > :nth-child(4) > :nth-child(3)').should('have.text', ' L -11 5 -9 -9 ')
-    cy.get('table > :nth-child(4) > :nth-child(4)').should('have.text', ' L -3 -3 -3 ')
+    goToRoundRobinPage()
+    verifyRoundRobinPage()
 
     // TODO: get tournament result
   })
