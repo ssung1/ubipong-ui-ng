@@ -24,12 +24,7 @@
             <mat-label>Date</mat-label>
             <input matInput id="input-new-tournament-date" placeholder="yyyy-MM-dd" [matDatepicker]="datepicker" [formControl]="inputNewTournamentDate">
             <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker>
-              <mat-datepicker-actions>
-                <button mat-button matDatepickerCancel>Cancel</button>
-                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-              </mat-datepicker-actions>
-            </mat-datepicker>
+            <mat-datepicker #datepicker></mat-datepicker>
           </mat-form-field>
     
           <p>
