@@ -36,7 +36,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
-import { EventListComponent } from './components/event-list/event-list.component'
+import { EventListComponent } from './components/event-list/event-list.component';
+import { EventDetailsComponent } from './components/event-details/event-details.component'
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { EventListComponent } from './components/event-list/event-list.component
     RoundRobinPageComponent,
     EventPlayerListComponent,
     EventListComponent,
+    EventDetailsComponent,
   ],
   imports: [
     BrowserModule,
