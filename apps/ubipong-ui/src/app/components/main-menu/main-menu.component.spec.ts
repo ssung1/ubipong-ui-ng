@@ -39,13 +39,13 @@ import { ClipboardModule } from '@angular/cdk/clipboard'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { LayoutModule } from '@angular/cdk/layout'
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MainMenuComponent } from './main-menu.component';
-import { UserService } from '../../services/user.service';
-
 import { HarnessLoader } from '@angular/cdk/testing'
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
 import { MatMenuHarness } from '@angular/material/menu/testing'
+
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MainMenuComponent } from './main-menu.component';
+import { UserService } from '../../services/user.service';
 
 describe('MainMenuComponent', () => {
   let mockUserServiceLogin: any
