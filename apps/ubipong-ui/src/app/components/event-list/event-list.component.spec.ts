@@ -32,7 +32,7 @@ describe('EventListComponent', () => {
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
 
-  let event = Object.freeze({
+  const event = Object.freeze({
     id: 123,
     name: 'Bikini Bottom Open 2019',
     challongeUrl: 'bb_201906_rr_pg_1',
