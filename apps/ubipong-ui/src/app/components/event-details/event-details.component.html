@@ -1,1 +1,36 @@
-<p>event-details works!</p>
+<p>Event: <span class="event-name">{{event.name}}</span>
+   <button class="enable-editing" (click)="enableEditing()">Edit</button></p>
+<p>Start Time: <span class="start-time">{{event.startTime}}</span></p>
+
+<div *ngIf="editEnabled" class="edit-panel">
+  <p>
+    <mat-form-field class="event-name">
+      <mat-label>Name</mat-label>
+      <input matInput class="event-name" type="text" size="48" [formControl]="inputEventName">
+      <mat-error *ngIf="inputEventName.invalid">{{inputEventNameErrorMessage}}</mat-error>
+    </mat-form-field>
+  
+    <!--
+    <mat-form-field class="challonge-url">
+      <mat-label>Challonge URL</mat-label>
+      <input matInput class="challonge-url" type="text" size="48" [formControl]="inputChallongeUrl">
+      <mat-error *ngIf="inputChallongeUrl.invalid">{{inputChallongeUrlErrorMessage}}</mat-error>
+    </mat-form-field>
+    -->
+  </p>
+  
+  <p>
+    <mat-form-field class="start-time">
+      <mat-label>Start Time</mat-label>
+      <mat-select class="start-time" [formControl]="inputStartTime">
+        <mat-option *ngFor="let timeOption of timeOptionList" [value]="timeOption">{{timeOption.display}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="inputStartTime.invalid">{{inputStartTimeErrorMessage}}</mat-error>
+    </mat-form-field>
+  </p>
+  
+  <p>
+    <button mat-button color="primary" class="submit-event" [disabled]="isFormInvalid" (click)="submitForm()">Add</button>
+    <button mat-button color="secondary" class="cancel-event" (click)="cancelForm()">Cancel</button>
+  </p>
+</div>

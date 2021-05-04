@@ -147,7 +147,6 @@ describe('TournamentPageComponent', () => {
     fixture = TestBed.createComponent(TournamentPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
     loader = TestbedHarnessEnvironment.loader(fixture)
   });
 
