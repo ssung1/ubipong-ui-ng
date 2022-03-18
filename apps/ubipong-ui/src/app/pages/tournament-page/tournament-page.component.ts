@@ -9,7 +9,7 @@ import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'ubipong-ui-ng-tournament-page',
+  selector: 'app-tournament-page',
   templateUrl: './tournament-page.component.html',
   styleUrls: ['./tournament-page.component.scss']
 })
