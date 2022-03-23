@@ -185,7 +185,20 @@ describe('EventDetailsComponent', () => {
     expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
   })
 
-  // it('should cancel form')
+  it('should allow user to cancel editing by activating the cancel button', async () => {
+    const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
+    expect(buttonEnableEditing).toBeTruthy()
+    buttonEnableEditing.click()
+
+    fixture.detectChanges()
+
+    const buttonCancelEvent = fixture.nativeElement.querySelector('button.cancel-event')
+    const submitEventSpy = jest.spyOn(component.cancelFormEventEmitter, 'emit')
+
+    buttonCancelEvent.click()
+    expect(submitEventSpy).toHaveBeenCalledWith(event)
+  })
+
   // it('should display new event form')
   // it('should not enable edit if existing event is not yet loaded')
 });
