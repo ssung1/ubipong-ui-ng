@@ -119,7 +119,7 @@ describe('RoundRobinPageComponent', () => {
     component.event = null
     component.gridContent = null
 
-    mockTournamentService.getRoundRobinGrid = jest.fn().mockReturnValue(throwError('error'))
+    mockTournamentService.getRoundRobinGrid.mockReturnValue(throwError('error'))
     component.refreshData()
 
     expect(component.event).toBeFalsy()
