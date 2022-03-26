@@ -147,7 +147,7 @@ describe('EventDetailsComponent', () => {
     expect(buttonEnableEditing.textContent).toBeTruthy()
   })
 
-  it('should allow user to edit event name when user activates the edit button', async () => {
+  it('should allow user to edit event when user activates the edit button', async () => {
     const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
     expect(buttonEnableEditing).toBeTruthy()
     buttonEnableEditing.click()
@@ -172,7 +172,7 @@ describe('EventDetailsComponent', () => {
     expect(inputStartTimeOptions).toContainEqual('12:00pm')
     expect(inputStartTimeOptions).toContainEqual('5:00pm')
     await inputStartTime.clickOptions({
-      text: '10:00am'
+      text: `${new Date(newEvent.startTime).getHours()}:00am`
     })
 
     fixture.detectChanges()

@@ -86,7 +86,7 @@ describe('TournamentPageComponent', () => {
       addEvent: jest.fn().mockReturnValue(of(event)),
       getTournamentById: jest.fn().mockReturnValue(of(tournament)),
     }
-    
+
     mockRouter = {
       navigate: jest.fn().mockReturnValue(Promise.resolve(true)),
     }
@@ -213,8 +213,9 @@ describe('TournamentPageComponent', () => {
     expect(inputNewStartTimeOptions).toContainEqual('8:00am')
     expect(inputNewStartTimeOptions).toContainEqual('12:00pm')
     expect(inputNewStartTimeOptions).toContainEqual('5:00pm')
+
     await inputNewStartTime.clickOptions({
-      text: '10:00am'
+      text: `${new Date(startTime).getHours()}:00am`
     })
 
     fixture.detectChanges()
@@ -256,7 +257,7 @@ describe('TournamentPageComponent', () => {
     component.eventList = []
 
     fixture.detectChanges();
-    
+
     expect(component.hasEvents).toBe(false)
 
     const compiled = fixture.nativeElement;
