@@ -196,9 +196,12 @@ describe('EventDetailsComponent', () => {
     const submitEventSpy = jest.spyOn(component.cancelFormEventEmitter, 'emit')
 
     buttonCancelEvent.click()
+
+    fixture.detectChanges()
+
+    expect(component.editEnabled).toBeFalsy()
     expect(submitEventSpy).toHaveBeenCalledWith(event)
   })
 
   // it('should display new event form')
-  // it('should not enable edit if existing event is not yet loaded')
 });

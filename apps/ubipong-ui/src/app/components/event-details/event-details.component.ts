@@ -48,6 +48,10 @@ export class EventDetailsComponent implements OnInit {
     this.inputEventName.setValue(this.event.name)
   }
 
+  disableEditing() {
+    this.editEnabled = false
+  }
+
   get inputEventNameErrorMessage() {
     if (this.inputEventName.hasError('required')) {
       return 'Name cannot be empty';
@@ -79,6 +83,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   cancelForm() {
+    this.disableEditing()
     this.cancelFormEventEmitter.emit(this.event)
   }
 }
