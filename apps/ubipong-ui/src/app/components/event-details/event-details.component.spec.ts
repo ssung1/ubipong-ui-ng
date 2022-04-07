@@ -171,8 +171,18 @@ describe('EventDetailsComponent', () => {
     expect(inputStartTimeOptions).toContainEqual('8:00am')
     expect(inputStartTimeOptions).toContainEqual('12:00pm')
     expect(inputStartTimeOptions).toContainEqual('5:00pm')
+    // click based on newEvent.startTime, but need to convert to timezone of the test runner
+    const startTime = new Date(newEvent.startTime).getHours()
+    const startTimeOption = (() => {
+      if (startTime > 12) {
+        return startTime - 12 + ":00pm"
+      } else {
+        return startTime + ":00am"
+      }
+    })()
+
     await inputStartTime.clickOptions({
-      text: `${new Date(newEvent.startTime).getHours()}:00am`
+      text: startTimeOption
     })
 
     fixture.detectChanges()
