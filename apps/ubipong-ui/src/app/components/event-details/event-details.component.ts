@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { TournamentEvent } from '../../models/tournament-event'
 
 @Component({
   selector: 'app-event-details',
@@ -9,7 +10,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class EventDetailsComponent implements OnInit {
 
   @Input()
-  event: any
+  event: TournamentEvent
 
   @Input()
   editEnabled: boolean = false
@@ -21,6 +22,7 @@ export class EventDetailsComponent implements OnInit {
   cancelFormEventEmitter: EventEmitter<any> = new EventEmitter<any>()
 
   inputEventName = new FormControl('', [Validators.required, Validators.maxLength(60)])
+  inputStartDate = new FormControl()
   inputStartTime = new FormControl()
 
   // cannot use `get timeOptionList()`.  not sure why yet, but material does not like it

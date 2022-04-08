@@ -46,9 +46,12 @@ import { MatSelectHarness } from '@angular/material/select/testing'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EventDetailsComponent } from './event-details.component';
 
+import { TournamentEvent } from '../../models/tournament-event'
+
 describe('EventDetailsComponent', () => {
-  const event = Object.freeze({
-    id: 123,
+  const eventId = 123
+  const event: TournamentEvent = Object.freeze({
+    id: eventId,
     name: 'Preliminary Group 1',
     challongeUrl: 'bb_201906_rr_pg_1',
     status: 'started',
@@ -56,8 +59,8 @@ describe('EventDetailsComponent', () => {
   })
 
   // we are editing event into newEvent
-  const newEvent = Object.freeze({
-    id: 123,
+  const newEvent: TournamentEvent = Object.freeze({
+    id: eventId,
     name: 'Preliminary Group 2',
     challongeUrl: 'bb_201906_rr_pg_1',
     status: 'started',
