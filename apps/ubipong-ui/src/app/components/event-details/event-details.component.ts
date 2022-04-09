@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
+import { FormControl, Validators } from '@angular/forms'
 import { TournamentEvent } from '../../models/tournament-event'
+import { TournamentTime } from '../../models/tournament-time'
 
 @Component({
   selector: 'app-event-details',
@@ -25,19 +26,17 @@ export class EventDetailsComponent implements OnInit {
   inputStartDate = new FormControl('', [Validators.required])
   inputStartTime = new FormControl('', [Validators.required])
 
-  // cannot use `get timeOptionList()`.  not sure why yet, but material does not like it
-  // when used as mat-option inside a mat-select
-  readonly timeOptionList = Object.freeze([
-    {hour: 8, minute: 0, display: "8:00am"},
-    {hour: 9, minute: 0, display: "9:00am"},
-    {hour: 10, minute: 0, display: "10:00am"},
-    {hour: 11, minute: 0, display: "11:00am"},
-    {hour: 12, minute: 0, display: "12:00pm"},
-    {hour: 13, minute: 0, display: "1:00pm"},
-    {hour: 14, minute: 0, display: "2:00pm"},
-    {hour: 15, minute: 0, display: "3:00pm"},
-    {hour: 16, minute: 0, display: "4:00pm"},
-    {hour: 17, minute: 0, display: "5:00pm"},
+  readonly timeOptionList: readonly TournamentTime[] = Object.freeze([
+    new TournamentTime({hour: 8, minute: 0}),
+    new TournamentTime({hour: 9, minute: 0}),
+    new TournamentTime({hour: 10, minute: 0}),
+    new TournamentTime({hour: 11, minute: 0}),
+    new TournamentTime({hour: 12, minute: 0}),
+    new TournamentTime({hour: 13, minute: 0}),
+    new TournamentTime({hour: 14, minute: 0}),
+    new TournamentTime({hour: 15, minute: 0}),
+    new TournamentTime({hour: 16, minute: 0}),
+    new TournamentTime({hour: 17, minute: 0}),
   ])
 
   constructor() { }

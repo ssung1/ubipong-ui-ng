@@ -48,6 +48,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EventDetailsComponent } from './event-details.component';
 
 import { TournamentEvent } from '../../models/tournament-event'
+import { TournamentTime } from '../../models/tournament-time'
 
 describe('EventDetailsComponent', () => {
   const eventId = 123
@@ -104,7 +105,7 @@ describe('EventDetailsComponent', () => {
         MatProgressSpinnerModule,
         MatRadioModule,
         MatRippleModule,
-        MatSelectModule,        
+        MatSelectModule,
         MatSidenavModule,
         MatSlideToggleModule,
         MatSliderModule,
@@ -183,14 +184,11 @@ describe('EventDetailsComponent', () => {
       expect(inputStartTime).toBeTruthy()
       await inputStartTime.open()
       const startHour = new Date(event.startTime).getHours()
-      const startHourText = (() => {
-        if (startHour > 12) {
-          return startHour - 12 + ":00pm"
-        } else {
-          return startHour + ":00am"
-        }
-      })()
-      expect(await inputStartTime.getValueText()).toBe(startHourText)
+      const startMinute = new Date(event.startTime).getMinutes()
+      expect(await inputStartTime.getValueText()).toBe(new TournamentTime({
+        hour: startHour,
+        minute: startMinute,
+      }).display)
       const inputStartTimeOptionHarnesses = await inputStartTime.getOptions()
       const inputStartTimeOptions = await Promise.all(
         inputStartTimeOptionHarnesses.map(o => o.getText()))
@@ -199,16 +197,13 @@ describe('EventDetailsComponent', () => {
       expect(inputStartTimeOptions).toContainEqual('5:00pm')
       // click based on newEvent.startTime, but need to convert to timezone of the test runner
       const newStartHour = new Date(newEvent.startTime).getHours()
-      const newStartHourOption = (() => {
-        if (newStartHour > 12) {
-          return newStartHour - 12 + ":00pm"
-        } else {
-          return newStartHour + ":00am"
-        }
-      })()
+      const newStartMinute = new Date(newEvent.startTime).getMinutes()
 
       await inputStartTime.clickOptions({
-        text: newStartHourOption
+        text: new TournamentTime({
+          hour: newStartHour,
+          minute: newStartMinute,
+        }).display
       })
     }
 
