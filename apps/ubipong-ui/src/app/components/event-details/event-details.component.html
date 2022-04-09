@@ -15,7 +15,7 @@
       <input matInput class="event-name" type="text" size="48" [formControl]="inputEventName">
       <mat-error *ngIf="inputEventName.invalid">{{inputEventNameErrorMessage}}</mat-error>
     </mat-form-field>
-  
+
     <!--
     <mat-form-field class="challonge-url">
       <mat-label>Challonge URL</mat-label>
@@ -24,7 +24,17 @@
     </mat-form-field>
     -->
   </p>
-  
+
+  <p>
+    <mat-form-field class="start-date">
+      <mat-label>Start Date</mat-label>
+      <input matInput class="start-date" placeholder="MM/dd/yyyy" [matDatepicker]="datepicker"
+        [formControl]="inputStartDate">
+      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker></mat-datepicker>
+    </mat-form-field>
+  </p>
+
   <p>
     <mat-form-field class="start-time">
       <mat-label>Start Time</mat-label>
@@ -34,7 +44,7 @@
       <mat-error *ngIf="inputStartTime.invalid">{{inputStartTimeErrorMessage}}</mat-error>
     </mat-form-field>
   </p>
-  
+ 
   <p>
     <button mat-button color="primary" class="submit-event" [disabled]="isFormInvalid" (click)="submitForm()">Apply</button>
     <button mat-button color="secondary" class="cancel-event" (click)="cancelForm()">Cancel</button>

@@ -38,6 +38,7 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { ClipboardModule } from '@angular/cdk/clipboard'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { LayoutModule } from '@angular/cdk/layout'
+import { MatNativeDateModule } from '@angular/material/core'
 
 import { HarnessLoader } from '@angular/cdk/testing'
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
@@ -116,6 +117,7 @@ describe('EventDetailsComponent', () => {
         ClipboardModule,
         DragDropModule,
         LayoutModule,
+        MatNativeDateModule,
       ],
     })
     .compileComponents();
@@ -157,36 +159,53 @@ describe('EventDetailsComponent', () => {
 
     fixture.detectChanges()
 
-    const inputEventName = fixture.nativeElement.querySelector('input.event-name')
-    expect(inputEventName).toBeTruthy()
-    expect(inputEventName.value).toBe(event.name)
-    inputEventName.value = newEvent.name
-    inputEventName.dispatchEvent(new Event('input'))
+    function editEventName() {
+      const inputEventName = fixture.nativeElement.querySelector('input.event-name')
+      expect(inputEventName).toBeTruthy()
+      expect(inputEventName.value).toBe(event.name)
+      inputEventName.value = newEvent.name
+      inputEventName.dispatchEvent(new Event('input'))
+    }
 
-    const inputStartTime = await loader.getHarness(MatSelectHarness.with({
-      selector: '.start-time'
-    }))
-    expect(inputStartTime).toBeTruthy()
-    await inputStartTime.open()
-    const inputStartTimeOptionHarnesses = await inputStartTime.getOptions()
-    const inputStartTimeOptions = await Promise.all(
-      inputStartTimeOptionHarnesses.map(o => o.getText()))
-    expect(inputStartTimeOptions).toContainEqual('8:00am')
-    expect(inputStartTimeOptions).toContainEqual('12:00pm')
-    expect(inputStartTimeOptions).toContainEqual('5:00pm')
-    // click based on newEvent.startTime, but need to convert to timezone of the test runner
-    const startTime = new Date(newEvent.startTime).getHours()
-    const startTimeOption = (() => {
-      if (startTime > 12) {
-        return startTime - 12 + ":00pm"
-      } else {
-        return startTime + ":00am"
-      }
-    })()
+    function editStartDate() {
+      const inputStartDate = fixture.nativeElement.querySelector('input.start-date')
+      expect(inputStartDate).toBeTruthy()
+      // material date picker sets displayed value to local date format
+      expect(inputStartDate.value).toBe(new Date(event.startTime).toLocaleDateString())
+      inputStartDate.value = newEvent.startTime
+      inputStartDate.dispatchEvent(new Event('input'));
+    }
 
-    await inputStartTime.clickOptions({
-      text: startTimeOption
-    })
+    async function editStartTime() {
+      const inputStartTime = await loader.getHarness(MatSelectHarness.with({
+        selector: '.start-time'
+      }))
+      expect(inputStartTime).toBeTruthy()
+      await inputStartTime.open()
+      const inputStartTimeOptionHarnesses = await inputStartTime.getOptions()
+      const inputStartTimeOptions = await Promise.all(
+        inputStartTimeOptionHarnesses.map(o => o.getText()))
+      expect(inputStartTimeOptions).toContainEqual('8:00am')
+      expect(inputStartTimeOptions).toContainEqual('12:00pm')
+      expect(inputStartTimeOptions).toContainEqual('5:00pm')
+      // click based on newEvent.startTime, but need to convert to timezone of the test runner
+      const startTime = new Date(newEvent.startTime).getHours()
+      const startTimeOption = (() => {
+        if (startTime > 12) {
+          return startTime - 12 + ":00pm"
+        } else {
+          return startTime + ":00am"
+        }
+      })()
+
+      await inputStartTime.clickOptions({
+        text: startTimeOption
+      })
+    }
+
+    editEventName()
+    editStartDate()
+    await editStartTime()
 
     fixture.detectChanges()
     const buttonSubmitEvent = fixture.nativeElement.querySelector('button.submit-event')

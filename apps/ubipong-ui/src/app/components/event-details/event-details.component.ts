@@ -48,6 +48,7 @@ export class EventDetailsComponent implements OnInit {
   enableEditing() {
     this.editEnabled = true
     this.inputEventName.setValue(this.event.name)
+    this.inputStartDate.setValue(this.event.startTime)
   }
 
   disableEditing() {
