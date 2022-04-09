@@ -1,4 +1,4 @@
-export class TournamentEvent {
+export type TournamentEvent = {
   id: number
   name: string
   challongeUrl: string
