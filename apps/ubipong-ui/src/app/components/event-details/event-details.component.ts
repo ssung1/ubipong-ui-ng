@@ -22,8 +22,8 @@ export class EventDetailsComponent implements OnInit {
   cancelFormEventEmitter: EventEmitter<any> = new EventEmitter<any>()
 
   inputEventName = new FormControl('', [Validators.required, Validators.maxLength(60)])
-  inputStartDate = new FormControl()
-  inputStartTime = new FormControl()
+  inputStartDate = new FormControl('', [Validators.required])
+  inputStartTime = new FormControl('', [Validators.required])
 
   // cannot use `get timeOptionList()`.  not sure why yet, but material does not like it
   // when used as mat-option inside a mat-select
@@ -49,6 +49,10 @@ export class EventDetailsComponent implements OnInit {
     this.editEnabled = true
     this.inputEventName.setValue(this.event.name)
     this.inputStartDate.setValue(this.event.startTime)
+    const startHour = new Date(this.event.startTime).getHours()
+    const startHourOption = this.timeOptionList.find(option => 
+      option.hour === startHour)
+    this.inputStartTime.setValue(startHourOption)
   }
 
   disableEditing() {

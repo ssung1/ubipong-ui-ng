@@ -182,6 +182,15 @@ describe('EventDetailsComponent', () => {
       }))
       expect(inputStartTime).toBeTruthy()
       await inputStartTime.open()
+      const startHour = new Date(event.startTime).getHours()
+      const startHourText = (() => {
+        if (startHour > 12) {
+          return startHour - 12 + ":00pm"
+        } else {
+          return startHour + ":00am"
+        }
+      })()
+      expect(await inputStartTime.getValueText()).toBe(startHourText)
       const inputStartTimeOptionHarnesses = await inputStartTime.getOptions()
       const inputStartTimeOptions = await Promise.all(
         inputStartTimeOptionHarnesses.map(o => o.getText()))
@@ -189,17 +198,17 @@ describe('EventDetailsComponent', () => {
       expect(inputStartTimeOptions).toContainEqual('12:00pm')
       expect(inputStartTimeOptions).toContainEqual('5:00pm')
       // click based on newEvent.startTime, but need to convert to timezone of the test runner
-      const startTime = new Date(newEvent.startTime).getHours()
-      const startTimeOption = (() => {
-        if (startTime > 12) {
-          return startTime - 12 + ":00pm"
+      const newStartHour = new Date(newEvent.startTime).getHours()
+      const newStartHourOption = (() => {
+        if (newStartHour > 12) {
+          return newStartHour - 12 + ":00pm"
         } else {
-          return startTime + ":00am"
+          return newStartHour + ":00am"
         }
       })()
 
       await inputStartTime.clickOptions({
-        text: startTimeOption
+        text: newStartHourOption
       })
     }
 
