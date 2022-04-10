@@ -315,12 +315,30 @@ describe('TournamentPageComponent', () => {
   })
 
   it('should not display event form until tournament information is retrieved', () => {
-    // await fixture.whenStable()
     component.tournament = null
     fixture.detectChanges()
 
     const nativeElement = fixture.nativeElement
     const accordianAddEvent = nativeElement.querySelector('#accordion-add-event')
     expect(accordianAddEvent).toBeFalsy()
+  })
+
+  it('should navigate to tournament-event details page if viewEventDetails event is received', () => {
+    component.eventList.push(event)
+
+    fixture.detectChanges();
+
+    expect(component.hasEvents).toBe(true)
+
+    const compiled = fixture.nativeElement;
+    const eventCard = compiled.querySelector('.event-card-list .event-card')
+
+    expect(eventCard).toBeTruthy()
+
+    eventCard.click()
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(
+      ["/event-page"],
+      {queryParams: {eventId: event.id}})
   })
 })

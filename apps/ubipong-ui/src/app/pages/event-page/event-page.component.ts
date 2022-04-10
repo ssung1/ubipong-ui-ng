@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { TournamentEvent } from '../../models/tournament-event';
+import { Component, OnInit } from '@angular/core'
+import { TournamentEvent } from '../../models/tournament-event'
+import { ActivatedRoute } from '@angular/router'
+import { TournamentService } from '../../services/tournament.service'
+import { map } from 'rxjs/operators'
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-page',
@@ -10,9 +14,29 @@ export class EventPageComponent implements OnInit {
 
   event?: TournamentEvent
 
-  constructor() { }
+  constructor(
+    private TournamentService: TournamentService,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+  ) { }
 
   ngOnInit(): void {
+    this.route.queryParamMap.pipe(
+      map(params => {
+        return Number(params.get('eventId'))
+      }),
+      map(eventId => {
+        this.refreshEventById(eventId)
+      }))
+    .subscribe()
+  }
+
+  refreshEventById(eventId: number): void {
+    this.TournamentService.getEvent(eventId).subscribe(event => {
+      this.event = event
+    }, error => {
+      this.snackBar.open(`Could not get event info: ${error.message}`, 'OK')
+    })
   }
 
 }

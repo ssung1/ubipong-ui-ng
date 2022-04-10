@@ -65,14 +65,14 @@ export class TournamentPageComponent implements OnInit {
       .subscribe(tournament => {
         this.tournament = tournament
       }, error => {
-        this.snackBar.open(`Cound not get tournament info: ${error.message}`, 'Ok', {duration: 2000})
+        this.snackBar.open(`Cound not get tournament info: ${error.message}`, 'Ok')
       })
 
     this.tournamentService.getEventList(this.tournamentId)
       .subscribe(eventList => {
         this.eventList = eventList
       }, error => {
-        this.snackBar.open(`Cound not get event list: ${error.message}`, 'Ok', {duration: 2000})
+        this.snackBar.open(`Cound not get event list: ${error.message}`, 'Ok')
       })
   }
 
@@ -143,6 +143,17 @@ export class TournamentPageComponent implements OnInit {
    */
   navigateToRoundRobinMatchSheet(event: any) {
     this.router.navigate(['/rr-match-sheet'], {
+      queryParams: {
+        eventId: event.id
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+
+  navigateToEventPage(event: any) {
+    this.router.navigate(['/event-page'], {
       queryParams: {
         eventId: event.id
       }

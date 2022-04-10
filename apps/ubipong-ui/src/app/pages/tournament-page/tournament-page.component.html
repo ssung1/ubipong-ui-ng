@@ -50,8 +50,9 @@
       </mat-expansion-panel>
     </mat-accordion>
 
-
-    <app-event-list [eventList]="eventList" (viewRoundRobinMatchSheet)="navigateToRoundRobinMatchSheet($event)">
+    <app-event-list [eventList]="eventList"
+      (viewRoundRobinMatchSheet)="navigateToRoundRobinMatchSheet($event)"
+      (viewEventDetails)="navigateToEventPage($event)">
     </app-event-list>
   </section>
 </app-main-menu>

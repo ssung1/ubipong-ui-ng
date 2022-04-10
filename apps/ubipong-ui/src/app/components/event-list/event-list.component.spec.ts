@@ -125,7 +125,7 @@ describe('EventListComponent', () => {
 
     const compiled = fixture.nativeElement
 
-    const eventCard = compiled.querySelector('.event')
+    const eventCard = compiled.querySelector('.event-card-list .event-card')
 
     const viewEventDetailsEventSpy = jest.spyOn(
       component.viewEventDetailsEventEmitter, 'emit')

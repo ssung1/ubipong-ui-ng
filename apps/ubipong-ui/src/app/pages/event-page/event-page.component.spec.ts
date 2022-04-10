@@ -35,16 +35,41 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
 import { MatSelectHarness } from '@angular/material/select/testing'
 
 describe('EventPageComponent', () => {
+  const event = {
+    id: 1,
+    name: 'Test Event',
+    challongeUrl: 'bb_201906_pg_rr_1',
+    status: 'pending',
+    startTime: '2020-01-01T00:00:00.000Z'
+  }
+
   let component: EventPageComponent
   let fixture: ComponentFixture<EventPageComponent>
 
   let mockUserService: any
+  let mockActivatedRoute: any
+  let mockTournamentService: any
+  let mockSnackBar: any
 
   beforeEach(async () => {
     mockUserService = {
       getUserId: jest.fn().mockResolvedValue(UserService.TEST_USER_ID),
       isLoggedIn: jest.fn().mockResolvedValue(true),
       login: jest.fn().mockResolvedValue('done')
+    }
+
+    mockActivatedRoute = {
+      queryParamMap: of({
+        get: jest.fn().mockReturnValue(event.id)
+      })
+    }
+
+    mockTournamentService = {
+      getEvent: jest.fn().mockReturnValue(of(event)),
+    }
+
+    mockSnackBar = {
+      open: jest.fn()
     }
 
     await TestBed.configureTestingModule({
@@ -80,6 +105,9 @@ describe('EventPageComponent', () => {
       ],
       providers: [
         { provide: UserService, useValue: mockUserService },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: TournamentService, useValue: mockTournamentService },
+        { provide: MatSnackBar, useValue: mockSnackBar },
       ],
     })
     .compileComponents()
@@ -93,20 +121,14 @@ describe('EventPageComponent', () => {
 
   it('should display event name', () => {
     expect(component).toBeTruthy()
-    component.event = {
-      id: 1,
-      name: 'Test Event',
-      challongeUrl: 'https://challonge.com/test',
-      status: 'pending',
-      startTime: '2020-01-01T00:00:00.000Z'
-    }
+
     fixture.detectChanges()
     const compiled = fixture.debugElement.nativeElement
     expect(compiled.querySelector('h1').textContent)
       .toContain(component.event.name)
   })
 
-  it('should display event details', () => {
+  it('should contain event details', () => {
     const compiled = fixture.debugElement.nativeElement
     const eventDetails = compiled.querySelector('app-event-details')
     expect(eventDetails).toBeTruthy()
