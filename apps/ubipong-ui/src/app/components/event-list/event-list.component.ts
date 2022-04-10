@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
+import {TournamentEvent} from '../../models/tournament-event'
 
 @Component({
   selector: 'app-event-list',
@@ -8,17 +9,26 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class EventListComponent implements OnInit {
 
   @Input()
-  eventList: any[]
+  eventList: TournamentEvent[]
 
   @Output('viewRoundRobinMatchSheet')
-  viewRoundRobinMatchSheetEventEmitter: EventEmitter<any> = new EventEmitter<any>()
+  viewRoundRobinMatchSheetEventEmitter: EventEmitter<TournamentEvent> =
+    new EventEmitter<TournamentEvent>()
+
+  @Output('viewEventDetails')
+  viewEventDetailsEventEmitter: EventEmitter<TournamentEvent> =
+    new EventEmitter<TournamentEvent>()
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  viewRoundRobinMatchSheet(event: any) {
+  viewRoundRobinMatchSheet(event: TournamentEvent) {
     this.viewRoundRobinMatchSheetEventEmitter.emit(event)
+  }
+
+  viewEventDetails(event: TournamentEvent) {
+    this.viewEventDetailsEventEmitter.emit(event)
   }
 }

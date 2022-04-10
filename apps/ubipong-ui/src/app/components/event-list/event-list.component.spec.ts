@@ -26,16 +26,18 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list'
 import { MatNativeDateModule } from '@angular/material/core'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import {TournamentEvent} from '../../models/tournament-event';
 
 describe('EventListComponent', () => {
   let mockUserService: any
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
 
-  const event = Object.freeze({
+  const event: TournamentEvent = Object.freeze({
     id: 123,
     name: 'Bikini Bottom Open 2019',
     challongeUrl: 'bb_201906_rr_pg_1',
+    startTime: '2019-06-01T00:00:00.000Z',
     status: 'started',
   })
 
@@ -116,4 +118,20 @@ describe('EventListComponent', () => {
 
     expect(viewRoundRobinMatchSheetEventSpy).toHaveBeenCalled()
   })
-});
+
+  it('should emit event to nagivate to event details if selected', () => {
+    component.eventList = [event]
+    fixture.detectChanges()
+
+    const compiled = fixture.nativeElement
+
+    const eventCard = compiled.querySelector('.event')
+
+    const viewEventDetailsEventSpy = jest.spyOn(
+      component.viewEventDetailsEventEmitter, 'emit')
+
+    eventCard.click()
+
+    expect(viewEventDetailsEventSpy).toHaveBeenCalled()
+  })
+})
