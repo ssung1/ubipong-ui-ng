@@ -133,8 +133,7 @@ describe('TournamentService', () => {
   });
 
   it('can return list of events of a given tournament', async () => {
-    // const eventLink = 'http://localhost:8080/crud/events/search/findByTournamentId?tournamentId=1'
-    const eventLink = 'http://localhost:8080/rest/v0/events/search/find-by-tournament-id?tournament-id=1'
+    const eventLink = `${url}/rest/v0/events/search/find-by-tournament-id?tournament-id=1`
     mockHttpClient.get.mockReturnValue(of([
       {
         "id": eventId,
