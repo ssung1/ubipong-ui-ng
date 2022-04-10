@@ -1,5 +1,5 @@
 export type TournamentEvent = {
-  id: number
+  id?: number
   name: string
   challongeUrl: string
   status: string

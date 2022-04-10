@@ -37,7 +37,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EventListComponent } from './components/event-list/event-list.component';
-import { EventDetailsComponent } from './components/event-details/event-details.component'
+import { EventDetailsComponent } from './components/event-details/event-details.component';
+import { EventPageComponent } from './pages/event-page/event-page.component'
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { EventDetailsComponent } from './components/event-details/event-details.
     EventPlayerListComponent,
     EventListComponent,
     EventDetailsComponent,
+    EventPageComponent,
   ],
   imports: [
     BrowserModule,
