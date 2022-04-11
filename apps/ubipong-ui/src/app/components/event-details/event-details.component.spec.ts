@@ -136,13 +136,6 @@ describe('EventDetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display event name', () => {
-    fixture.detectChanges()
-
-    const eventName = fixture.nativeElement.querySelector('span.event-name')
-    expect(eventName.textContent).toBe(event.name)
-  })
-
   it('should display start time', () => {
     const startTime = fixture.nativeElement.querySelector('span.start-time')
     expect(startTime.textContent).toBe(event.startTime)
