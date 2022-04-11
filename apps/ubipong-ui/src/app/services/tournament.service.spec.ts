@@ -61,7 +61,6 @@ describe('TournamentService', () => {
   });
 
   it('can add a tournament', async () => {
-    const tournamentLink = "http://localhost:8080/crud/tournaments/1";
     const addTournamentRequest = {
       "id": 0,
       "name": tournamentName,
@@ -115,7 +114,6 @@ describe('TournamentService', () => {
   });
 
   it('can retrieve a tournament by ID (url)', async () => {
-    const tournamentLink = "http://localhost:8080/crud/tournaments/3";
     mockHttpClient.get.mockReturnValue(of(tournament));
 
     const tournamentResponse = await tournamentService.getTournament(tournamentLink).toPromise();
@@ -124,7 +122,6 @@ describe('TournamentService', () => {
   });
 
   it('can update a tournament', async () => {
-    const tournamentLink = "http://localhost:8080/crud/tournaments/1";
     mockHttpClient.put.mockReturnValue(of(tournament));
 
     const response = await tournamentService.updateTournament(tournamentLink, tournament).toPromise();
@@ -151,4 +148,20 @@ describe('TournamentService', () => {
     expect(eventList[0].id).toBe(eventId)
     expect(eventList[0].challongeUrl).toBe(eventUrl)
   })
-});
+
+  it('can update an event', async () => {
+    const eventLink = `${url}/rest/v0/events/${eventId}`
+    const event = {
+      "id": eventId,
+      "tournamentId": tournamentId,
+      "challongeUrl": eventUrl,
+      "name": "Preliminary Group 1",
+      "challongeTournament": null,
+    }
+    mockHttpClient.put.mockReturnValue(of(event));
+
+    const response = await tournamentService.updateEvent(eventLink, event).toPromise();
+    expect(mockHttpClient.put).toHaveBeenCalled();
+    expect(response).toEqual(event)
+  })
+})

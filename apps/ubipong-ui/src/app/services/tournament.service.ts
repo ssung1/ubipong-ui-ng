@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
 import { AddEventRequest } from '../models/add-event-request';
+import {TournamentEvent} from '../models/tournament-event';
 
 const eventRoot = '/rest/v0/events';
 const crudEventRoot = '/crud/events'
@@ -21,6 +22,13 @@ export class TournamentService {
 
   getUrl(path: string): string {
     return environment.tournamentServiceUrl + path;
+  }
+
+  get defaultHeaders(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+    return headers;
   }
 
   getRoundRobinGrid(eventUrl: string): Observable<any[][]> {
@@ -59,12 +67,9 @@ export class TournamentService {
   }
 
   addTournament(tournament: Tournament): Observable<Tournament> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    const url = this.getUrl(tournamentRoot);
+    const url = this.getUrl(tournamentRoot)
 
-    return <Observable<any>>this.httpClient.post(url, tournament, { headers: headers });
+    return <Observable<any>>this.httpClient.post(url, tournament, { headers: this.defaultHeaders })
   }
 
   getTournamentList(): Observable<any> {
@@ -94,5 +99,10 @@ export class TournamentService {
     })
     const url = this.getUrl(`${eventRoot}`)
     return <Observable<any>>this.httpClient.post(url, addEventRequest, { headers: headers })
+  }
+
+  updateEvent(event: TournamentEvent): Observable<TournamentEvent> {
+    const url = this.getUrl(`${eventRoot}/${event.id}`)
+    return <Observable<TournamentEvent>>this.httpClient.put(url, event, { headers: this.defaultHeaders })
   }
 }
