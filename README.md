@@ -32,6 +32,26 @@ Then copy the contents in dist/apps/ubipong-ui to the server.
 And because we are deploying to a plain old web server, we need to use
 hash navigation.
 
+## How to Run in WSL
+
+If we want to run (`ng serve`) the application in WSL while accessing it from Windows, we need to listen to the host name of the WSL.
+
+Find the IP address using
+
+```bash
+ip addr show eth0
+```
+
+Then run
+
+```bash
+npx ng serve --host 0.0.0.0
+```
+
+Now we can get to it from our browser in Windows using the IP address.
+
+If the API is also running in WSL, then we need to edit `environment.ts` to set the `tournamentServerUrl` to the IP address.
+
 
 
 ## Table Tennis Tournament Manager
