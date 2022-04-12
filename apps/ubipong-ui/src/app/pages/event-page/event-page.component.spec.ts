@@ -26,6 +26,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatTableModule } from '@angular/material/table'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatNativeDateModule } from '@angular/material/core'
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
@@ -40,7 +41,7 @@ describe('EventPageComponent', () => {
     name: 'Test Event',
     challongeUrl: 'bb_201906_pg_rr_1',
     status: 'pending',
-    startTime: '2020-01-01T00:00:00.000Z'
+    startTime: '2020-01-01T12:00:00.000Z'
   }
 
   let component: EventPageComponent
@@ -66,6 +67,7 @@ describe('EventPageComponent', () => {
 
     mockTournamentService = {
       getEvent: jest.fn().mockReturnValue(of(event)),
+      updateEvent: jest.fn().mockReturnValue(of(event)),
     }
 
     mockSnackBar = {
@@ -100,6 +102,7 @@ describe('EventPageComponent', () => {
         MatTableModule,
         MatToolbarModule,
         LayoutModule,
+        MatNativeDateModule,
         MatSidenavModule,
         MatListModule,
       ],
@@ -132,5 +135,23 @@ describe('EventPageComponent', () => {
     const compiled = fixture.debugElement.nativeElement
     const eventDetails = compiled.querySelector('app-event-details')
     expect(eventDetails).toBeTruthy()
+  })
+
+  it('should call tournamentService when it receives the update event', () => {
+    const compiled = fixture.nativeElement
+    const buttonEnableEditing = compiled.querySelector('app-event-details button.enable-editing')
+    expect(buttonEnableEditing).toBeTruthy()
+
+    buttonEnableEditing.click()
+
+    fixture.detectChanges()
+    const buttonSubmitEvent = compiled.querySelector('.edit-panel .submit-event')
+    expect(buttonSubmitEvent).toBeTruthy()
+
+    buttonSubmitEvent.click()
+    expect(mockTournamentService.updateEvent).toHaveBeenCalledWith({
+      ...event,
+      startTime: null
+    })
   })
 })

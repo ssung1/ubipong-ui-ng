@@ -15,7 +15,7 @@ export class EventPageComponent implements OnInit {
   event?: TournamentEvent
 
   constructor(
-    private TournamentService: TournamentService,
+    private tournamentService: TournamentService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
   ) { }
@@ -32,11 +32,18 @@ export class EventPageComponent implements OnInit {
   }
 
   refreshEventById(eventId: number): void {
-    this.TournamentService.getEvent(eventId).subscribe(event => {
+    this.tournamentService.getEvent(eventId).subscribe(event => {
       this.event = event
     }, error => {
       this.snackBar.open(`Could not get event info: ${error.message}`, 'OK')
     })
   }
 
+  updateEvent(event: TournamentEvent): void {
+    this.tournamentService.updateEvent(event).subscribe(() => {
+      this.snackBar.open('Event updated', 'OK')
+    }, error => {
+      this.snackBar.open(`Could not update event: ${error.message}`, 'OK')
+    })
+  }
 }
