@@ -88,17 +88,12 @@ export class TournamentService {
   }
 
   updateTournament(tournamentLink: string, tournament: Tournament): Observable<any> {
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
-    return <Observable<any>>this.httpClient.put(tournamentLink, JSON.stringify(tournament), { headers: headers });
+    return <Observable<any>>this.httpClient.put(tournamentLink, tournament, { headers: this.defaultHeaders });
   }
 
   addEvent(addEventRequest: AddEventRequest): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
     const url = this.getUrl(`${eventRoot}`)
-    return <Observable<any>>this.httpClient.post(url, addEventRequest, { headers: headers })
+    return <Observable<any>>this.httpClient.post(url, addEventRequest, { headers: this.defaultHeaders })
   }
 
   updateEvent(event: TournamentEvent): Observable<TournamentEvent> {

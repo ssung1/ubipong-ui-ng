@@ -27,6 +27,15 @@ describe('TournamentService', () => {
       }
     }
   }
+  const event = {
+    "id": eventId,
+    "tournamentId": tournamentId,
+    "challongeUrl": eventUrl,
+    "name": "Preliminary Group 1",
+    "challongeTournament": null,
+    "startTime": "2018-06-20T17:00:00.000+0000",
+    "status": "pending",
+  }
 
   let mockHttpClient: any;
   let tournamentService: TournamentService;
@@ -72,8 +81,9 @@ describe('TournamentService', () => {
 
     const response = await tournamentService.addTournament(addTournamentRequest).toPromise();
 
-    expect(mockHttpClient.post).toHaveBeenCalledWith(
-      `${url}/rest/v0/tournaments`, addTournamentRequest, expect.anything());
+    expect(mockHttpClient.post.mock.calls[0][0]).toBe(`${url}/rest/v0/tournaments`)
+    expect(mockHttpClient.post.mock.calls[0][1]).toBe(addTournamentRequest)
+    expect(mockHttpClient.post.mock.calls[0][2].headers.get('Content-Type')).toBe('application/json')
     expect(response['_links']['self']['href']).toBe(tournamentLink);
   });
 
@@ -125,7 +135,9 @@ describe('TournamentService', () => {
     mockHttpClient.put.mockReturnValue(of(tournament));
 
     const response = await tournamentService.updateTournament(tournamentLink, tournament).toPromise();
-    expect(mockHttpClient.put).toHaveBeenCalled();
+    expect(mockHttpClient.put.mock.calls[0][0]).toBe(tournamentLink)
+    expect(mockHttpClient.put.mock.calls[0][1]).toBe(tournament)
+    expect(mockHttpClient.put.mock.calls[0][2].headers.get('Content-Type')).toBe('application/json')
     expect(response).toEqual(tournament)
   });
 
@@ -149,19 +161,31 @@ describe('TournamentService', () => {
     expect(eventList[0].challongeUrl).toBe(eventUrl)
   })
 
+  it('can add an event', async () => {
+    const eventLink = `${url}/rest/v0/events`
+    mockHttpClient.post.mockReturnValue(of(event))
+    const addEventRequest = {
+      tournamentId: event.tournamentId,
+      name: event.name,
+      challongeUrl: event.challongeUrl,
+      startTime: event.startTime,
+    }
+    const response = await tournamentService.addEvent(addEventRequest).toPromise();
+
+    expect(mockHttpClient.post.mock.calls[0][0]).toBe(eventLink)
+    expect(mockHttpClient.post.mock.calls[0][1]).toBe(addEventRequest)
+    expect(mockHttpClient.post.mock.calls[0][2].headers.get('Content-Type')).toBe('application/json')
+    expect(response).toEqual(event)
+  })
+
   it('can update an event', async () => {
     const eventLink = `${url}/rest/v0/events/${eventId}`
-    const event = {
-      "id": eventId,
-      "tournamentId": tournamentId,
-      "challongeUrl": eventUrl,
-      "name": "Preliminary Group 1",
-      "challongeTournament": null,
-    }
-    mockHttpClient.put.mockReturnValue(of(event));
+    mockHttpClient.put.mockReturnValue(of(event))
 
-    const response = await tournamentService.updateEvent(eventLink, event).toPromise();
-    expect(mockHttpClient.put).toHaveBeenCalled();
+    const response = await tournamentService.updateEvent(event).toPromise();
+    expect(mockHttpClient.put.mock.calls[0][0]).toBe(eventLink)
+    expect(mockHttpClient.put.mock.calls[0][1]).toBe(event)
+    expect(mockHttpClient.put.mock.calls[0][2].headers.get('Content-Type')).toBe('application/json')
     expect(response).toEqual(event)
   })
 })
