@@ -58,6 +58,7 @@ describe('EventDetailsComponent', () => {
     challongeUrl: 'bb_201906_rr_pg_1',
     status: 'started',
     startTime: '2021-05-03T12:00:00.000Z',
+    tournamentId: 234,
   })
 
   // we are editing event into newEvent
@@ -67,6 +68,7 @@ describe('EventDetailsComponent', () => {
     challongeUrl: 'bb_201906_rr_pg_1',
     status: 'started',
     startTime: '2021-05-03T14:00:00.000Z',
+    tournamentId: 234,
   })
 
   let component: EventDetailsComponent
