@@ -148,6 +148,63 @@ describe('EventDetailsComponent', () => {
     expect(buttonEnableEditing.textContent).toBeTruthy()
   })
 
+  function editEventName() {
+    const inputEventName = fixture.nativeElement.querySelector('input.event-name')
+    expect(inputEventName).toBeTruthy()
+    expect(inputEventName.value).toBe(event.name)
+    inputEventName.value = newEvent.name
+    inputEventName.dispatchEvent(new Event('input'))
+  }
+
+  function editStartDate() {
+    const inputStartDate = fixture.nativeElement.querySelector('input.start-date')
+    expect(inputStartDate).toBeTruthy()
+    // material date picker sets displayed value to local date format
+    const startTime = component.event.startTime
+    if (startTime) {
+      expect(inputStartDate.value).toBe(new Date(startTime).toLocaleDateString())
+    } else {
+      expect(inputStartDate.value).toBe('')
+    }
+    inputStartDate.value = newEvent.startTime
+    inputStartDate.dispatchEvent(new Event('input'));
+  }
+
+  async function editStartTime() {
+    const inputStartTime = await loader.getHarness(MatSelectHarness.with({
+      selector: '.start-time'
+    }))
+    expect(inputStartTime).toBeTruthy()
+    await inputStartTime.open()
+    const startTime = component.event.startTime
+    if (startTime) {
+      const startHour = new Date(startTime).getHours()
+      const startMinute = new Date(startTime).getMinutes()
+      expect(await inputStartTime.getValueText()).toBe(new TournamentTime({
+        hour: startHour,
+        minute: startMinute,
+      }).display)
+    } else {
+      expect(await inputStartTime.getValueText()).toBe('')
+    }
+    const inputStartTimeOptionHarnesses = await inputStartTime.getOptions()
+    const inputStartTimeOptions = await Promise.all(
+      inputStartTimeOptionHarnesses.map(o => o.getText()))
+    expect(inputStartTimeOptions).toContainEqual('8:00am')
+    expect(inputStartTimeOptions).toContainEqual('12:00pm')
+    expect(inputStartTimeOptions).toContainEqual('5:00pm')
+    // click based on newEvent.startTime, but need to convert to timezone of the test runner
+    const newStartHour = new Date(newEvent.startTime).getHours()
+    const newStartMinute = new Date(newEvent.startTime).getMinutes()
+
+    await inputStartTime.clickOptions({
+      text: new TournamentTime({
+        hour: newStartHour,
+        minute: newStartMinute,
+      }).display
+    })
+  }
+
   it('should allow user to edit event when user activates the edit button', async () => {
     const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
     expect(buttonEnableEditing).toBeTruthy()
@@ -155,52 +212,31 @@ describe('EventDetailsComponent', () => {
 
     fixture.detectChanges()
 
-    function editEventName() {
-      const inputEventName = fixture.nativeElement.querySelector('input.event-name')
-      expect(inputEventName).toBeTruthy()
-      expect(inputEventName.value).toBe(event.name)
-      inputEventName.value = newEvent.name
-      inputEventName.dispatchEvent(new Event('input'))
+    editEventName()
+    editStartDate()
+    await editStartTime()
+
+    fixture.detectChanges()
+    const buttonSubmitEvent = fixture.nativeElement.querySelector('button.submit-event')
+    expect(buttonSubmitEvent).toBeTruthy()
+
+    // event emitter
+    const submitEventSpy = jest.spyOn(component.submitFormEventEmitter, 'emit')
+    buttonSubmitEvent.click()
+    expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
+  })
+
+  it('should allow user to edit event even if existing event has no start time', async () => {
+    component.event = {
+      ...event,
+      startTime: null,
     }
 
-    function editStartDate() {
-      const inputStartDate = fixture.nativeElement.querySelector('input.start-date')
-      expect(inputStartDate).toBeTruthy()
-      // material date picker sets displayed value to local date format
-      expect(inputStartDate.value).toBe(new Date(event.startTime).toLocaleDateString())
-      inputStartDate.value = newEvent.startTime
-      inputStartDate.dispatchEvent(new Event('input'));
-    }
+    const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
+    expect(buttonEnableEditing).toBeTruthy()
+    buttonEnableEditing.click()
 
-    async function editStartTime() {
-      const inputStartTime = await loader.getHarness(MatSelectHarness.with({
-        selector: '.start-time'
-      }))
-      expect(inputStartTime).toBeTruthy()
-      await inputStartTime.open()
-      const startHour = new Date(event.startTime).getHours()
-      const startMinute = new Date(event.startTime).getMinutes()
-      expect(await inputStartTime.getValueText()).toBe(new TournamentTime({
-        hour: startHour,
-        minute: startMinute,
-      }).display)
-      const inputStartTimeOptionHarnesses = await inputStartTime.getOptions()
-      const inputStartTimeOptions = await Promise.all(
-        inputStartTimeOptionHarnesses.map(o => o.getText()))
-      expect(inputStartTimeOptions).toContainEqual('8:00am')
-      expect(inputStartTimeOptions).toContainEqual('12:00pm')
-      expect(inputStartTimeOptions).toContainEqual('5:00pm')
-      // click based on newEvent.startTime, but need to convert to timezone of the test runner
-      const newStartHour = new Date(newEvent.startTime).getHours()
-      const newStartMinute = new Date(newEvent.startTime).getMinutes()
-
-      await inputStartTime.clickOptions({
-        text: new TournamentTime({
-          hour: newStartHour,
-          minute: newStartMinute,
-        }).display
-      })
-    }
+    fixture.detectChanges()
 
     editEventName()
     editStartDate()

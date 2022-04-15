@@ -76,7 +76,7 @@ export class EventDetailsComponent implements OnInit {
     // offset in milliseconds for easy conversion
     const offset = new Date().getTimezoneOffset() * 60 * 1000
     // set clock to local time
-    const startTime = new Date(new Date(this.event.startTime).getTime() + offset)
+    const startTime = new Date(new Date(this.inputStartDate.value).getTime() + offset)
     // so that we can use setHours to get the right hours
     startTime.setHours(this.inputStartTime.value?.hour,
       this.inputStartTime.value?.minute, 0)
