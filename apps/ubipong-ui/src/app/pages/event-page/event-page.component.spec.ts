@@ -41,7 +41,9 @@ describe('EventPageComponent', () => {
     name: 'Test Event',
     challongeUrl: 'bb_201906_pg_rr_1',
     status: 'pending',
-    startTime: '2020-01-01T12:00:00.000Z'
+    // the time here should be set to a time that is included in the time-dropdown
+    // if we don't, we end up with a null startTime
+    startTime: '2020-01-01T17:00:00.000Z'
   }
 
   let component: EventPageComponent
@@ -149,9 +151,6 @@ describe('EventPageComponent', () => {
     expect(buttonSubmitEvent).toBeTruthy()
 
     buttonSubmitEvent.click()
-    expect(mockTournamentService.updateEvent).toHaveBeenCalledWith({
-      ...event,
-      startTime: null
-    })
+    expect(mockTournamentService.updateEvent).toHaveBeenCalledWith(event)
   })
 })
