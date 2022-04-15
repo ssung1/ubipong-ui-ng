@@ -197,10 +197,18 @@ describe('TournamentPageComponent', () => {
     inputNewName.value = eventName
     inputNewName.dispatchEvent(new Event('input'))
 
+    // no challonge URL, so the add button is still disabled
+    fixture.detectChanges()
+    expect(buttonAddEvent.disabled).toBe(true)
+
     const inputNewChallongeUrl = nativeElement.querySelector('#input-new-challonge-url')
     expect(inputNewChallongeUrl).toBeTruthy()
     inputNewChallongeUrl.value = challongeUrl
     inputNewChallongeUrl.dispatchEvent(new Event('input'))
+
+    // no start time, so the add button is still disabled
+    fixture.detectChanges()
+    expect(buttonAddEvent.disabled).toBe(true)
 
     const inputNewStartTime = await loader.getHarness(MatSelectHarness.with({
       selector: '#input-new-start-time'

@@ -24,7 +24,7 @@ export class TournamentPageComponent implements OnInit {
   
   inputNewName = new FormControl('', [Validators.required, Validators.maxLength(60)])
   inputNewChallongeUrl = new FormControl('', [Validators.required])
-  inputNewStartTime = new FormControl()
+  inputNewStartTime = new FormControl('', [Validators.required])
 
   // cannot use `get timeOptionList()`.  not sure why yet, but material does not like it
   // when used as mat-option inside a mat-select
@@ -95,7 +95,8 @@ export class TournamentPageComponent implements OnInit {
 
   get isNewEventFormInvalid() {
     return this.inputNewName.invalid ||
-      this.inputNewChallongeUrl.invalid
+      this.inputNewChallongeUrl.invalid ||
+      this.inputNewStartTime.invalid
   }
 
   get hasEvents() {
