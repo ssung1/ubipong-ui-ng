@@ -339,7 +339,7 @@ describe('TournamentPageComponent', () => {
     expect(component.hasEvents).toBe(true)
 
     const compiled = fixture.nativeElement;
-    const eventCard = compiled.querySelector('.event-card-list .event-card')
+    const eventCard = compiled.querySelector('.event-card-list .event-card .event-name')
 
     expect(eventCard).toBeTruthy()
 

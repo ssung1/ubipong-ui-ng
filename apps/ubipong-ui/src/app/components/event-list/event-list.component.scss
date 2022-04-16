@@ -6,7 +6,8 @@ section.event-card-list {
 
   mat-card.event-card {
     margin: .5rem 0;
-    :hover {
+
+    .event-name {
       cursor: pointer;
     }
 
