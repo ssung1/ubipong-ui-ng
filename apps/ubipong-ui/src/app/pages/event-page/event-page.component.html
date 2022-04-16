@@ -1,6 +1,7 @@
 <app-main-menu>
   <section id="event-page">
     <h1>{{event?.name}}</h1>
+
     <app-event-details [event]="event" (submitEvent)="updateEvent($event)"></app-event-details>
   </section>
 </app-main-menu>

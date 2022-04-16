@@ -5,6 +5,7 @@ section.event-card-list {
   align-items: stretch;
 
   mat-card.event-card {
+    margin: .5rem 0;
     :hover {
       cursor: pointer;
     }
