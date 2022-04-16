@@ -24,7 +24,7 @@ export class EventDetailsComponent implements OnInit {
 
   inputEventName = new FormControl('', [Validators.required, Validators.maxLength(60)])
   inputStartDate = new FormControl('', [Validators.required])
-  inputStartTime = new FormControl('', [Validators.required])
+  inputStartTime = new FormControl('hi', [Validators.required])
 
   readonly timeOptionList: readonly TournamentTime[] = Object.freeze([
     new TournamentTime({hour: 8, minute: 0}),
@@ -68,7 +68,17 @@ export class EventDetailsComponent implements OnInit {
     return JSON.stringify(this.inputEventName.errors);
   }
 
+  get inputStartDateErrorMessage() {
+    if (this.inputStartDate.hasError('required')) {
+      return 'Start date cannot be empty';
+    }
+    return JSON.stringify(this.inputStartDate.errors);
+  }
+
   get inputStartTimeErrorMessage() {
+    if (this.inputStartTime.hasError('required')) {
+      return 'Start time cannot be empty';
+    }
     return JSON.stringify(this.inputStartTime.errors);
   }
 
@@ -91,5 +101,11 @@ export class EventDetailsComponent implements OnInit {
   cancelForm() {
     this.disableEditing()
     this.cancelFormEventEmitter.emit(this.event)
+  }
+
+  get isFormInvalid() {
+    return this.inputEventName.invalid ||
+      this.inputStartDate.invalid ||
+      this.inputStartTime.invalid
   }
 }

@@ -238,13 +238,22 @@ describe('EventDetailsComponent', () => {
 
     fixture.detectChanges()
 
-    editEventName()
-    editStartDate()
-    await editStartTime()
-
-    fixture.detectChanges()
     const buttonSubmitEvent = fixture.nativeElement.querySelector('button.submit-event')
     expect(buttonSubmitEvent).toBeTruthy()
+
+    editEventName()
+    fixture.detectChanges()
+    expect(buttonSubmitEvent.disabled).toBe(true)
+
+    editStartDate()
+    fixture.detectChanges()
+    expect(buttonSubmitEvent.disabled).toBe(true)
+
+    await editStartTime()
+    fixture.detectChanges()
+    expect(buttonSubmitEvent.disabled).toBe(false)
+
+    fixture.detectChanges()
 
     // event emitter
     const submitEventSpy = jest.spyOn(component.submitFormEventEmitter, 'emit')

@@ -31,6 +31,7 @@
         [formControl]="inputStartDate">
       <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
       <mat-datepicker #datepicker></mat-datepicker>
+      <mat-error *ngIf="inputStartDate.invalid">{{inputStartDateErrorMessage}}</mat-error>
     </mat-form-field>
   </p>
 
