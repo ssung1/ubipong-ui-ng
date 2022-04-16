@@ -1,13 +1,10 @@
 section.event-card-list {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: stretch;
 
-  mat-card.event {
-    margin: 1rem;
-    flex: 1 1 0;
-
+  mat-card.event-card {
     :hover {
       cursor: pointer;
     }
