@@ -125,7 +125,7 @@ describe('EventListComponent', () => {
 
     const compiled = fixture.nativeElement
 
-    const eventCard = compiled.querySelector('.event-card-list .event-card')
+    const eventCard = compiled.querySelector('.event-card-list .event-card .event-name')
 
     const viewEventDetailsEventSpy = jest.spyOn(
       component.viewEventDetailsEventEmitter, 'emit')
@@ -133,5 +133,21 @@ describe('EventListComponent', () => {
     eventCard.click()
 
     expect(viewEventDetailsEventSpy).toHaveBeenCalled()
+  })
+
+  it('should not emit event to nagivate if only the challonge URL is selected', () => {
+    component.eventList = [event]
+    fixture.detectChanges()
+
+    const compiled = fixture.nativeElement
+
+    const eventCard = compiled.querySelector('.event-card-list .event-card .challonge-url')
+
+    const viewEventDetailsEventSpy = jest.spyOn(
+      component.viewEventDetailsEventEmitter, 'emit')
+
+    eventCard.click()
+
+    expect(viewEventDetailsEventSpy).not.toHaveBeenCalled()
   })
 })

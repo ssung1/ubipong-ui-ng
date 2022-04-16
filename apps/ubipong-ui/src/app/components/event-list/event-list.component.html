@@ -1,11 +1,10 @@
 <section class="event-card-list">
-  <mat-card class="event-card" *ngFor="let event of eventList"
-    (click)="viewEventDetails(event)">
+  <mat-card class="event-card" *ngFor="let event of eventList">
     <mat-card-header>
     </mat-card-header>
     <mat-card-content>
       <section>
-        <mat-card-title class="event-name">{{event.name}}</mat-card-title>
+        <mat-card-title class="event-name" (click)="viewEventDetails(event)">{{event.name}}</mat-card-title>
       </section>
       <section>
           <div class="challonge-url"><a target="_new" href="https://challonge.com/{{event.challongeUrl}}">{{event.challongeUrl}}</a></div>
