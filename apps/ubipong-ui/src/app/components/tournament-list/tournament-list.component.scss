@@ -3,9 +3,10 @@ section.tournament-card-list {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;
+  margin: -.5rem;
 
   mat-card.tournament-card {
-    margin: 1rem;
+    margin: .5rem;
     flex: 1 1 0;
 
     :hover {
