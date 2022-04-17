@@ -17,6 +17,12 @@ or routing will fail.
 
 ## How to Deploy
 
+Once the commits are merged into master branch, tag the version with
+
+```bash
+git tag v{yyyy-MM-dd}
+```
+
 Run build with
 
 ```bash
