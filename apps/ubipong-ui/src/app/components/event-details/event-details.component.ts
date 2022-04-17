@@ -14,7 +14,7 @@ export class EventDetailsComponent implements OnInit {
   event: TournamentEvent
 
   @Input()
-  editEnabled: boolean = false
+  isEditingEnabled: boolean = false
 
   @Output('submitEvent')
   submitFormEventEmitter: EventEmitter<any> = new EventEmitter<any>()

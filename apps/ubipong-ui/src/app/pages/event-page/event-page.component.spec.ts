@@ -139,7 +139,11 @@ describe('EventPageComponent', () => {
     expect(eventDetails).toBeTruthy()
   })
 
-  it('should call tournamentService when it receives the update event', () => {
+  it('should call tournamentService when it receives the update event', async () => {
+    await fixture.whenStable()
+    expect(component.isLoggedIn).toBe(true)
+
+    fixture.detectChanges()
     const compiled = fixture.nativeElement
     const buttonEnableEditing = compiled.querySelector('app-event-details button.enable-editing')
     expect(buttonEnableEditing).toBeTruthy()

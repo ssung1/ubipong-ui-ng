@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router'
 import { TournamentService } from '../../services/tournament.service'
 import { map } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../../services/user.service'
 
 @Component({
   selector: 'app-event-page',
@@ -13,14 +14,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EventPageComponent implements OnInit {
 
   event?: TournamentEvent
+  isLoggedIn: boolean = false
 
   constructor(
     private tournamentService: TournamentService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
+    this.refreshUser()
     this.route.queryParamMap.pipe(
       map(params => {
         return Number(params.get('eventId'))
@@ -44,6 +48,12 @@ export class EventPageComponent implements OnInit {
       this.snackBar.open('Event updated', 'OK')
     }, error => {
       this.snackBar.open(`Could not update event: ${error.message}`, 'OK')
+    })
+  }
+
+  refreshUser() {
+    this.userService.isLoggedIn().then(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn
     })
   }
 }

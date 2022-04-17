@@ -130,6 +130,7 @@ describe('EventDetailsComponent', () => {
     fixture = TestBed.createComponent(EventDetailsComponent);
     component = fixture.componentInstance;
     component.event = event
+    component.isEditingEnabled = true
     fixture.detectChanges()
     loader = TestbedHarnessEnvironment.loader(fixture)
   });
@@ -143,9 +144,17 @@ describe('EventDetailsComponent', () => {
     expect(startTime.textContent).toBe(event.startTime)
   })
 
-  it('should have an edit button', () => {
+  it('should have an edit button if editing is enabled', () => {
+    fixture.detectChanges()
     const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
-    expect(buttonEnableEditing.textContent).toBeTruthy()
+    expect(buttonEnableEditing).toBeTruthy()
+  })
+
+  it('should not have an edit button if editing is disabled', () => {
+    component.isEditingEnabled = false
+    fixture.detectChanges()
+    const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
+    expect(buttonEnableEditing).toBeFalsy()
   })
 
   function editEventName() {
@@ -275,7 +284,7 @@ describe('EventDetailsComponent', () => {
 
     fixture.detectChanges()
 
-    expect(component.editEnabled).toBeFalsy()
+    expect(component.isEditEventFormOpen).toBe(false)
     expect(submitEventSpy).toHaveBeenCalledWith(event)
   })
 
