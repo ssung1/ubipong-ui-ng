@@ -22,6 +22,8 @@ export class EventDetailsComponent implements OnInit {
   @Output('cancelEvent')
   cancelFormEventEmitter: EventEmitter<any> = new EventEmitter<any>()
 
+  isEditEventFormOpen = false
+
   inputEventName = new FormControl('', [Validators.required, Validators.maxLength(60)])
   inputStartDate = new FormControl('', [Validators.required])
   inputStartTime = new FormControl('hi', [Validators.required])
@@ -45,7 +47,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   enableEditing() {
-    this.editEnabled = true
+    this.isEditEventFormOpen = true
     this.inputEventName.setValue(this.event.name)
     this.inputStartDate.setValue(this.event.startTime)
     const startHour = new Date(this.event.startTime).getHours()
@@ -55,7 +57,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   disableEditing() {
-    this.editEnabled = false
+    this.isEditEventFormOpen = false
   }
 
   get inputEventNameErrorMessage() {
