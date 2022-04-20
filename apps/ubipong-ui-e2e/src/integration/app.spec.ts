@@ -28,7 +28,8 @@ describe('ubipong-ui', () => {
 
   const preliminaryGroup1 = {
     name: "Preliminary Group 1",
-    challongeUrl: "bb_201906_pg_rr_1"
+    challongeUrl: "bb_201906_pg_rr_1",
+    startTime: "2019-06-23T10:00:00-05:00",
   }
 
   const spongebob = {
@@ -101,6 +102,16 @@ describe('ubipong-ui', () => {
   function verifyAddedEvent(event: any) {
     const eventElement = cy.contains('.event-card', preliminaryGroup1.name)
     eventElement.contains('.event-status', 'created')
+  }
+
+  function editEvent(event: any) {
+    cy.contains('.event-card .event-name', preliminaryGroup1.name).click()
+    cy.contains('.event button', 'Edit').click()
+    cy.get('.edit-panel input.event-name').type(preliminaryGroup1.name)
+    cy.get('.edit-panel input.start-date').type(preliminaryGroup1.startTime)
+    cy.get('.edit-panel mat-select.start-time').click()
+    cy.contains('.mat-option-text', '10:00am').click()
+    cy.contains('.edit-panel button', 'Save').click()
   }
 
   function addPlayerList(players, challongeUrl: string) {
@@ -256,6 +267,12 @@ describe('ubipong-ui', () => {
     goToTournamentFromDashboard(bikiniBottomOpen.name)
     addEvent(preliminaryGroup1)
     verifyAddedEvent(preliminaryGroup1)
+    editEvent(preliminaryGroup1)
+
+    // we have not done the navigation, so we go back to the tournament page the hard way
+    goToDashboard()
+    goToTournamentFromDashboard(bikiniBottomOpen.name)
+
     addPlayerList([spongebob, patrick, squidward],
       preliminaryGroup1.challongeUrl)
     startEvent(preliminaryGroup1.challongeUrl)
