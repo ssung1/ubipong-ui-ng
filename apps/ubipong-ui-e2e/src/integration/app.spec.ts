@@ -99,7 +99,7 @@ describe('ubipong-ui', () => {
   }
 
   function verifyAddedEvent(event: any) {
-    const eventElement = cy.contains('.event', preliminaryGroup1.name)
+    const eventElement = cy.contains('.event-card', preliminaryGroup1.name)
     eventElement.contains('.event-status', 'created')
   }
 
@@ -142,7 +142,7 @@ describe('ubipong-ui', () => {
   }
 
   function goToRoundRobinMatchSheet(eventName) {
-    const event = cy.contains('.event', eventName)
+    const event = cy.contains('.event-card', eventName)
     event.get('.button-round-robin-match-sheet').click()
   }
 

@@ -15,6 +15,18 @@ npx nx build --prod --base-href /ubipong/
 
 or routing will fail.
 
+## How to E2E Test
+
+Check settings in `apps/ubipong-ui-e2e/src/config/environment.ts`.
+
+For `challongeApiKey` set environment variable `CYPRESS_CHALLONGE_API_KEY` (note the `CYPRESS_` prefix).
+
+Run
+
+```bash
+npx nx e2e --watch
+```
+
 ## How to Deploy
 
 Once the commits are merged into master branch, tag the version with
