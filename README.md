@@ -24,7 +24,7 @@ For `challongeApiKey` set environment variable `CYPRESS_CHALLONGE_API_KEY` (note
 Run
 
 ```bash
-npx nx e2e --watch
+npx nx e2e ubipong-ui-e2e --watch
 ```
 
 ## How to Deploy
