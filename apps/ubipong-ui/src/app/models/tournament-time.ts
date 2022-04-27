@@ -2,7 +2,7 @@ export class TournamentTime {
   readonly hour: number
   readonly minute: number
 
-  constructor({hour, minute}) {
+  constructor({hour, minute}: {hour: number; minute: number}) {
     this.hour = hour
     this.minute = minute
   }
