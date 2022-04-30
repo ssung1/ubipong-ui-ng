@@ -60,7 +60,7 @@ export class UserService {
   public static TEST_USER_ID = 'testuser'
 
   get authCodeFlowConfig(): AuthConfig {
-    const baseHref = this.document.querySelector('html head base').getAttribute('href')
+    const baseHref = this?.document?.querySelector('html head base')?.getAttribute('href') ?? ''
     return {
       // Url of the Identity Provider
       //
@@ -194,7 +194,8 @@ export class UserService {
     }
 
     if (await this.isLoggedIn()) {
-      return this.oAuthService.getIdentityClaims()['email']
+      const user: any = this.oAuthService.getIdentityClaims()
+      return user.email
     } else {
       throw new Error('User is not logged in.')
     }

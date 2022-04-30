@@ -14,6 +14,9 @@ describe('UserService', () => {
     mockDocument = {
       querySelector: jest.fn().mockReturnValue({
         getAttribute: jest.fn().mockReturnValue(baseHref)
+      }),
+      querySelectorAll: jest.fn().mockReturnValue({
+        getAttribute: jest.fn().mockReturnValue(baseHref)
       })
     }
     mockOAuthService = {
