@@ -14,7 +14,7 @@ describe('TournamentService', () => {
   const tournamentId = 1
   const eventId = 101
   const tournamentLink = "http://localhost:8080/crud/tournaments/1";
-  const tournament = {
+  const tournament: Tournament = {
     "id": tournamentId,
     "name": tournamentName,
     "tournamentDate": "2018-06-20T17:00:00.000+0000",
@@ -22,9 +22,6 @@ describe('TournamentService', () => {
       "self": {
         "href": tournamentLink
       },
-      "tournament": {
-        "href": tournamentLink
-      }
     }
   }
   const event = {
@@ -83,7 +80,7 @@ describe('TournamentService', () => {
     expect(mockHttpClient.post.mock.calls[0][0]).toBe(`${url}/rest/v0/tournaments`)
     expect(mockHttpClient.post.mock.calls[0][1]).toBe(addTournamentRequest)
     expect(mockHttpClient.post.mock.calls[0][2].headers.get('Content-Type')).toBe('application/json')
-    expect((response?.['_links']?.['self']?.['href']).toBe(tournamentLink)
+    expect(response._links?.self.href).toBe(tournamentLink)
   });
 
   it('can retrieve a list of tournaments', async () => {
@@ -133,7 +130,7 @@ describe('TournamentService', () => {
   it('can update a tournament', async () => {
     mockHttpClient.put.mockReturnValue(of(tournament));
 
-    const response = await tournamentService.updateTournament(tournamentLink, tournament).toPromise();
+    const response = await lastValueFrom(tournamentService.updateTournament(tournamentLink, tournament))
     expect(mockHttpClient.put.mock.calls[0][0]).toBe(tournamentLink)
     expect(mockHttpClient.put.mock.calls[0][1]).toBe(tournament)
     expect(mockHttpClient.put.mock.calls[0][2].headers.get('Content-Type')).toBe('application/json')
