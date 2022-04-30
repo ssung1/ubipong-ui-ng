@@ -4,7 +4,7 @@ import { TournamentService } from './tournament.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
-import { of } from 'rxjs';
+import { of, lastValueFrom } from 'rxjs';
 import { doesNotReject } from 'assert';
 
 describe('TournamentService', () => {
@@ -53,8 +53,7 @@ describe('TournamentService', () => {
   it('can retrieve a round robin grid by event URL', async () => {
     const content = "example";
     mockHttpClient.get.mockReturnValue(of([[{ type: 1, content: content }]]));
-    const response = await tournamentService.getRoundRobinGrid(eventUrl).toPromise();
-
+    const response = await lastValueFrom(tournamentService.getRoundRobinGrid(eventUrl))
     expect(mockHttpClient.get).toHaveBeenCalledWith(
       `${url}/rest/v0/events/${eventUrl}/roundRobinGrid`);
     expect(response[0][0].content).toBe(content);
@@ -79,12 +78,12 @@ describe('TournamentService', () => {
 
     mockHttpClient.post.mockReturnValue(of(tournament));
 
-    const response = await tournamentService.addTournament(addTournamentRequest).toPromise();
+    const response: Tournament = await lastValueFrom(tournamentService.addTournament(addTournamentRequest))
 
     expect(mockHttpClient.post.mock.calls[0][0]).toBe(`${url}/rest/v0/tournaments`)
     expect(mockHttpClient.post.mock.calls[0][1]).toBe(addTournamentRequest)
     expect(mockHttpClient.post.mock.calls[0][2].headers.get('Content-Type')).toBe('application/json')
-    expect(response['_links']['self']['href']).toBe(tournamentLink);
+    expect((response?.['_links']?.['self']?.['href']).toBe(tournamentLink)
   });
 
   it('can retrieve a list of tournaments', async () => {
@@ -126,7 +125,7 @@ describe('TournamentService', () => {
   it('can retrieve a tournament by ID (url)', async () => {
     mockHttpClient.get.mockReturnValue(of(tournament));
 
-    const tournamentResponse = await tournamentService.getTournament(tournamentLink).toPromise();
+    const tournamentResponse = await lastValueFrom(tournamentService.getTournament(tournamentLink))
     expect(mockHttpClient.get).toHaveBeenCalledWith(tournamentLink);
     expect(tournamentResponse.name).toBe(tournamentName);
   });
@@ -153,7 +152,7 @@ describe('TournamentService', () => {
       }
     ]))
 
-    const eventList = await tournamentService.getEventList(1).toPromise()
+    const eventList = await lastValueFrom(tournamentService.getEventList(1))
 
     expect(mockHttpClient.get).toHaveBeenCalledWith(eventLink)
     expect(eventList.length).toBe(1)
