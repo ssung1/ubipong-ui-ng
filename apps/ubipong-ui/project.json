@@ -1,0 +1,94 @@
+{
+  "projectType": "application",
+  "root": "apps/ubipong-ui",
+  "sourceRoot": "apps/ubipong-ui/src",
+  "prefix": "ubipong-ui-ng",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ubipong-ui",
+        "index": "apps/ubipong-ui/src/index.html",
+        "main": "apps/ubipong-ui/src/main.ts",
+        "polyfills": "apps/ubipong-ui/src/polyfills.ts",
+        "tsConfig": "apps/ubipong-ui/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/ubipong-ui/src/favicon.ico",
+          "apps/ubipong-ui/src/assets"
+        ],
+        "styles": ["apps/ubipong-ui/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/ubipong-ui/src/environments/environment.ts",
+              "with": "apps/ubipong-ui/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ubipong-ui:build:production"
+        },
+        "development": {
+          "browserTarget": "ubipong-ui:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "ubipong-ui:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/ubipong-ui/**/*.ts",
+          "apps/ubipong-ui/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/ubipong-ui"],
+      "options": {
+        "jestConfig": "apps/ubipong-ui/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
