@@ -18,7 +18,10 @@
           "apps/ubipong-ui/src/favicon.ico",
           "apps/ubipong-ui/src/assets"
         ],
-        "styles": ["apps/ubipong-ui/src/styles.scss"],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+          "apps/ubipong-ui/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
