@@ -93,6 +93,13 @@ export class TournamentPageComponent implements OnInit {
     return JSON.stringify(this.inputNewChallongeUrl.errors)
   }
 
+  get inputNewStartTimeErrorMessage() {
+    if (this.inputNewStartTime.hasError('required')) {
+      return 'Must have start time';
+    }
+    return JSON.stringify(this.inputNewStartTime.errors);
+  }
+
   get isNewEventFormInvalid() {
     return this.inputNewName.invalid ||
       this.inputNewChallongeUrl.invalid ||

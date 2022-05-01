@@ -138,10 +138,10 @@ export class EventPlayerListComponent implements OnInit {
     }
   }
 
-  createGroupList(groupSize: number) {
+  createGroupList(groupSize: string) {
     var groupIndex = 0;
     var direction = 1;
-    const numberOfGroups = this.calculateNumberOfGroups(groupSize);
+    const numberOfGroups = this.calculateNumberOfGroups(parseInt(groupSize))
 
     // clear list first
     this.roundRobinGroupList = [];
