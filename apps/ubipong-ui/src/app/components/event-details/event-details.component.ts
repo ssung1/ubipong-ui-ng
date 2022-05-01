@@ -11,7 +11,14 @@ import { TournamentTime } from '../../models/tournament-time'
 export class EventDetailsComponent implements OnInit {
 
   @Input()
-  event: TournamentEvent
+  event: TournamentEvent = {
+    id: 0,
+    tournamentId: 0,
+    name: '',
+    challongeUrl: '',
+    status: '',
+    startTime: JSON.stringify(new Date()),
+  }
 
   @Input()
   isEditingEnabled: boolean = false

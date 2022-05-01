@@ -34,7 +34,7 @@ export class EventPlayerListComponent implements OnInit {
 
   newName = '';
   newClub = '';
-  newRating = null;
+  newRating = '';
 
   sortedByRating = true;
 
@@ -79,7 +79,7 @@ export class EventPlayerListComponent implements OnInit {
   }
 
   addPlayer(name: string = this.newName,
-      club: string = this.newClub, rating: string = this.newRating) {
+    club: string = this.newClub, rating: string = this.newRating) {
     const player = new Player();
     player.name = name;
     player.club = club;
@@ -92,7 +92,7 @@ export class EventPlayerListComponent implements OnInit {
 
     this.newName = '';
     this.newClub = '';
-    this.newRating = null;
+    this.newRating = '';
   }
 
   sortPlayerListByRating() {

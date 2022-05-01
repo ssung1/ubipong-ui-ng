@@ -47,9 +47,6 @@ describe('TournamentListComponent', () => {
         "self": {
             "href": tournamentLink
         },
-        "tournament": {
-            "href": tournamentLink
-        }
     }
   }
   const tournament2: Tournament = {
@@ -60,9 +57,6 @@ describe('TournamentListComponent', () => {
         "self": {
             "href": tournamentLink2
         },
-        "tournament": {
-            "href": tournamentLink2
-        }
     }
   }
 

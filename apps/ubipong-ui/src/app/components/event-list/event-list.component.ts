@@ -9,7 +9,7 @@ import {TournamentEvent} from '../../models/tournament-event'
 export class EventListComponent implements OnInit {
 
   @Input()
-  eventList: TournamentEvent[]
+  eventList: TournamentEvent[] = []
 
   @Output('viewRoundRobinMatchSheet')
   viewRoundRobinMatchSheetEventEmitter: EventEmitter<TournamentEvent> =

@@ -211,10 +211,10 @@ describe('EventPlayerListComponent', () => {
     const dom = fixture.nativeElement;
     dom.querySelector('#input-group-size').value = groupSize;
 
-    const createGroupList = spyOn(component, 'createGroupList').and.stub();
-    dom.querySelector('#button-make-groups').click();
-    expect(createGroupList).toHaveBeenCalledWith(groupSize.toString());
-  });
+    component.createGroupList = jest.fn()
+    dom.querySelector('#button-make-groups').click()
+    expect(component.createGroupList).toHaveBeenCalledWith(groupSize.toString())
+  })
 
   it('should create round robin groups when user clicks on the make group button', () => {
     component.playerList = [
@@ -229,7 +229,7 @@ describe('EventPlayerListComponent', () => {
 
     const player = dom.querySelector('div.group-list table tr:nth-child(3) > td:nth-child(1)');
     expect(player.textContent).toBe(player1.name);
-  });
+  })
 
   it('should not sort players by rating if option is turned off', () => {
     component.sortedByRating = false;

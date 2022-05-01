@@ -238,7 +238,7 @@ describe('EventDetailsComponent', () => {
   it('should allow user to edit event even if existing event has no start time', async () => {
     component.event = {
       ...event,
-      startTime: null,
+      startTime: '',
     }
 
     const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
