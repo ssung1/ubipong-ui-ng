@@ -116,13 +116,13 @@ describe('RoundRobinPageComponent', () => {
   })
 
   it('should not update event name if round robin grid is not available', () => {
-    component.event = null
-    component.gridContent = null
+    component.event = event
+    component.gridContent = [[]]
 
     mockTournamentService.getRoundRobinGrid.mockReturnValue(throwError('error'))
     component.refreshData()
 
-    expect(component.event).toBeFalsy()
-    expect(component.gridContent).toBeFalsy();
+    expect(component.event).toEqual(event)
+    expect(component.gridContent).toEqual([[]])
   })
 });

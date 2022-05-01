@@ -130,7 +130,7 @@ describe('EventPageComponent', () => {
     fixture.detectChanges()
     const compiled = fixture.debugElement.nativeElement
     expect(compiled.querySelector('h1').textContent)
-      .toContain(component.event.name)
+      .toContain(component.event?.name)
   })
 
   it('should contain event details', () => {

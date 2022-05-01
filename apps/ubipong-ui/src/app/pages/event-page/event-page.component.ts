@@ -13,7 +13,7 @@ import { UserService } from '../../services/user.service'
 })
 export class EventPageComponent implements OnInit {
 
-  event?: TournamentEvent
+  event: TournamentEvent | null = null
   isLoggedIn: boolean = false
 
   constructor(

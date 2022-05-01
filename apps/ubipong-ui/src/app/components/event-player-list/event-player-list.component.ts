@@ -80,10 +80,7 @@ export class EventPlayerListComponent implements OnInit {
 
   addPlayer(name: string = this.newName,
     club: string = this.newClub, rating: string = this.newRating) {
-    const player = new Player();
-    player.name = name;
-    player.club = club;
-    player.rating = parseInt(rating);
+    const player = new Player(name, club, parseInt(rating))
     this.playerList.push(player);
 
     if (this.sortedByRating) {
@@ -133,9 +130,7 @@ export class EventPlayerListComponent implements OnInit {
 
   ensureRoundRobinGroup(groupIndex: number): RoundRobinGroup {
     if (!this.roundRobinGroupList[groupIndex]) {
-      const newGroup = new RoundRobinGroup();
-      newGroup.groupNumber = groupIndex + 1;
-      newGroup.playerList = [];
+      const newGroup = new RoundRobinGroup(0, groupIndex + 1, [])
       this.roundRobinGroupList[groupIndex] = newGroup;
       return newGroup;
     } else {

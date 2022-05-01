@@ -11,14 +11,7 @@ import { TournamentTime } from '../../models/tournament-time'
 export class EventDetailsComponent implements OnInit {
 
   @Input()
-  event: TournamentEvent = {
-    id: 0,
-    tournamentId: 0,
-    name: '',
-    challongeUrl: '',
-    status: '',
-    startTime: JSON.stringify(new Date()),
-  }
+  event: TournamentEvent | null = null
 
   @Input()
   isEditingEnabled: boolean = false
@@ -55,9 +48,9 @@ export class EventDetailsComponent implements OnInit {
 
   enableEditing() {
     this.isEditEventFormOpen = true
-    this.inputEventName.setValue(this.event.name)
-    this.inputStartDate.setValue(this.event.startTime)
-    const startHour = new Date(this.event.startTime).getHours()
+    this.inputEventName.setValue(this.event?.name)
+    this.inputStartDate.setValue(this.event?.startTime)
+    const startHour = new Date(this.event?.startTime ?? new Date().toJSON()).getHours()
     const startHourOption = this.timeOptionList.find(option => 
       option.hour === startHour)
     this.inputStartTime.setValue(startHourOption)

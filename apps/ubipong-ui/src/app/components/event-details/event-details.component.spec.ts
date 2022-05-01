@@ -169,7 +169,7 @@ describe('EventDetailsComponent', () => {
     const inputStartDate = fixture.nativeElement.querySelector('input.start-date')
     expect(inputStartDate).toBeTruthy()
     // material date picker sets displayed value to local date format
-    const startTime = component.event.startTime
+    const startTime = component.event?.startTime
     if (startTime) {
       expect(inputStartDate.value).toBe(new Date(startTime).toLocaleDateString())
     } else {
@@ -185,7 +185,7 @@ describe('EventDetailsComponent', () => {
     }))
     expect(inputStartTime).toBeTruthy()
     await inputStartTime.open()
-    const startTime = component.event.startTime
+    const startTime = component.event?.startTime
     if (startTime) {
       const startHour = new Date(startTime).getHours()
       const startMinute = new Date(startTime).getMinutes()

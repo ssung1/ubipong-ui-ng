@@ -106,8 +106,9 @@ export class TournamentPageComponent implements OnInit {
   addEvent() {
     // offset in milliseconds for easy conversion
     const offset = new Date().getTimezoneOffset() * 60 * 1000
+    const tournamentDateString: string = this.tournament?.tournamentDate ?? new Date().toJSON()
     // set clock to local time
-    const tournamentDate = new Date(new Date(this.tournament.tournamentDate).getTime() + offset)
+    const tournamentDate = new Date(new Date(tournamentDateString).getTime() + offset)
     // so that we can use setHours to get the right hours
     tournamentDate.setHours(this.inputNewStartTime.value?.hour,
       this.inputNewStartTime.value?.minute, 0)

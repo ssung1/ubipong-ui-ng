@@ -47,12 +47,9 @@ describe('DashboardComponent', () => {
     "name": tournamentName,
     "tournamentDate": tournamentDate,
     "_links": {
-        "self": {
-            "href": tournamentLink
-        },
-        "tournament": {
-            "href": tournamentLink
-        }
+      "self": {
+        "href": tournamentLink
+      },
     }
   }
   const tournament2: Tournament = {
@@ -60,12 +57,9 @@ describe('DashboardComponent', () => {
     "name": tournamentName2,
     "tournamentDate": tournamentDate2,
     "_links": {
-        "self": {
-            "href": tournamentLink2
-        },
-        "tournament": {
-            "href": tournamentLink2
-        }
+      "self": {
+        "href": tournamentLink2
+      }
     }
   }
 
@@ -232,7 +226,7 @@ describe('DashboardComponent', () => {
     const addedTournament = component.tournamentList[0];
     expect(addedTournament.name).toBe(tournamentName);
     expect(addedTournament.tournamentDate).toBe(tournamentDate);
-    expect(addedTournament['_links']['self']['href']).toBeTruthy();
+    expect(addedTournament._links?.self?.href).toBeTruthy();
 
     expect(component.inputNewName.value).toBe(null);
     expect(component.inputNewTournamentDate.value).toBe(null);

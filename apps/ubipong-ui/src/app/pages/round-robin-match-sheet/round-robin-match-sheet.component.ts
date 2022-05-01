@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
@@ -10,10 +10,10 @@ import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
   styleUrls: ['./round-robin-match-sheet.component.scss']
 })
 export class RoundRobinMatchSheetComponent implements OnInit {
-  eventId: number;
-  challongeUrl: string;
-  event: any;
-  matchGroupList: Observable<any[][]>;
+  eventId: number = 0;
+  challongeUrl: string = '';
+  event: any = {};
+  matchGroupList: Observable<any[][]> = of([])
 
   constructor(
     private tournamentService: TournamentService,
@@ -22,7 +22,7 @@ export class RoundRobinMatchSheetComponent implements OnInit {
 
   ngOnInit() {
     // we are calling challongeUrl eventName for now, because eventually we will be using actual event ID or event name
-    this.challongeUrl = this.route.snapshot.queryParamMap.get("eventId");
+    this.challongeUrl = this.route.snapshot.queryParamMap.get("eventId") ?? ''
     this.eventId = Number(this.route.snapshot.queryParamMap.get("eventId"))
     this.refreshData();
   }

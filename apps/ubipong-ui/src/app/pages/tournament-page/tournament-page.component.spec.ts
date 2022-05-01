@@ -33,6 +33,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { HarnessLoader } from '@angular/cdk/testing'
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
 import { MatSelectHarness } from '@angular/material/select/testing'
+import {Tournament} from '../../models/tournament';
 
 describe('TournamentPageComponent', () => {
   const eventId = 101

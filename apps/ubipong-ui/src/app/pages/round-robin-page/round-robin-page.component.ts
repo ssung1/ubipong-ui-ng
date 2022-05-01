@@ -13,7 +13,7 @@ import { interval, Observable, of, Subscription } from 'rxjs';
 })
 export class RoundRobinPageComponent implements OnInit, OnDestroy {
 
-  private refreshInterval: Subscription;
+  private refreshInterval?: Subscription;
   refreshIntervalTime = environment.roundRobinGridRefreshInterval;
   refresh = environment.roundRobinGridRefresh;
 
@@ -37,7 +37,7 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
   }
 
   parseEventList(): number[] {
-    const eventListJson = this.route.snapshot.queryParamMap.get("eventIdList");
+    const eventListJson = this.route.snapshot.queryParamMap.get("eventIdList") ?? '{}'
     return JSON.parse(eventListJson)
   }
 
