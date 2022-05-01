@@ -4,11 +4,11 @@ import { TournamentEvent } from '../../models/tournament-event'
 import { TournamentTime } from '../../models/tournament-time'
 
 @Component({
-  selector: 'app-event-details',
-  templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.scss']
+  selector: 'app-event-editor',
+  templateUrl: './event-editor.component.html',
+  styleUrls: ['./event-editor.component.scss']
 })
-export class EventDetailsComponent implements OnInit {
+export class EventEditorComponent implements OnInit {
 
   @Input()
   event: TournamentEvent | null = null

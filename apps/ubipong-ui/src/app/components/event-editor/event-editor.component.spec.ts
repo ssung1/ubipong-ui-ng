@@ -45,12 +45,12 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
 import { MatSelectHarness } from '@angular/material/select/testing'
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EventDetailsComponent } from './event-details.component';
+import { EventEditorComponent } from './event-editor.component';
 
 import { TournamentEvent } from '../../models/tournament-event'
 import { TournamentTime } from '../../models/tournament-time'
 
-describe('EventDetailsComponent', () => {
+describe('EventEditorComponent', () => {
   const eventId = 123
   const event: TournamentEvent = Object.freeze({
     id: eventId,
@@ -71,13 +71,13 @@ describe('EventDetailsComponent', () => {
     tournamentId: 234,
   })
 
-  let component: EventDetailsComponent
-  let fixture: ComponentFixture<EventDetailsComponent>
+  let component: EventEditorComponent
+  let fixture: ComponentFixture<EventEditorComponent>
   let loader: HarnessLoader
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventDetailsComponent ],
+      declarations: [ EventEditorComponent ],
       imports: [
         BrowserModule,
         FormsModule,
@@ -127,7 +127,7 @@ describe('EventDetailsComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventDetailsComponent);
+    fixture = TestBed.createComponent(EventEditorComponent);
     component = fixture.componentInstance;
     component.event = event
     component.isEditingEnabled = true

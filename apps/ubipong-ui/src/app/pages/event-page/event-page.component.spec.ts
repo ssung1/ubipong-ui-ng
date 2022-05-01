@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventPageComponent } from './event-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EventDetailsComponent } from '../../components/event-details/event-details.component';
-import { of, throwError } from 'rxjs';
+import { EventEditorComponent } from '../../components/event-editor/event-editor.component';
+import { of } from 'rxjs';
 import { TournamentService } from '../../services/tournament.service';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MainMenuComponent } from '../../components/main-menu/main-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button'
@@ -30,10 +30,6 @@ import { MatNativeDateModule } from '@angular/material/core'
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-
-import { HarnessLoader } from '@angular/cdk/testing'
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
-import { MatSelectHarness } from '@angular/material/select/testing'
 
 describe('EventPageComponent', () => {
   const event = {
@@ -80,7 +76,7 @@ describe('EventPageComponent', () => {
       declarations: [
         EventPageComponent,
         MainMenuComponent,
-        EventDetailsComponent,
+        EventEditorComponent,
       ],
       imports: [
         FormsModule,
@@ -133,9 +129,9 @@ describe('EventPageComponent', () => {
       .toContain(component.event?.name)
   })
 
-  it('should contain event details', () => {
+  it('should contain event editor', () => {
     const compiled = fixture.debugElement.nativeElement
-    const eventDetails = compiled.querySelector('app-event-details')
+    const eventDetails = compiled.querySelector('app-event-editor')
     expect(eventDetails).toBeTruthy()
   })
 
@@ -145,7 +141,7 @@ describe('EventPageComponent', () => {
 
     fixture.detectChanges()
     const compiled = fixture.nativeElement
-    const buttonEnableEditing = compiled.querySelector('app-event-details button.enable-editing')
+    const buttonEnableEditing = compiled.querySelector('app-event-editor button.enable-editing')
     expect(buttonEnableEditing).toBeTruthy()
 
     buttonEnableEditing.click()

@@ -37,7 +37,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EventListComponent } from './components/event-list/event-list.component';
-import { EventDetailsComponent } from './components/event-details/event-details.component';
+import { EventEditorComponent } from './components/event-editor/event-editor.component';
 import { EventPageComponent } from './pages/event-page/event-page.component'
 
 @NgModule({
@@ -51,7 +51,7 @@ import { EventPageComponent } from './pages/event-page/event-page.component'
     RoundRobinPageComponent,
     EventPlayerListComponent,
     EventListComponent,
-    EventDetailsComponent,
+    EventEditorComponent,
     EventPageComponent,
   ],
   imports: [

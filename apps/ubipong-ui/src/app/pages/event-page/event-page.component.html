@@ -2,7 +2,7 @@
   <section id="event-page">
     <h1>{{event?.name}}</h1>
 
-    <app-event-details [event]="event" [isEditingEnabled]="isLoggedIn" (submitEvent)="updateEvent($event)">
-    </app-event-details>
+    <app-event-editor [event]="event" [isEditingEnabled]="isLoggedIn" (submitEvent)="updateEvent($event)">
+    </app-event-editor>
   </section>
 </app-main-menu>
