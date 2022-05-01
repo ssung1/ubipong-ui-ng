@@ -130,7 +130,6 @@ describe('EventEditorComponent', () => {
     fixture = TestBed.createComponent(EventEditorComponent);
     component = fixture.componentInstance;
     component.event = event
-    component.isEditingEnabled = true
     fixture.detectChanges()
     loader = TestbedHarnessEnvironment.loader(fixture)
   });
@@ -142,19 +141,6 @@ describe('EventEditorComponent', () => {
   it('should display start time', () => {
     const startTime = fixture.nativeElement.querySelector('span.start-time')
     expect(startTime.textContent).toBe(event.startTime)
-  })
-
-  it('should have an edit button if editing is enabled', () => {
-    fixture.detectChanges()
-    const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
-    expect(buttonEnableEditing).toBeTruthy()
-  })
-
-  it('should not have an edit button if editing is disabled', () => {
-    component.isEditingEnabled = false
-    fixture.detectChanges()
-    const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
-    expect(buttonEnableEditing).toBeFalsy()
   })
 
   function editEventName() {

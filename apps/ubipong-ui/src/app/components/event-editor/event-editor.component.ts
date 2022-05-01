@@ -13,9 +13,6 @@ export class EventEditorComponent implements OnInit {
   @Input()
   event: TournamentEvent | null = null
 
-  @Input()
-  isEditingEnabled: boolean = false
-
   @Output('submitEvent')
   submitFormEventEmitter: EventEmitter<any> = new EventEmitter<any>()
 

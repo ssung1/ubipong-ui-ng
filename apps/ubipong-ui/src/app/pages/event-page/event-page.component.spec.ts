@@ -129,7 +129,7 @@ describe('EventPageComponent', () => {
       .toContain(component.event?.name)
   })
 
-  it('should contain event editor', () => {
+  it('should contain event editor if editing is enabled', () => {
     const compiled = fixture.debugElement.nativeElement
     const eventDetails = compiled.querySelector('app-event-editor')
     expect(eventDetails).toBeTruthy()
