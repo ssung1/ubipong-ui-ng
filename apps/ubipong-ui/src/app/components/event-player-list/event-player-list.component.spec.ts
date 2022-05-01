@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventPlayerListComponent } from './event-player-list.component';
 import { FormsModule } from '@angular/forms';
@@ -166,7 +166,7 @@ describe('EventPlayerListComponent', () => {
   it('should correctly create the round robin groups - empty list', () => {
     component.playerList = [
     ];
-    component.createGroupList(4);
+    component.createGroupList('4')
 
     expect(component.roundRobinGroupList.length).toBe(0);
   });
@@ -175,7 +175,7 @@ describe('EventPlayerListComponent', () => {
     component.playerList = [
       player1,
     ];
-    component.createGroupList(4);
+    component.createGroupList('4')
 
     expect(component.roundRobinGroupList.length).toBe(1);
   });
@@ -184,7 +184,7 @@ describe('EventPlayerListComponent', () => {
     component.playerList = [
       player1, player2
     ];
-    component.createGroupList(1);
+    component.createGroupList('1')
 
     expect(component.roundRobinGroupList.length).toBe(2);
     expect(component.roundRobinGroupList[0].playerList[0].name).toBe(player1Name);
@@ -195,7 +195,7 @@ describe('EventPlayerListComponent', () => {
     component.playerList = [
       player1, player2, player1
     ];
-    component.createGroupList(2);
+    component.createGroupList('2');
 
     expect(component.roundRobinGroupList.length).toBe(2);
 
@@ -280,7 +280,7 @@ describe('EventPlayerListComponent', () => {
 
   it('should create a string that contains all the players in a group', () => {
     component.playerList = [player1, player2];
-    component.createGroupList(2);
+    component.createGroupList('2');
     const playerString = component.getAllPlayersAsString(component.roundRobinGroupList[0]);
 
     expect(playerString).toBe(player1Name + '\n' + player2Name);
