@@ -1,19 +1,11 @@
-<div class="event">
-  <div>
-    <p>Start Time: <span class="start-time">{{event?.startTime}}</span></p>
-  </div>
-  <div>
-    <button mat-button class="enable-editing" (click)="enableEditing()">Edit</button>
-  </div>
-</div>
-
-<div *ngIf="isEditEventFormOpen" class="edit-panel">
+<section class="event-editor">
   <p>
     <mat-form-field class="event-name">
       <mat-label>Name</mat-label>
       <input matInput class="event-name" type="text" size="48" [formControl]="inputEventName">
       <mat-error *ngIf="inputEventName.invalid">{{inputEventNameErrorMessage}}</mat-error>
     </mat-form-field>
+  </p>
 
     <!--
     <mat-form-field class="challonge-url">
@@ -22,7 +14,6 @@
       <mat-error *ngIf="inputChallongeUrl.invalid">{{inputChallongeUrlErrorMessage}}</mat-error>
     </mat-form-field>
     -->
-  </p>
 
   <p>
     <mat-form-field class="start-date">
@@ -49,4 +40,4 @@
     <button mat-button color="primary" class="submit-event" [disabled]="isFormInvalid" (click)="submitForm()">Save</button>
     <button mat-button color="secondary" class="cancel-event" (click)="cancelForm()">Cancel</button>
   </p>
-</div>
+</section>

@@ -140,14 +140,9 @@ describe('EventPageComponent', () => {
     expect(component.isLoggedIn).toBe(true)
 
     fixture.detectChanges()
+
     const compiled = fixture.nativeElement
-    const buttonEnableEditing = compiled.querySelector('app-event-editor button.enable-editing')
-    expect(buttonEnableEditing).toBeTruthy()
-
-    buttonEnableEditing.click()
-
-    fixture.detectChanges()
-    const buttonSubmitEvent = compiled.querySelector('.edit-panel .submit-event')
+    const buttonSubmitEvent = compiled.querySelector('.event-editor .submit-event')
     expect(buttonSubmitEvent).toBeTruthy()
 
     buttonSubmitEvent.click()

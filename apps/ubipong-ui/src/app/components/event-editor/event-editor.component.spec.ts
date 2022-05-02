@@ -138,11 +138,6 @@ describe('EventEditorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display start time', () => {
-    const startTime = fixture.nativeElement.querySelector('span.start-time')
-    expect(startTime.textContent).toBe(event.startTime)
-  })
-
   function editEventName() {
     const inputEventName = fixture.nativeElement.querySelector('input.event-name')
     expect(inputEventName).toBeTruthy()
@@ -200,13 +195,7 @@ describe('EventEditorComponent', () => {
     })
   }
 
-  it('should allow user to edit event when user activates the edit button', async () => {
-    const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
-    expect(buttonEnableEditing).toBeTruthy()
-    buttonEnableEditing.click()
-
-    fixture.detectChanges()
-
+  it('should allow user to edit event', async () => {
     editEventName()
     editStartDate()
     await editStartTime()
@@ -226,29 +215,14 @@ describe('EventEditorComponent', () => {
       ...event,
       startTime: '',
     }
+    component.ngOnInit()
 
-    const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
-    expect(buttonEnableEditing).toBeTruthy()
-    buttonEnableEditing.click()
-
-    fixture.detectChanges()
+    editEventName()
+    editStartDate()
+    await editStartTime()
 
     const buttonSubmitEvent = fixture.nativeElement.querySelector('button.submit-event')
     expect(buttonSubmitEvent).toBeTruthy()
-
-    editEventName()
-    fixture.detectChanges()
-    expect(buttonSubmitEvent.disabled).toBe(true)
-
-    editStartDate()
-    fixture.detectChanges()
-    expect(buttonSubmitEvent.disabled).toBe(true)
-
-    await editStartTime()
-    fixture.detectChanges()
-    expect(buttonSubmitEvent.disabled).toBe(false)
-
-    fixture.detectChanges()
 
     // event emitter
     const submitEventSpy = jest.spyOn(component.submitFormEventEmitter, 'emit')
@@ -257,12 +231,6 @@ describe('EventEditorComponent', () => {
   })
 
   it('should allow user to cancel editing by activating the cancel button', async () => {
-    const buttonEnableEditing = fixture.nativeElement.querySelector('button.enable-editing')
-    expect(buttonEnableEditing).toBeTruthy()
-    buttonEnableEditing.click()
-
-    fixture.detectChanges()
-
     const buttonCancelEvent = fixture.nativeElement.querySelector('button.cancel-event')
     const submitEventSpy = jest.spyOn(component.cancelFormEventEmitter, 'emit')
 
@@ -270,9 +238,6 @@ describe('EventEditorComponent', () => {
 
     fixture.detectChanges()
 
-    expect(component.isEditEventFormOpen).toBe(false)
     expect(submitEventSpy).toHaveBeenCalledWith(event)
   })
-
-  // it('should display new event form')
-});
+})

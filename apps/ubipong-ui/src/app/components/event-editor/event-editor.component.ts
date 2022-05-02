@@ -19,11 +19,9 @@ export class EventEditorComponent implements OnInit {
   @Output('cancelEvent')
   cancelFormEventEmitter: EventEmitter<any> = new EventEmitter<any>()
 
-  isEditEventFormOpen = false
-
   inputEventName = new FormControl('', [Validators.required, Validators.maxLength(60)])
   inputStartDate = new FormControl('', [Validators.required])
-  inputStartTime = new FormControl('hi', [Validators.required])
+  inputStartTime = new FormControl('', [Validators.required])
 
   readonly timeOptionList: readonly TournamentTime[] = Object.freeze([
     new TournamentTime({hour: 8, minute: 0}),
@@ -41,20 +39,12 @@ export class EventEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  enableEditing() {
-    this.isEditEventFormOpen = true
     this.inputEventName.setValue(this.event?.name)
     this.inputStartDate.setValue(this.event?.startTime)
     const startHour = new Date(this.event?.startTime ?? new Date().toJSON()).getHours()
     const startHourOption = this.timeOptionList.find(option => 
       option.hour === startHour)
     this.inputStartTime.setValue(startHourOption)
-  }
-
-  disableEditing() {
-    this.isEditEventFormOpen = false
   }
 
   get inputEventNameErrorMessage() {
@@ -98,7 +88,6 @@ export class EventEditorComponent implements OnInit {
   }
 
   cancelForm() {
-    this.disableEditing()
     this.cancelFormEventEmitter.emit(this.event)
   }
 
