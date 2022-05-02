@@ -15,6 +15,7 @@ export class EventPageComponent implements OnInit {
 
   event: TournamentEvent | null = null
   isLoggedIn: boolean = false
+  private eventEditorOpen: boolean = false
 
   constructor(
     private tournamentService: TournamentService,
@@ -55,5 +56,13 @@ export class EventPageComponent implements OnInit {
     this.userService.isLoggedIn().then(isLoggedIn => {
       this.isLoggedIn = isLoggedIn
     })
+  }
+
+  get isEventEditorOpen(): boolean {
+    return this.eventEditorOpen
+  }
+
+  toggleEventEditor(): void {
+    this.eventEditorOpen = !this.eventEditorOpen
   }
 }

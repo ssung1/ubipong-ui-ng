@@ -6,10 +6,12 @@
       <p>Start Time: <span class="start-time">{{event?.startTime}}</span></p>
     </div>
     <div>
-      <button *ngIf="isLoggedIn" mat-button class="enable-editing">Edit</button>
+      <button *ngIf="isLoggedIn" mat-button class="button-toggle-event-editor" (click)="toggleEventEditor()">
+        Edit
+      </button>
     </div>
 
-    <app-event-editor [event]="event" (submitEvent)="updateEvent($event)">
+    <app-event-editor *ngIf="isEventEditorOpen" [event]="event" (submitEvent)="updateEvent($event)">
     </app-event-editor>
   </section>
 </app-main-menu>

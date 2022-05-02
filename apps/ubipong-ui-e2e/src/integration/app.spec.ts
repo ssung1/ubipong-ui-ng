@@ -106,16 +106,16 @@ describe('ubipong-ui', () => {
 
   function editEvent(event: any) {
     cy.contains('.event-card .event-name', preliminaryGroup1.name).click()
-    cy.contains('.event button', 'Edit').click()
-    const inputEventName = cy.get('.edit-panel input.event-name')
+    cy.contains('#event-page button', 'Edit').click()
+    const inputEventName = cy.get('.event-editor input.event-name')
     inputEventName.clear()
     inputEventName.type(preliminaryGroup1.name)
-    const inputStartDate = cy.get('.edit-panel input.start-date')
+    const inputStartDate = cy.get('.event-editor input.start-date')
     inputStartDate.clear()
     inputStartDate.type(preliminaryGroup1.startTime)
-    cy.get('.edit-panel mat-select.start-time').click()
+    cy.get('.event-editor mat-select.start-time').click()
     cy.contains('.mat-option-text', '10:00am').click()
-    cy.contains('.edit-panel button', 'Save').click()
+    cy.contains('.event-editor button', 'Save').click()
   }
 
   function addPlayerList(players, challongeUrl: string) {

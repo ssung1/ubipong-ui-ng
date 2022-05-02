@@ -129,10 +129,21 @@ describe('EventPageComponent', () => {
       .toContain(component.event?.name)
   })
 
-  it('should contain event editor if editing is enabled', () => {
-    const compiled = fixture.debugElement.nativeElement
-    const eventDetails = compiled.querySelector('app-event-editor')
-    expect(eventDetails).toBeTruthy()
+  it('should contain event editor if editing is enabled', async () => {
+    await fixture.whenStable()
+    expect(component.isLoggedIn).toBe(true)
+
+    fixture.detectChanges()
+
+    const compiled = fixture.nativeElement
+    const buttonToggleEventEditor = compiled.querySelector('.button-toggle-event-editor')
+    expect(buttonToggleEventEditor).toBeTruthy()
+    buttonToggleEventEditor.click()
+
+    fixture.detectChanges()
+
+    const eventEditor = compiled.querySelector('app-event-editor')
+    expect(eventEditor).toBeTruthy()
   })
 
   it('should call tournamentService when it receives the update event', async () => {
@@ -142,10 +153,39 @@ describe('EventPageComponent', () => {
     fixture.detectChanges()
 
     const compiled = fixture.nativeElement
+    const buttonToggleEventEditor = compiled.querySelector('.button-toggle-event-editor')
+    expect(buttonToggleEventEditor).toBeTruthy()
+    buttonToggleEventEditor.click()
+
+    fixture.detectChanges()
+
     const buttonSubmitEvent = compiled.querySelector('.event-editor .submit-event')
     expect(buttonSubmitEvent).toBeTruthy()
 
     buttonSubmitEvent.click()
     expect(mockTournamentService.updateEvent).toHaveBeenCalledWith(event)
+  })
+
+  it('should close event editor when edit button is clicked while editor is shown', async () => {
+    await fixture.whenStable()
+    expect(component.isLoggedIn).toBe(true)
+
+    fixture.detectChanges()
+
+    const compiled = fixture.nativeElement
+    const buttonToggleEventEditor = compiled.querySelector('.button-toggle-event-editor')
+    expect(buttonToggleEventEditor).toBeTruthy()
+    buttonToggleEventEditor.click()
+
+    fixture.detectChanges()
+
+    const eventEditor = compiled.querySelector('app-event-editor')
+    expect(eventEditor).toBeTruthy()
+
+    buttonToggleEventEditor.click()
+
+    fixture.detectChanges()
+    const eventEditorClosed = compiled.querySelector('app-event-editor')
+    expect(eventEditorClosed).toBeFalsy()
   })
 })
