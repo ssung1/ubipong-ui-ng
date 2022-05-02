@@ -141,9 +141,17 @@ describe('EventEditorComponent', () => {
   function editEventName() {
     const inputEventName = fixture.nativeElement.querySelector('input.event-name')
     expect(inputEventName).toBeTruthy()
-    expect(inputEventName.value).toBe(event.name)
+    expect(inputEventName.value).toBe(component.event?.name ?? '')
     inputEventName.value = newEvent.name
     inputEventName.dispatchEvent(new Event('input'))
+  }
+
+  function editChallongUrl() {
+    const inputChallongeUrl = fixture.nativeElement.querySelector('input.challonge-url')
+    expect(inputChallongeUrl).toBeTruthy()
+    expect(inputChallongeUrl.value).toBe(component.event?.name ?? '')
+    inputChallongeUrl.value = newEvent.name
+    inputChallongeUrl.dispatchEvent(new Event('input'))
   }
 
   function editStartDate() {
@@ -175,7 +183,8 @@ describe('EventEditorComponent', () => {
         minute: startMinute,
       }).display)
     } else {
-      expect(await inputStartTime.getValueText()).toBe('')
+      // if not provided, set time to a default value
+      expect(await inputStartTime.getValueText()).toBe('8:00am')
     }
     const inputStartTimeOptionHarnesses = await inputStartTime.getOptions()
     const inputStartTimeOptions = await Promise.all(
@@ -210,14 +219,12 @@ describe('EventEditorComponent', () => {
     expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
   })
 
-  it('should allow user to edit event even if existing event has no start time', async () => {
-    component.event = {
-      ...event,
-      startTime: '',
-    }
+  it('should allow user to add new event', async () => {
+    component.event = null
     component.ngOnInit()
 
     editEventName()
+    editChallongUrl()
     editStartDate()
     await editStartTime()
 
@@ -227,6 +234,8 @@ describe('EventEditorComponent', () => {
     // event emitter
     const submitEventSpy = jest.spyOn(component.submitFormEventEmitter, 'emit')
     buttonSubmitEvent.click()
+    expect(submitEventSpy.mock.calls[0][0].name).toBe(newEvent.name)
+    expect(submitEventSpy.mock.calls[0][0].startTime).toBe(newEvent.startTime)
     expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
   })
 

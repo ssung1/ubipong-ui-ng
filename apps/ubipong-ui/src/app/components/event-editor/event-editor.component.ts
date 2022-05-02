@@ -20,6 +20,7 @@ export class EventEditorComponent implements OnInit {
   cancelFormEventEmitter: EventEmitter<any> = new EventEmitter<any>()
 
   inputEventName = new FormControl('', [Validators.required, Validators.maxLength(60)])
+  inputChallongeUrl = new FormControl('', [Validators.required, Validators.maxLength(30)])
   inputStartDate = new FormControl('', [Validators.required])
   inputStartTime = new FormControl('', [Validators.required])
 
@@ -55,6 +56,16 @@ export class EventEditorComponent implements OnInit {
       return 'Name is too long';
     }
     return JSON.stringify(this.inputEventName.errors);
+  }
+
+  get inputChallongeUrlErrorMessage() {
+    if (this.inputChallongeUrl.hasError('required')) {
+      return 'Challonge URL cannot be empty';
+    }
+    if (this.inputChallongeUrl.hasError('maxlength')) {
+      return 'Challonge URL is too long';
+    }
+    return JSON.stringify(this.inputChallongeUrl.errors);
   }
 
   get inputStartDateErrorMessage() {
