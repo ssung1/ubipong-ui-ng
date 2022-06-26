@@ -50,9 +50,9 @@ describe('TournamentService', () => {
   it('can retrieve a round robin grid by event URL', async () => {
     const content = "example";
     mockHttpClient.get.mockReturnValue(of([[{ type: 1, content: content }]]));
-    const response = await lastValueFrom(tournamentService.getRoundRobinGrid(eventUrl))
+    const response = await lastValueFrom(tournamentService.getRoundRobinGrid(eventId))
     expect(mockHttpClient.get).toHaveBeenCalledWith(
-      `${url}/rest/v0/events/${eventUrl}/roundRobinGrid`);
+      `${url}/rest/v0/events/${eventId}/roundRobinGrid`);
     expect(response[0][0].content).toBe(content);
   });
 
