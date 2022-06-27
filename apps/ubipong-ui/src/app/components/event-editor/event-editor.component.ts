@@ -95,7 +95,8 @@ export class EventEditorComponent implements OnInit {
     this.submitFormEventEmitter.emit({
       ...this.event,
       name: this.inputEventName.value,
-      startTime: startTime.toJSON()
+      startTime: startTime.toJSON(),
+      challongeUrl: this.inputChallongeUrl.value ?? this.event?.challongeUrl
     })
   }
 

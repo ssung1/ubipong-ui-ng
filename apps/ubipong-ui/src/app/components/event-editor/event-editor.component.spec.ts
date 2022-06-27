@@ -149,8 +149,8 @@ describe('EventEditorComponent', () => {
   function editChallongUrl() {
     const inputChallongeUrl = fixture.nativeElement.querySelector('input.challonge-url')
     expect(inputChallongeUrl).toBeTruthy()
-    expect(inputChallongeUrl.value).toBe(component.event?.name ?? '')
-    inputChallongeUrl.value = newEvent.name
+    expect(inputChallongeUrl.value).toBe(component.event?.challongeUrl ?? '')
+    inputChallongeUrl.value = newEvent.challongeUrl
     inputChallongeUrl.dispatchEvent(new Event('input'))
   }
 
@@ -236,6 +236,7 @@ describe('EventEditorComponent', () => {
     buttonSubmitEvent.click()
     expect(submitEventSpy.mock.calls[0][0].name).toBe(newEvent.name)
     expect(submitEventSpy.mock.calls[0][0].startTime).toBe(newEvent.startTime)
+    expect(submitEventSpy.mock.calls[0][0].challongeUrl).toBe(newEvent.challongeUrl)
     expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
   })
 
