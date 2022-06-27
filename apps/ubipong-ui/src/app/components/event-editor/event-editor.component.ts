@@ -42,7 +42,8 @@ export class EventEditorComponent implements OnInit {
   ngOnInit(): void {
     this.inputEventName.setValue(this.event?.name)
     this.inputStartDate.setValue(this.event?.startTime)
-    const startHour = new Date(this.event?.startTime ?? new Date().toJSON()).getHours()
+    const startHour = this.event?.startTime ?
+      new Date(this.event.startTime).getHours() : 8
     const startHourOption = this.timeOptionList.find(option => 
       option.hour === startHour)
     this.inputStartTime.setValue(startHourOption)
