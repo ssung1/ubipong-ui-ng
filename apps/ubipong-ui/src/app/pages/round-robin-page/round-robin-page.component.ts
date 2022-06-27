@@ -60,7 +60,7 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
       //
       // this way, this.event and this.gridContent can be updated at the
       // same time in the subscribe block
-      return this.tournamentService.getRoundRobinGrid(event.challongeUrl).pipe(map(
+      return this.tournamentService.getRoundRobinGrid(event.id).pipe(map(
         gridContent => [event, gridContent]))
     })).subscribe(([event, gridContent]) => {
       this.event = event
