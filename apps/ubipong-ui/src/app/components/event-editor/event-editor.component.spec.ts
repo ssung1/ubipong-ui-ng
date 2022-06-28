@@ -234,15 +234,10 @@ describe('EventEditorComponent', () => {
     // event emitter
     const submitEventSpy = jest.spyOn(component.submitFormEventEmitter, 'emit')
     buttonSubmitEvent.click()
-    expect(submitEventSpy.mock.calls[0][0].name).toBe(newEvent.name)
-    expect(submitEventSpy.mock.calls[0][0].startTime).toBe(newEvent.startTime)
-    expect(submitEventSpy.mock.calls[0][0].challongeUrl).toBe(newEvent.challongeUrl)
-    expect(submitEventSpy.mock.calls[0][0].tournamentId).toBe(newEvent.tournamentId)
-
-    // not needed for new event
-    // expect(submitEventSpy.mock.calls[0][0].id).toBe(newEvent.id)
-    // expect(submitEventSpy.mock.calls[0][0].status).toBe(newEvent.status)
-    // expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
+    const emittedEvent = submitEventSpy.mock.calls[0][0]
+    expect(emittedEvent.name).toBe(newEvent.name)
+    expect(emittedEvent.startTime).toBe(newEvent.startTime)
+    expect(emittedEvent.challongeUrl).toBe(newEvent.challongeUrl)
   })
 
   it('should allow user to cancel editing by activating the cancel button', async () => {

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { FormControl, Validators } from '@angular/forms';
 import { Tournament } from '../../models/tournament';
-import { Observable, of } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
