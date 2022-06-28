@@ -47,6 +47,7 @@ export class EventEditorComponent implements OnInit {
     const startHourOption = this.timeOptionList.find(option => 
       option.hour === startHour)
     this.inputStartTime.setValue(startHourOption)
+    this.inputChallongeUrl.setValue(this.event?.challongeUrl)
   }
 
   get inputEventNameErrorMessage() {

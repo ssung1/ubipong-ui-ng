@@ -216,7 +216,10 @@ describe('EventEditorComponent', () => {
     // event emitter
     const submitEventSpy = jest.spyOn(component.submitFormEventEmitter, 'emit')
     buttonSubmitEvent.click()
-    expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
+    const emittedEvent = submitEventSpy.mock.calls[0][0]
+    expect(emittedEvent.name).toBe(newEvent.name)
+    expect(emittedEvent.startTime).toBe(newEvent.startTime)
+    expect(emittedEvent.challongeUrl).toBe(newEvent.challongeUrl)
   })
 
   it('should allow user to add new event', async () => {
