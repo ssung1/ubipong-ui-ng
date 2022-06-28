@@ -237,7 +237,12 @@ describe('EventEditorComponent', () => {
     expect(submitEventSpy.mock.calls[0][0].name).toBe(newEvent.name)
     expect(submitEventSpy.mock.calls[0][0].startTime).toBe(newEvent.startTime)
     expect(submitEventSpy.mock.calls[0][0].challongeUrl).toBe(newEvent.challongeUrl)
-    expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
+    expect(submitEventSpy.mock.calls[0][0].tournamentId).toBe(newEvent.tournamentId)
+
+    // not needed for new event
+    // expect(submitEventSpy.mock.calls[0][0].id).toBe(newEvent.id)
+    // expect(submitEventSpy.mock.calls[0][0].status).toBe(newEvent.status)
+    // expect(submitEventSpy).toHaveBeenCalledWith(newEvent)
   })
 
   it('should allow user to cancel editing by activating the cancel button', async () => {
