@@ -119,7 +119,7 @@ describe('RoundRobinPageComponent', () => {
     component.event = event
     component.gridContent = [[]]
 
-    mockTournamentService.getRoundRobinGrid.mockReturnValue(throwError('error'))
+    mockTournamentService.getRoundRobinGrid.mockReturnValue(throwError(() => 'error'))
     component.refreshData()
 
     expect(component.event).toEqual(event)
