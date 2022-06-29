@@ -77,9 +77,9 @@ describe('RoundRobinPageComponent', () => {
   it('should rotate round robin groups', () => {
     mockTournamentService.getEvent.mockReset()
     mockTournamentService.getEvent
-      .mockReturnValueOnce(of({name: eventName, challongeUrl: challongeUrlList[0]}))
-      .mockReturnValueOnce(of({name: eventName, challongeUrl: challongeUrlList[1]}))
-      .mockReturnValueOnce(of({name: eventName, challongeUrl: challongeUrlList[2]}))
+      .mockReturnValueOnce(of({name: eventName, id: eventIdList[0]}))
+      .mockReturnValueOnce(of({name: eventName, id: eventIdList[1]}))
+      .mockReturnValueOnce(of({name: eventName, id: eventIdList[2]}))
 
     const getRoundRobinGrid = mockTournamentService.getRoundRobinGrid
     const getEvent = mockTournamentService.getEvent
@@ -87,15 +87,15 @@ describe('RoundRobinPageComponent', () => {
     component.eventIndex = 0;
 
     component.refreshData();
-    expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[0]);
+    expect(getRoundRobinGrid).toHaveBeenCalledWith(eventIdList[0]);
     expect(getEvent).toHaveBeenCalledWith(eventIdList[0]);
     expect(component.eventIndex).toBe(1);
     component.refreshData();
-    expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[1]);
+    expect(getRoundRobinGrid).toHaveBeenCalledWith(eventIdList[1]);
     expect(getEvent).toHaveBeenCalledWith(eventIdList[1]);
     expect(component.eventIndex).toBe(2);
     component.refreshData();
-    expect(getRoundRobinGrid).toHaveBeenCalledWith(challongeUrlList[2]);
+    expect(getRoundRobinGrid).toHaveBeenCalledWith(eventIdList[2]);
     expect(getEvent).toHaveBeenCalledWith(eventIdList[2]);
     expect(component.eventIndex).toBe(0);
   });
