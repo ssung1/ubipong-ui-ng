@@ -275,8 +275,10 @@ describe('DashboardComponent', () => {
   it('should display error message if tournament addition fails', () => {
     const errorMessage = 'System Error: Please Try Again Later'
 
-    mockTournamentService.addTournament.mockReturnValue(throwError({
-      message: errorMessage
+    mockTournamentService.addTournament.mockReturnValue(throwError(() => {
+      return {
+        message: errorMessage
+      }
     }));
 
     component.toggleNewTournamentForm();

@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { TournamentListComponent } from './tournament-list.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { of, throwError } from 'rxjs'
-import { Router } from '@angular/router'
+import { of } from 'rxjs'
 import { RouterTestingModule } from '@angular/router/testing'
 import { TournamentService } from '../../services/tournament.service'
 import { Tournament } from '../../models/tournament'
@@ -63,7 +62,6 @@ describe('TournamentListComponent', () => {
   let component: TournamentListComponent;
   let fixture: ComponentFixture<TournamentListComponent>;
   let mockTournamentService: any;
-  let router: Router;
 
   beforeEach(async () => {
     mockTournamentService = {
@@ -132,8 +130,6 @@ describe('TournamentListComponent', () => {
       ],
     })
     .compileComponents();
-
-    router = TestBed.inject(Router);
   })
 
   beforeEach(() => {

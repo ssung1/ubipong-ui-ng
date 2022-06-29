@@ -33,7 +33,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { HarnessLoader } from '@angular/cdk/testing'
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
 import { MatSelectHarness } from '@angular/material/select/testing'
-import {Tournament} from '../../models/tournament';
 
 describe('TournamentPageComponent', () => {
   const eventId = 101
@@ -309,8 +308,10 @@ describe('TournamentPageComponent', () => {
   it('should display error message if event addition fails', () => {
     const errorMessage = 'System Error: Please Try Again Later'
 
-    mockTournamentService.addEvent.mockReturnValue(throwError({
-      message: errorMessage
+    mockTournamentService.addEvent.mockReturnValue(throwError(() => {
+      return {
+        message: errorMessage
+      }
     }))
 
     component.toggleNewEventForm()

@@ -1,7 +1,4 @@
-import { TestBed, inject } from '@angular/core/testing';
-
 import { TournamentService } from './tournament.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
 import { of, lastValueFrom } from 'rxjs';
