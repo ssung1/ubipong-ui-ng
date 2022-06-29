@@ -188,4 +188,30 @@ describe('EventPageComponent', () => {
     const eventEditorClosed = compiled.querySelector('app-event-editor')
     expect(eventEditorClosed).toBeFalsy()
   })
+
+  it('should close event editor when cancel button is clicked', async () => {
+    await fixture.whenStable()
+    expect(component.isLoggedIn).toBe(true)
+
+    fixture.detectChanges()
+
+    const compiled = fixture.nativeElement
+    const buttonToggleEventEditor = compiled.querySelector('.button-toggle-event-editor')
+    expect(buttonToggleEventEditor).toBeTruthy()
+    buttonToggleEventEditor.click()
+
+    fixture.detectChanges()
+
+    const eventEditor = compiled.querySelector('app-event-editor')
+    expect(eventEditor).toBeTruthy()
+
+    const buttonCancelEvent = compiled.querySelector('.event-editor .cancel-event')
+    expect(buttonCancelEvent).toBeTruthy()
+
+    buttonCancelEvent.click()
+
+    fixture.detectChanges()
+    const eventEditorClosed = compiled.querySelector('app-event-editor')
+    expect(eventEditorClosed).toBeFalsy()
+  })
 })

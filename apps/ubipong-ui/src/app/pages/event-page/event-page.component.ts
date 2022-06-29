@@ -37,18 +37,24 @@ export class EventPageComponent implements OnInit {
   }
 
   refreshEventById(eventId: number): void {
-    this.tournamentService.getEvent(eventId).subscribe(event => {
-      this.event = event
-    }, error => {
-      this.snackBar.open(`Could not get event info: ${error.message}`, 'OK')
+    this.tournamentService.getEvent(eventId).subscribe({
+      next: event => {
+        this.event = event
+      },
+      error: error => {
+        this.snackBar.open(`Could not get event info: ${error.message}`, 'OK')
+      }
     })
   }
 
   updateEvent(event: TournamentEvent): void {
-    this.tournamentService.updateEvent(event).subscribe(() => {
-      this.snackBar.open('Event updated', 'OK')
-    }, error => {
-      this.snackBar.open(`Could not update event: ${error.message}`, 'OK')
+    this.tournamentService.updateEvent(event).subscribe({
+      next: () => {
+        this.snackBar.open('Event updated', 'OK')
+      },
+      error: error => {
+        this.snackBar.open(`Could not update event: ${error.message}`, 'OK')
+      }
     })
   }
 

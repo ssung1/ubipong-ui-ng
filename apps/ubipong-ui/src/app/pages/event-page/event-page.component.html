@@ -11,7 +11,8 @@
       </button>
     </div>
 
-    <app-event-editor *ngIf="isEventEditorOpen" [event]="event" (submitEvent)="updateEvent($event)">
+    <app-event-editor *ngIf="isEventEditorOpen" [event]="event"
+      (submitEvent)="updateEvent($event)" (cancelEvent)="toggleEventEditor()">
     </app-event-editor>
   </section>
 </app-main-menu>

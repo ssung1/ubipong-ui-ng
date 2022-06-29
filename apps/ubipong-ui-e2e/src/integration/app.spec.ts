@@ -103,16 +103,24 @@ describe('ubipong-ui', () => {
     const eventElement = cy.contains('.event-card', preliminaryGroup1.name)
     eventElement.contains('.event-status', 'created')
   }
+  
+  function editEventButThenCancel(event: any) {
+    cy.contains('#event-page button', 'Edit').click()
+    cy.contains('.event-editor button', 'Cancel').click()
+  }
+
+  function goToEventFromTournamentPage(eventName: string) {
+    cy.contains('.event-card .event-name', eventName).click()
+  }
 
   function editEvent(event: any) {
-    cy.contains('.event-card .event-name', preliminaryGroup1.name).click()
     cy.contains('#event-page button', 'Edit').click()
     const inputEventName = cy.get('.event-editor input.event-name')
     inputEventName.clear()
-    inputEventName.type(preliminaryGroup1.name)
+    inputEventName.type(event.name)
     const inputStartDate = cy.get('.event-editor input.start-date')
     inputStartDate.clear()
-    inputStartDate.type(preliminaryGroup1.startTime)
+    inputStartDate.type(event.startTime)
     cy.get('.event-editor mat-select.start-time').click()
     cy.contains('.mat-option-text', '10:00am').click()
     cy.contains('.event-editor button', 'Save').click()
@@ -271,6 +279,8 @@ describe('ubipong-ui', () => {
     goToTournamentFromDashboard(bikiniBottomOpen.name)
     addEvent(preliminaryGroup1)
     verifyAddedEvent(preliminaryGroup1)
+    goToEventFromTournamentPage(preliminaryGroup1.name)
+    editEventButThenCancel(preliminaryGroup1)
     editEvent(preliminaryGroup1)
 
     // we have not done the navigation, so we go back to the tournament page the hard way
