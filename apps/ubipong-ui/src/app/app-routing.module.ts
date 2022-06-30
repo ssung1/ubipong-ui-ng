@@ -6,7 +6,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component'
 import { TournamentPageComponent } from './pages/tournament-page/tournament-page.component'
 import { RoundRobinPageComponent } from './pages/round-robin-page/round-robin-page.component'
 import { EventPlayerListComponent } from './components/event-player-list/event-player-list.component'
-import {EventPageComponent} from './pages/event-page/event-page.component'
+import { EventPageComponent } from './pages/event-page/event-page.component'
+import { SingleMatchSheetComponent } from './components/single-match-sheet/single-match-sheet.component'
 
 const routes: Routes = [
   {
@@ -26,6 +27,9 @@ const routes: Routes = [
   },
   {
     path: "event-page", component: EventPageComponent,
+  },
+  {
+    path: "single-match-sheet", component: SingleMatchSheetComponent,
   },
   {
     path: "**", component: DashboardComponent,
