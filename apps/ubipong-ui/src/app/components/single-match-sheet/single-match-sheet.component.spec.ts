@@ -30,7 +30,7 @@ describe('SingleMatchSheetComponent', () => {
     component.eventName = eventName
     fixture.detectChanges()
 
-    const eventNameElement = compiled.querySelector('.eventName')
+    const eventNameElement = compiled.querySelector('.event-name')
     expect(eventNameElement).toBeTruthy()
     expect(eventNameElement.textContent).toBe(eventName)
   })
@@ -41,7 +41,7 @@ describe('SingleMatchSheetComponent', () => {
     component.roundName = roundName
     fixture.detectChanges()
 
-    const roundNameElement = compiled.querySelector('.roundName')
+    const roundNameElement = compiled.querySelector('.round-name')
     expect(roundNameElement).toBeTruthy()
     expect(roundNameElement.textContent).toBe(roundName)
   })
@@ -54,7 +54,7 @@ describe('SingleMatchSheetComponent', () => {
     component.player2Name = player2Name
     fixture.detectChanges()
 
-    const playerNameElementList = compiled.querySelectorAll('.playerName')
+    const playerNameElementList = compiled.querySelectorAll('.player-name')
     expect(playerNameElementList).toBeTruthy()
     expect(playerNameElementList.length).toBeGreaterThan(1)
   })
