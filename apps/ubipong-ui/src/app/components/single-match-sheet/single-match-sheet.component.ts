@@ -7,16 +7,16 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SingleMatchSheetComponent implements OnInit {
   @Input()
-  eventName = '(event name)'
+  eventName = '_______________'
 
   @Input()
-  roundName = '(round name)'
+  roundName = '_______________'
 
   @Input()
-  player1Name = '(player 1 name)'
+  player1Name = '_______________'
 
   @Input()
-  player2Name = '(player 2 name)'
+  player2Name = '_______________'
 
   constructor() {}
 
