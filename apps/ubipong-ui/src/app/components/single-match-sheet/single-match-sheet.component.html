@@ -1,12 +1,12 @@
 <div class="single-match-sheet">
-  <h1 class="event-name">{{eventName}}</h1>
-  <h2 class="round-name">{{roundName}}</h2>
+  <h1 class="event-name" [attr.data-name]="eventName">{{eventName}}</h1>
+  <h2 class="round-name" [attr.data-name]="roundName">{{roundName}}</h2>
   <p>
-    <span class="player-name">{{player1Name}}</span>
+    <span class="player-name" [attr.data-name]="player1Name">{{player1Name}}</span>
     vs
-    <span class="player-name">{{player2Name}}</span>
+    <span class="player-name" [attr.data-name]="player2Name">{{player2Name}}</span>
   </p>
-  
+
   <section class="score-grid">
     <p class="score"></p>
     <p class="score"></p>

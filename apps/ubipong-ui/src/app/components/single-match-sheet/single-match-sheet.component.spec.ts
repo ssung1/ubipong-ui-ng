@@ -33,6 +33,7 @@ describe('SingleMatchSheetComponent', () => {
     const eventNameElement = compiled.querySelector('.event-name')
     expect(eventNameElement).toBeTruthy()
     expect(eventNameElement.textContent).toBe(eventName)
+    expect(eventNameElement.dataset.name).toBe(eventName)
   })
 
   it('should have name of the round', () => {
@@ -44,6 +45,7 @@ describe('SingleMatchSheetComponent', () => {
     const roundNameElement = compiled.querySelector('.round-name')
     expect(roundNameElement).toBeTruthy()
     expect(roundNameElement.textContent).toBe(roundName)
+    expect(roundNameElement.dataset.name).toBe(roundName)
   })
 
   it('should have names of the players', () => {
@@ -54,9 +56,12 @@ describe('SingleMatchSheetComponent', () => {
     component.player2Name = player2Name
     fixture.detectChanges()
 
-    const playerNameElementList = compiled.querySelectorAll('.player-name')
-    expect(playerNameElementList).toBeTruthy()
-    expect(playerNameElementList.length).toBeGreaterThan(1)
+    const player1NameElement = compiled.querySelector(`.player-name[data-name="${player1Name}"]`)
+    expect(player1NameElement).toBeTruthy()
+    expect(player1NameElement.textContent).toBe(player1Name)
+    const player2NameElement = compiled.querySelector(`.player-name[data-name="${player2Name}"]`)
+    expect(player2NameElement).toBeTruthy()
+    expect(player2NameElement.textContent).toBe(player2Name)
   })
 
   it('should have space to write down the scores', () => {
