@@ -65,8 +65,25 @@ describe('SingleMatchSheetComponent', () => {
   })
 
   it('should have space to write down the scores', () => {
+    const gameCount = 7
+    component.gameCount = gameCount 
+
+    fixture.detectChanges()
+
     const scoreElementList = compiled.querySelectorAll('.score')
     expect(scoreElementList).toBeTruthy()
-    expect(scoreElementList.length).toBeGreaterThan(1)
+    expect(scoreElementList.length).toBe(gameCount * 2)
+  })
+
+  it('should auto-correct number of games to an odd number', () => {
+    // even game count would be incremented by 1
+    const gameCount = 6
+    component.gameCount = gameCount 
+
+    fixture.detectChanges()
+
+    const scoreElementList = compiled.querySelectorAll('.score')
+    expect(scoreElementList).toBeTruthy()
+    expect(scoreElementList.length).toBe((gameCount + 1) * 2)
   })
 });

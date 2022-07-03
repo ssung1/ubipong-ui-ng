@@ -18,7 +18,23 @@ export class SingleMatchSheetComponent implements OnInit {
   @Input()
   player2Name = '_______________'
 
+  @Input()
+  gameCount = 5
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  get scoreSpaceRange() {
+    const correctedGameCount = ((gameCount) => {
+      if (gameCount % 2 === 0) {
+        return gameCount + 1
+      } else {
+        return gameCount
+      }
+    })(this.gameCount)
+
+    const scoresPerGame = 2
+    return Array.from({length: correctedGameCount * scoresPerGame})
+  }
 }
