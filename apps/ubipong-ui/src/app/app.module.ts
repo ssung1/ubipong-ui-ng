@@ -40,6 +40,7 @@ import { EventListComponent } from './components/event-list/event-list.component
 import { EventEditorComponent } from './components/event-editor/event-editor.component';
 import { EventPageComponent } from './pages/event-page/event-page.component';
 import { SingleMatchSheetComponent } from './components/single-match-sheet/single-match-sheet.component';
+import { SingleMatchSheetPageComponent } from './pages/single-match-sheet-page/single-match-sheet-page.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { SingleMatchSheetComponent } from './components/single-match-sheet/singl
     EventEditorComponent,
     EventPageComponent,
     SingleMatchSheetComponent,
+    SingleMatchSheetPageComponent,
   ],
   imports: [
     BrowserModule,
