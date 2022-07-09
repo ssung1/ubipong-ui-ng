@@ -1,1 +1,1 @@
-export const menuSingleMatchSheet = '[routerlink="/single-match-sheet"] > .mat-list-item-content'
+export const menuSingleMatchSheet = '[routerlink="/single-match-sheet-page"] > .mat-list-item-content'
