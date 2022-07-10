@@ -1,4 +1,6 @@
 #single-match-sheet-page {
   display: grid;
   grid-template-columns: 50% 50%;
+  page-break-after: always;
+  height: 100vh;
 }
