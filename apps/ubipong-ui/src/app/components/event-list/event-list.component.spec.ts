@@ -32,15 +32,16 @@ describe('EventListComponent', () => {
   let mockUserService: any
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
+  let compiled: any
 
-  const event: TournamentEvent = Object.freeze({
+  const event: TournamentEvent = {
     id: 123,
     tournamentId: 234,
     name: 'Bikini Bottom Open 2019',
     challongeUrl: 'bb_201906_rr_pg_1',
     startTime: '2019-06-01T00:00:00.000Z',
     status: 'started',
-  })
+  } as const
 
   beforeEach(async () => {
     mockUserService = {
@@ -86,6 +87,7 @@ describe('EventListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EventListComponent);
     component = fixture.componentInstance;
+    compiled = fixture.nativeElement
     fixture.detectChanges();
   });
 
@@ -97,8 +99,6 @@ describe('EventListComponent', () => {
     component.eventList = [event]
     fixture.detectChanges()
 
-    const compiled = fixture.nativeElement
-
     expect(compiled.querySelector('.event-card-list .event-name').textContent.trim()).toBe(event.name)
     expect(compiled.querySelector('.event-card-list .event-status').textContent.trim()).toBe(event.status)
   })
@@ -106,8 +106,6 @@ describe('EventListComponent', () => {
   it('should emit event to view round robin match sheet', () => {
     component.eventList = [event]
     fixture.detectChanges()
-
-    const compiled = fixture.nativeElement
 
     const buttonRoundRobinMatchSheet = compiled.querySelector('.button-round-robin-match-sheet')
 
@@ -124,8 +122,6 @@ describe('EventListComponent', () => {
     component.eventList = [event]
     fixture.detectChanges()
 
-    const compiled = fixture.nativeElement
-
     const eventCard = compiled.querySelector('.event-card-list .event-card .event-name')
 
     const viewEventDetailsEventSpy = jest.spyOn(
@@ -139,8 +135,6 @@ describe('EventListComponent', () => {
   it('should not emit event to nagivate if only the challonge URL is selected', () => {
     component.eventList = [event]
     fixture.detectChanges()
-
-    const compiled = fixture.nativeElement
 
     const eventCard = compiled.querySelector('.event-card-list .event-card .challonge-url')
 
