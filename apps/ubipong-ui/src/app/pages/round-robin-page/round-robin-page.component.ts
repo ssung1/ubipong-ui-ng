@@ -51,8 +51,18 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
     this.refreshInterval?.unsubscribe()
   }
 
+  private getNextEventId() {
+    const eventId = this.eventIdList[this.eventIndex]
+    this.eventIndex += 1
+    if (this.eventIndex >= this.eventIdList.length) {
+      this.eventIndex = 0
+    }
+
+    return eventId
+  }
+
   refreshData() {
-    const eventId = this.eventIdList[this.eventIndex];
+    const eventId = this.getNextEventId()
 
     this.tournamentService.getEvent(eventId).pipe(mergeMap(event => {
       // instead of setting this.event = event,
@@ -66,11 +76,6 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
       this.event = event
       this.gridContent = gridContent
     });
-
-    this.eventIndex += 1;
-    if (this.eventIndex >= this.eventIdList.length) {
-      this.eventIndex = 0;
-    }
   }
 
   ngOnDestroy() {
