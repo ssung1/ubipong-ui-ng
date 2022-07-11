@@ -9,7 +9,6 @@ const oauthHost = 'https://dev-66577045.okta.com/oauth2/default'
 
 export const environment = {
   production: false,
-  mockData: false,
   roundRobinGridRefresh: false,
   roundRobinGridRefreshInterval: 5000,
   tournamentServiceUrl: "http://localhost:8080",

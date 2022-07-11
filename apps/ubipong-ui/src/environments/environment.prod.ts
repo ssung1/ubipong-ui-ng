@@ -5,7 +5,6 @@ const oauthHost = 'https://dev-66577045.okta.com/oauth2/default'
 
 export const environment = {
   production: true,
-  mockData: false,
   roundRobinGridRefresh: true,
   roundRobinGridRefreshInterval: 15000,
   tournamentServiceUrl: "https://ubipong-api.herokuapp.com",
