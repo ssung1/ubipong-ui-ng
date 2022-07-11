@@ -5,10 +5,11 @@
     <mat-card-content>
       <section>
         <mat-card-title class="event-name" (click)="viewEventDetails(event)">{{event.name}}</mat-card-title>
+        <div class="event-status">{{event.status}}</div>
       </section>
       <section>
         <div class="challonge-url"><a target="_new" href="https://challonge.com/{{event.challongeUrl}}">{{event.challongeUrl}}</a></div>
-        <div class="event-status">{{event.status}}</div>
+        <div class="event-start-time">{{event.startTime | date : 'hh:mm'}}</div>
       </section>
     </mat-card-content>
     <mat-card-actions>

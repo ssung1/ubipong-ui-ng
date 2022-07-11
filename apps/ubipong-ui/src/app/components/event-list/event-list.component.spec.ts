@@ -99,8 +99,10 @@ describe('EventListComponent', () => {
     component.eventList = [event]
     fixture.detectChanges()
 
-    expect(compiled.querySelector('.event-card-list .event-name').textContent.trim()).toBe(event.name)
-    expect(compiled.querySelector('.event-card-list .event-status').textContent.trim()).toBe(event.status)
+    const eventCard = compiled.querySelector('.event-card-list mat-card')
+    expect(eventCard.querySelector('.event-name').textContent.trim()).toBe(event.name)
+    expect(eventCard.querySelector('.event-status').textContent.trim()).toBe(event.status)
+    expect(eventCard.querySelector('.event-start-time').textContent.trim()).toBe('08:00')
   })
 
   it('should emit event to view round robin match sheet', () => {
