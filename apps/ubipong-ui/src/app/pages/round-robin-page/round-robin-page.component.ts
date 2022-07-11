@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { TournamentService } from '../../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
-import { interval, Observable, of, Subscription } from 'rxjs';
+import { forkJoin, interval, Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-round-robin-page',
@@ -64,18 +64,12 @@ export class RoundRobinPageComponent implements OnInit, OnDestroy {
   refreshData() {
     const eventId = this.getNextEventId()
 
-    this.tournamentService.getEvent(eventId).pipe(mergeMap(event => {
-      // instead of setting this.event = event,
-      // we combine event with the output of getRoundRobinGrid
-      //
-      // this way, this.event and this.gridContent can be updated at the
-      // same time in the subscribe block
-      return this.tournamentService.getRoundRobinGrid(event.id).pipe(map(
-        gridContent => [event, gridContent]))
-    })).subscribe(([event, gridContent]) => {
+    const eventObservable = this.tournamentService.getEvent(eventId)
+    const roundRobinGridObservable = this.tournamentService.getRoundRobinGrid(eventId)
+    forkJoin([eventObservable, roundRobinGridObservable]).subscribe(([event, gridContent]) => {
       this.event = event
       this.gridContent = gridContent
-    });
+    })
   }
 
   ngOnDestroy() {
