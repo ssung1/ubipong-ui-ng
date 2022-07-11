@@ -60,6 +60,8 @@ export class UserService {
   public static TEST_USER_ID = 'testuser'
 
   get authCodeFlowConfig(): AuthConfig {
+    // we had to do this because we are using hash location strategy
+    // otherwise we could get baseHref with locationStrategy.getBaseHref()
     const baseHref = this?.document?.querySelector('html head base')?.getAttribute('href') ?? ''
     return {
       // Url of the Identity Provider
