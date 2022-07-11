@@ -25,8 +25,8 @@
     margin: auto;
 
     h2 {
-      font-size: 4vw;
-      line-height: 4vw;
+      font-size: 2em;
+      line-height: 1.5em;
       margin: 1em 0;
     }
 
@@ -38,18 +38,18 @@
     
       td {
         text-transform: uppercase;
-        width: 5ex;
+        width: 5em;
         text-overflow: clip;
         padding: .5em;
         border: 1px solid;
       }
     
       td:nth-child(1) {
-          width: 2ex;
+          width: 2em;
       }
     
       td:nth-child(2) {
-          width: 12ex;
+          width: 12em;
       }
     }
   }
