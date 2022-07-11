@@ -2,9 +2,7 @@
 
 import { getGreeting } from '../support/app.po'
 import { environment } from '../config/environment'
-import 'cypress-wait-until'
 import { Util } from '../support/util'
-import { eventNames } from 'process'
 
 describe('ubipong-ui', () => {
   // Tournament Setup:
@@ -131,22 +129,15 @@ describe('ubipong-ui', () => {
       `v1/tournaments/${challongeUrl}/participants/bulk_add.json`,
       environment.challongeHost)
 
-    cy.waitUntil(() => {
-      return cy.request({
-        method: 'POST',
-        url: url.toString(),
-        qs: {
-          api_key: environment.challongeApiKey
-        },
-        body: {
-          participants: players
-        },
-        failOnStatusCode: false
-      }).then(response => response.status == 200)
-    },
-    {
-      timeout: 15000,
-      interval: 5000
+    cy.request({
+      method: 'POST',
+      url: url.toString(),
+      qs: {
+        api_key: environment.challongeApiKey
+      },
+      body: {
+        participants: players
+      }
     })
   }
 
