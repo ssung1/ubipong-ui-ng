@@ -1,14 +1,9 @@
 section.tournament-card-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: stretch;
-  margin: -.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20em, auto));
+  gap: 1rem;
 
   mat-card.tournament-card {
-    margin: .5rem;
-    flex: 1 1 0;
-
     :hover {
       cursor: pointer;
     }
