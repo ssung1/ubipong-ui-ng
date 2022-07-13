@@ -22,7 +22,7 @@ describe('ubipong-ui', () => {
     tournamentDate: '2019-06-23T00:00:00-05:00'
   }
 
-  let bikiniBottomOpen
+  let bikiniBottomOpen: any
 
   const preliminaryGroup1 = {
     name: "Preliminary Group 1",
@@ -61,7 +61,7 @@ describe('ubipong-ui', () => {
     winner: 'spongebob'
   }
 
-  function deleteChallongeTournament(challongeUrl) {
+  function deleteChallongeTournament(challongeUrl: string) {
     cy.request({
       method: 'DELETE',
       url: `${environment.challongeHost}/v1/tournaments/${challongeUrl}.json`,
@@ -84,7 +84,7 @@ describe('ubipong-ui', () => {
     cy.get('#button-add-tournament').click()
   }
 
-  function goToTournamentFromDashboard(tournamentName) {
+  function goToTournamentFromDashboard(tournamentName: string) {
     cy.contains('.tournament-name', tournamentName).click()
   }
 
@@ -128,7 +128,7 @@ describe('ubipong-ui', () => {
     cy.contains('.event-editor button', 'Save').click()
   }
 
-  function addPlayerList(players, challongeUrl: string) {
+  function addPlayerList(players: any[], challongeUrl: string) {
     const url = new URL(
       `v1/tournaments/${challongeUrl}/participants/bulk_add.json`,
       environment.challongeHost)
@@ -145,7 +145,7 @@ describe('ubipong-ui', () => {
     })
   }
 
-  function startEvent(challongeUrl) {
+  function startEvent(challongeUrl: string) {
     const url = new URL(
       `v1/tournaments/${challongeUrl}/start.json`,
       environment.challongeHost)
@@ -159,7 +159,7 @@ describe('ubipong-ui', () => {
     })
   }
 
-  function goToRoundRobinMatchSheet(eventName) {
+  function goToRoundRobinMatchSheet(eventName: string) {
     const event = cy.contains('.event-card', eventName)
     event.get('.button-round-robin-match-sheet').click()
   }
@@ -180,7 +180,7 @@ describe('ubipong-ui', () => {
     cy.get('table > :nth-child(5) > :nth-child(2)').should('have.text', 'spongebob')
   }
 
-  function getEventMatchList(challongeUrl) {
+  function getEventMatchList(challongeUrl: string) {
     const url = new URL(
       `${eventContext}/${challongeUrl}/roundRobinMatchList`,
       environment.apiHost)
@@ -190,13 +190,13 @@ describe('ubipong-ui', () => {
 
   // find the correct ID of the match we want from matchList
   // then submit score
-  function submitMatchResult(match, challongeUrl) {
+  function submitMatchResult(match: any, challongeUrl: string) {
     // get the entire list
     const matchListChainable = getEventMatchList(challongeUrl)
 
     matchListChainable.then(matchList => {
       // find the match for which we want to submit the scores
-      const thisMatchFromList = matchList.find(m => {
+      const thisMatchFromList = matchList.find((m: any) => {
         return m.player1Name == match.player1Name
           && m.player2Name == match.player2Name
       })
@@ -213,7 +213,7 @@ describe('ubipong-ui', () => {
       const url = new URL(
         `v1/tournaments/${challongeUrl}/matches/${thisMatchFromList.matchId}.json`,
         environment.challongeHost)
-      const response = cy.request({
+      cy.request({
         method: 'PUT',
         url: url.toString(),
         qs: {
