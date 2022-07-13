@@ -1,8 +1,8 @@
-import {Links} from "./links"
+import { Links } from "./links"
 
 export type Tournament  = {
-  id: number
-  name: string
-  tournamentDate: string
-  _links: Links | null
+  readonly id: number
+  readonly name: string
+  readonly tournamentDate: string
+  readonly _links: Links | null
 }
