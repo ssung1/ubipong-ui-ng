@@ -29,6 +29,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {TournamentEvent} from '../../models/tournament-event';
 
 describe('EventListComponent', () => {
+  const locale = 'en-US'
+  const timeFormat: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+  }
   let mockUserService: any
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
@@ -102,7 +107,8 @@ describe('EventListComponent', () => {
     const eventCard = compiled.querySelector('.event-card-list mat-card')
     expect(eventCard.querySelector('.event-name').textContent.trim()).toBe(event.name)
     expect(eventCard.querySelector('.event-status').textContent.trim()).toBe(event.status)
-    expect(eventCard.querySelector('.event-start-time').textContent.trim()).toBe('08:00')
+    const timeString = new Date(event.startTime).toLocaleString(locale, timeFormat)
+    expect(eventCard.querySelector('.event-start-time').textContent.trim()).toBe(timeString)
   })
 
   it('should emit event to view round robin match sheet', () => {

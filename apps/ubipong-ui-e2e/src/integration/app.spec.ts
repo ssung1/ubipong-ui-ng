@@ -30,6 +30,8 @@ describe('ubipong-ui', () => {
     startTime: "2019-06-23T10:00:00-05:00",
   }
 
+  const startTime = '10:00am'
+
   const spongebob = {
     name: 'spongebob'
   }
@@ -92,7 +94,7 @@ describe('ubipong-ui', () => {
     cy.get('#input-new-challonge-url').type(event.challongeUrl)
 
     cy.get('#form-field-new-start-time').click()
-    cy.contains('.mat-option-text', '10:00am').click()
+    cy.contains('.mat-option-text', startTime).click()
 
     cy.get('#button-add-event').click()
   }
@@ -100,6 +102,8 @@ describe('ubipong-ui', () => {
   function verifyAddedEvent(event: any) {
     const eventElement = cy.contains('.event-card', preliminaryGroup1.name)
     eventElement.contains('.event-status', 'created')
+    // for now, only match the hour part (without the am/pm because we don't have a good way of formatting time)
+    eventElement.get('.event-start-time').should('contain.text', startTime.substring(0, 5))
   }
   
   function editEventButThenCancel(event: any) {
@@ -120,7 +124,7 @@ describe('ubipong-ui', () => {
     inputStartDate.clear()
     inputStartDate.type(event.startTime)
     cy.get('.event-editor mat-select.start-time').click()
-    cy.contains('.mat-option-text', '10:00am').click()
+    cy.contains('.mat-option-text', startTime).click()
     cy.contains('.event-editor button', 'Save').click()
   }
 

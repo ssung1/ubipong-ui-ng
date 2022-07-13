@@ -9,7 +9,7 @@
       </section>
       <section>
         <div class="challonge-url"><a target="_new" href="https://challonge.com/{{event.challongeUrl}}">{{event.challongeUrl}}</a></div>
-        <div class="event-start-time">{{event.startTime | date : 'hh:mm'}}</div>
+        <div class="event-start-time">{{formatTime(event.startTime)}}</div>
       </section>
     </mat-card-content>
     <mat-card-actions>
