@@ -48,7 +48,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EventEditorComponent } from './event-editor.component';
 
 import { TournamentEvent } from '../../models/tournament-event'
-import { TournamentTime } from '../../models/tournament-time'
+import { EventTime } from '../../models/tournament-time'
 
 describe('EventEditorComponent', () => {
   const eventId = 123
@@ -178,7 +178,7 @@ describe('EventEditorComponent', () => {
     if (startTime) {
       const startHour = new Date(startTime).getHours()
       const startMinute = new Date(startTime).getMinutes()
-      expect(await inputStartTime.getValueText()).toBe(new TournamentTime({
+      expect(await inputStartTime.getValueText()).toBe(new EventTime({
         hour: startHour,
         minute: startMinute,
       }).display)
@@ -197,7 +197,7 @@ describe('EventEditorComponent', () => {
     const newStartMinute = new Date(newEvent.startTime).getMinutes()
 
     await inputStartTime.clickOptions({
-      text: new TournamentTime({
+      text: new EventTime({
         hour: newStartHour,
         minute: newStartMinute,
       }).display

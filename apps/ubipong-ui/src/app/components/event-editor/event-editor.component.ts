@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { TournamentEvent } from '../../models/tournament-event'
-import { TournamentTime } from '../../models/tournament-time'
+import { EventTime } from '../../models/tournament-time'
 
 @Component({
   selector: 'app-event-editor',
@@ -24,17 +24,17 @@ export class EventEditorComponent implements OnInit {
   inputStartDate = new FormControl('', [Validators.required])
   inputStartTime = new FormControl('', [Validators.required])
 
-  readonly timeOptionList: readonly TournamentTime[] = Object.freeze([
-    new TournamentTime({hour: 8, minute: 0}),
-    new TournamentTime({hour: 9, minute: 0}),
-    new TournamentTime({hour: 10, minute: 0}),
-    new TournamentTime({hour: 11, minute: 0}),
-    new TournamentTime({hour: 12, minute: 0}),
-    new TournamentTime({hour: 13, minute: 0}),
-    new TournamentTime({hour: 14, minute: 0}),
-    new TournamentTime({hour: 15, minute: 0}),
-    new TournamentTime({hour: 16, minute: 0}),
-    new TournamentTime({hour: 17, minute: 0}),
+  readonly timeOptionList: readonly EventTime[] = Object.freeze([
+    new EventTime({hour: 8, minute: 0}),
+    new EventTime({hour: 9, minute: 0}),
+    new EventTime({hour: 10, minute: 0}),
+    new EventTime({hour: 11, minute: 0}),
+    new EventTime({hour: 12, minute: 0}),
+    new EventTime({hour: 13, minute: 0}),
+    new EventTime({hour: 14, minute: 0}),
+    new EventTime({hour: 15, minute: 0}),
+    new EventTime({hour: 16, minute: 0}),
+    new EventTime({hour: 17, minute: 0}),
   ])
 
   constructor() { }

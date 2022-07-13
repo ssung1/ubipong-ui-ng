@@ -1,4 +1,4 @@
-export class TournamentTime {
+export class EventTime {
   readonly hour: number
   readonly minute: number
 
