@@ -48,7 +48,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EventEditorComponent } from './event-editor.component';
 
 import { TournamentEvent } from '../../models/tournament-event'
-import { EventTime } from '../../models/tournament-time'
+import { EventTime } from '../../models/event-time'
 
 describe('EventEditorComponent', () => {
   const eventId = 123

@@ -1,4 +1,4 @@
-import { EventTime } from './tournament-time'
+import { EventTime } from './event-time'
 
 describe('tournament time', () => {
   it('should produce the correct displayed value: in the am', () => {

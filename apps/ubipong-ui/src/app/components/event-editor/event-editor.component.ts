@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { TournamentEvent } from '../../models/tournament-event'
-import { EventTime } from '../../models/tournament-time'
+import { EventTime } from '../../models/event-time'
 
 @Component({
   selector: 'app-event-editor',
