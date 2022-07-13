@@ -126,6 +126,18 @@ describe('EventListComponent', () => {
     expect(viewRoundRobinMatchSheetEventSpy).toHaveBeenCalled()
   })
 
+  it('should disable round robin match sheet if event has not started', () => {
+    component.eventList = [{
+      ...event,
+      status: 'created',
+    }]
+    fixture.detectChanges()
+
+    const buttonRoundRobinMatchSheet = compiled.querySelector('.button-round-robin-match-sheet')
+
+    expect(buttonRoundRobinMatchSheet.disabled).toBe(true)
+  })
+
   it('should emit event to nagivate to event details if selected', () => {
     component.eventList = [event]
     fixture.detectChanges()

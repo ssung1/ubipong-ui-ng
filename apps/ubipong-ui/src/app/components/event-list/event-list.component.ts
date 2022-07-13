@@ -38,4 +38,8 @@ export class EventListComponent implements OnInit {
       minute: 'numeric',
     } as Intl.DateTimeFormatOptions)
   }
+
+  isRoundRobinMatchSheetDisabled(status: string) {
+    return status === 'created'
+  }
 }

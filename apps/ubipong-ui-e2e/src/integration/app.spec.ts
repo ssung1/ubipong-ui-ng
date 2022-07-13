@@ -16,6 +16,7 @@ describe('ubipong-ui', () => {
   // patrick vs squidward: patrick wins 3 3 3
   
   const eventContext = '/rest/v0/events'
+  const statusCreated = 'created'
 
   const bikiniBottomOpenBase = {
     name: 'Bikini Bottom Open 2019',
@@ -99,11 +100,21 @@ describe('ubipong-ui', () => {
     cy.get('#button-add-event').click()
   }
 
-  function verifyAddedEvent(event: any) {
-    const eventElement = cy.contains('.event-card', preliminaryGroup1.name)
-    eventElement.contains('.event-status', 'created')
+  function verifyAddedEvent(options: {
+    event: any,
+    status: string,
+  }) {
+    const event = options.event ?? preliminaryGroup1
+    const status = options.status ?? statusCreated
+
+    const eventElement = cy.contains('.event-card', event.name)
+    eventElement.contains('.event-status', status)
     // for now, only match the hour part (without the am/pm because we don't have a good way of formatting time)
     eventElement.get('.event-start-time').should('contain.text', startTime.substring(0, 5))
+
+    if (status === statusCreated) {
+      eventElement.get('.button-round-robin-match-sheet').should('be.disabled')
+    }
   }
   
   function editEventButThenCancel(event: any) {
@@ -273,18 +284,22 @@ describe('ubipong-ui', () => {
     addTournament(bikiniBottomOpen)
     goToTournamentFromDashboard(bikiniBottomOpen.name)
     addEvent(preliminaryGroup1)
-    verifyAddedEvent(preliminaryGroup1)
+    verifyAddedEvent({
+      event: preliminaryGroup1,
+      status: statusCreated,
+    })
     goToEventFromTournamentPage(preliminaryGroup1.name)
     editEventButThenCancel(preliminaryGroup1)
     editEvent(preliminaryGroup1)
 
-    // we have not done the navigation, so we go back to the tournament page the hard way
-    goToDashboard()
-    goToTournamentFromDashboard(bikiniBottomOpen.name)
-
+    cy.log('Add players and start event')
     addPlayerList([spongebob, patrick, squidward],
       preliminaryGroup1.challongeUrl)
     startEvent(preliminaryGroup1.challongeUrl)
+
+    // we have not done the navigation, so we go back to the tournament page the hard way
+    goToDashboard()
+    goToTournamentFromDashboard(bikiniBottomOpen.name)
     goToRoundRobinMatchSheet(preliminaryGroup1.name)
     verifyRoundRobinMatchSheet()
 
