@@ -26,7 +26,8 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list'
 import { MatNativeDateModule } from '@angular/material/core'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import {TournamentEvent} from '../../models/tournament-event';
+import { TournamentEvent } from '../../models/tournament-event'
+import { EventStatus } from '../../models/event-status'
 
 describe('EventListComponent', () => {
   const locale = 'en-US'
@@ -45,7 +46,7 @@ describe('EventListComponent', () => {
     name: 'Bikini Bottom Open 2019',
     challongeUrl: 'bb_201906_rr_pg_1',
     startTime: '2019-06-01T00:00:00.000Z',
-    status: 'started',
+    status: EventStatus.Started,
   } as const
 
   beforeEach(async () => {
@@ -129,7 +130,7 @@ describe('EventListComponent', () => {
   it('should disable round robin match sheet if event has not started', () => {
     component.eventList = [{
       ...event,
-      status: 'created',
+      status: EventStatus.Created,
     }]
     fixture.detectChanges()
 

@@ -1,8 +1,10 @@
+import { EventStatus } from './event-status'
+
 export type TournamentEvent = {
-  id: number
-  tournamentId: number
-  name: string
-  challongeUrl: string
-  status: string
-  startTime: string
+  readonly id: number
+  readonly tournamentId: number
+  readonly name: string
+  readonly challongeUrl: string
+  readonly status: EventStatus
+  readonly startTime: string
 }

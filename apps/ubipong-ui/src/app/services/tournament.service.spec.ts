@@ -2,6 +2,8 @@ import { TournamentService } from './tournament.service';
 import { environment } from '../../environments/environment';
 import { Tournament } from '../models/tournament';
 import { of, lastValueFrom } from 'rxjs';
+import { EventStatus } from '../models/event-status';
+import { TournamentEvent } from '../models/tournament-event';
 
 describe('TournamentService', () => {
   const eventUrl = "bikiniBottomOpen-RoundRobin-Group-5";
@@ -19,17 +21,15 @@ describe('TournamentService', () => {
         "href": tournamentLink
       },
     }
-  }
-  const event = {
-    "id": eventId,
-    "tournamentId": tournamentId,
-    "challongeUrl": eventUrl,
-    "name": "Preliminary Group 1",
-    "challongeTournament": null,
-    "startTime": "2018-06-20T17:00:00.000+0000",
-    "status": "pending",
-  }
-
+  } as const
+  const event: TournamentEvent = {
+    id: eventId,
+    tournamentId: tournamentId,
+    challongeUrl: eventUrl,
+    name: 'Preliminary Group 1',
+    startTime: '2018-06-20T17:00:00.000+0000',
+    status: EventStatus.Created,
+  } as const
   let mockHttpClient: any;
   let tournamentService: TournamentService;
   const url = environment.tournamentServiceUrl;

@@ -44,32 +44,33 @@ import { HarnessLoader } from '@angular/cdk/testing'
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed'
 import { MatSelectHarness } from '@angular/material/select/testing'
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EventEditorComponent } from './event-editor.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { EventEditorComponent } from './event-editor.component'
 
 import { TournamentEvent } from '../../models/tournament-event'
 import { EventTime } from '../../models/event-time'
+import { EventStatus } from '../../models/event-status'
 
 describe('EventEditorComponent', () => {
   const eventId = 123
-  const event: TournamentEvent = Object.freeze({
+  const event: TournamentEvent = {
     id: eventId,
     name: 'Preliminary Group 1',
     challongeUrl: 'bb_201906_rr_pg_1',
-    status: 'started',
+    status: EventStatus.Started,
     startTime: '2021-05-03T12:00:00.000Z',
     tournamentId: 234,
-  })
+  }
 
   // we are editing event into newEvent
-  const newEvent: TournamentEvent = Object.freeze({
+  const newEvent: TournamentEvent = {
     id: eventId,
     name: 'Preliminary Group 2',
     challongeUrl: 'bb_201906_rr_pg_1',
-    status: 'started',
+    status: EventStatus.Started,
     startTime: '2021-05-03T14:00:00.000Z',
     tournamentId: 234,
-  })
+  }
 
   let component: EventEditorComponent
   let fixture: ComponentFixture<EventEditorComponent>
