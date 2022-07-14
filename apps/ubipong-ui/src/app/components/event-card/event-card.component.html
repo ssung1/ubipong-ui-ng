@@ -1,0 +1,20 @@
+<mat-card class="event-card">
+  <mat-card-header>
+  </mat-card-header>
+  <mat-card-content>
+    <section>
+      <mat-card-title class="event-name" (click)="viewEventDetails(event)">{{event.name}}</mat-card-title>
+      <div class="event-status">{{event.status}}</div>
+    </section>
+    <section>
+      <div class="challonge-url"><a target="_new" href="https://challonge.com/{{event.challongeUrl}}">{{event.challongeUrl}}</a></div>
+      <div class="event-start-time">{{formatTime(event.startTime)}}</div>
+    </section>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button class="button-round-robin-match-sheet" [disabled]="isRoundRobinMatchSheetDisabled(event.status)"
+      color="primary" (click)="viewRoundRobinMatchSheet(event)">
+      View Match Sheet
+    </button>
+  </mat-card-actions>
+</mat-card>
