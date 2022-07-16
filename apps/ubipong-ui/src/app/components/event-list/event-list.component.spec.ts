@@ -28,6 +28,7 @@ import { MatNativeDateModule } from '@angular/material/core'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { TournamentEvent } from '../../models/tournament-event'
 import { EventStatus } from '../../models/event-status'
+import { EventCardComponent } from '../event-card/event-card.component';
 
 describe('EventListComponent', () => {
   const locale = 'en-US'
@@ -56,7 +57,10 @@ describe('EventListComponent', () => {
       login: jest.fn().mockResolvedValue('done')
     }
     await TestBed.configureTestingModule({
-      declarations: [ EventListComponent ],
+      declarations: [
+        EventListComponent,
+        EventCardComponent,
+      ],
       imports: [
         FormsModule,
         ReactiveFormsModule,
