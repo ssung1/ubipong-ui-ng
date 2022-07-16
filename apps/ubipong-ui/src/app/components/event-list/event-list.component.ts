@@ -31,15 +31,4 @@ export class EventListComponent implements OnInit {
   viewEventDetails(event: TournamentEvent) {
     this.viewEventDetailsEventEmitter.emit(event)
   }
-
-  formatTime(dateTime: string) {
-    return new Date(dateTime).toLocaleString('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-    } as Intl.DateTimeFormatOptions)
-  }
-
-  isRoundRobinMatchSheetDisabled(status: string) {
-    return status === 'created'
-  }
 }
