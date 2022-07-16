@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
 import { EventStatus } from '../../models/event-status'
 import { TournamentEvent } from '../../models/tournament-event'
+import { formatTime } from '../../utils/datetime-formatter'
 
 @Component({
   selector: 'app-event-card',
@@ -39,10 +40,7 @@ export class EventCardComponent implements OnInit {
   }
 
   formatTime(dateTime: string) {
-    return new Date(dateTime).toLocaleString('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-    } as Intl.DateTimeFormatOptions)
+    return formatTime(dateTime)
   }
 
   isRoundRobinMatchSheetDisabled(status: string) {

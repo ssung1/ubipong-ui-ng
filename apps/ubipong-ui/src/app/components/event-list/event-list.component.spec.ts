@@ -31,11 +31,15 @@ import { EventStatus } from '../../models/event-status'
 import { EventCardComponent } from '../event-card/event-card.component';
 
 describe('EventListComponent', () => {
-  const locale = 'en-US'
-  const timeFormat: Intl.DateTimeFormatOptions = {
-    hour: 'numeric',
-    minute: 'numeric',
+  function formatTime(dateTime: string) {
+    const timeWithDayPeriod = new Date(dateTime).toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+    } as Intl.DateTimeFormatOptions)
+    const spaceIndex = timeWithDayPeriod.search(' ')
+    return timeWithDayPeriod.substring(0, spaceIndex)
   }
+  const locale = 'en-US'
   let mockUserService: any
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
@@ -112,7 +116,7 @@ describe('EventListComponent', () => {
     const eventCard = compiled.querySelector('.event-card-list mat-card')
     expect(eventCard.querySelector('.event-name').textContent.trim()).toBe(event.name)
     expect(eventCard.querySelector('.event-status').textContent.trim()).toBe(event.status)
-    const timeString = new Date(event.startTime).toLocaleString(locale, timeFormat)
+    const timeString = formatTime(event.startTime)
     expect(eventCard.querySelector('.event-start-time').textContent.trim()).toBe(timeString)
   })
 
