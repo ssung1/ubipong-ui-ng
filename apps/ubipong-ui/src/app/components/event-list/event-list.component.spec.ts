@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventListComponent } from './event-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
@@ -28,19 +27,10 @@ import { MatNativeDateModule } from '@angular/material/core'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { TournamentEvent } from '../../models/tournament-event'
 import { EventStatus } from '../../models/event-status'
-import { EventCardComponent } from '../event-card/event-card.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {By} from '@angular/platform-browser';
 
 describe('EventListComponent', () => {
-  function formatTime(dateTime: string) {
-    const timeWithDayPeriod = new Date(dateTime).toLocaleString('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-    } as Intl.DateTimeFormatOptions)
-    const spaceIndex = timeWithDayPeriod.search(' ')
-    return timeWithDayPeriod.substring(0, spaceIndex)
-  }
-  const locale = 'en-US'
-  let mockUserService: any
   let component: EventListComponent;
   let fixture: ComponentFixture<EventListComponent>;
   let compiled: any
@@ -55,15 +45,12 @@ describe('EventListComponent', () => {
   } as const
 
   beforeEach(async () => {
-    mockUserService = {
-      getUserId: jest.fn().mockResolvedValue(UserService.TEST_USER_ID),
-      isLoggedIn: jest.fn().mockResolvedValue(true),
-      login: jest.fn().mockResolvedValue('done')
-    }
     await TestBed.configureTestingModule({
       declarations: [
         EventListComponent,
-        EventCardComponent,
+      ],
+      schemas: [
+        NO_ERRORS_SCHEMA,
       ],
       imports: [
         FormsModule,
@@ -91,9 +78,6 @@ describe('EventListComponent', () => {
         MatListModule,
         MatNativeDateModule,
       ],
-      providers: [
-        { provide: UserService, useValue: mockUserService },
-      ],
     })
     .compileComponents();
   });
@@ -102,76 +86,41 @@ describe('EventListComponent', () => {
     fixture = TestBed.createComponent(EventListComponent);
     component = fixture.componentInstance;
     compiled = fixture.nativeElement
+    component.eventList = [event]
     fixture.detectChanges();
   });
+
+  function findEventCardElement() {
+    return fixture.debugElement.query(By.css('app-event-card'))
+  }
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
   
-  it('should display events', () => {
-    component.eventList = [event]
-    fixture.detectChanges()
-
-    const eventCard = compiled.querySelector('.event-card-list mat-card')
-    expect(eventCard.querySelector('.event-name').textContent.trim()).toBe(event.name)
-    expect(eventCard.querySelector('.event-status').textContent.trim()).toBe(event.status)
-    const timeString = formatTime(event.startTime)
-    expect(eventCard.querySelector('.event-start-time').textContent.trim()).toBe(timeString)
+  it('should display event through the event-card component (app-event-card)', () => {
+    const eventCardElement = findEventCardElement()
+    expect(eventCardElement).toBeTruthy()
+    expect(eventCardElement.properties['event']).toEqual(event)
   })
 
-  it('should emit event to view round robin match sheet', () => {
-    component.eventList = [event]
-    fixture.detectChanges()
-
-    const buttonRoundRobinMatchSheet = compiled.querySelector('.button-round-robin-match-sheet')
+  it('should relay the event to view round robin match sheet', () => {
+    const eventCardElement = findEventCardElement()
+    expect(eventCardElement).toBeTruthy()
 
     const viewRoundRobinMatchSheetEventSpy = jest.spyOn(
       component.viewRoundRobinMatchSheetEventEmitter, 'emit')
-
-    expect(buttonRoundRobinMatchSheet.disabled).toBe(false)
-    buttonRoundRobinMatchSheet.click()
-
+    eventCardElement.triggerEventHandler('viewRoundRobinMatchSheet', event)
     expect(viewRoundRobinMatchSheetEventSpy).toHaveBeenCalled()
   })
 
-  it('should disable round robin match sheet if event has not started', () => {
-    component.eventList = [{
-      ...event,
-      status: EventStatus.Created,
-    }]
-    fixture.detectChanges()
-
-    const buttonRoundRobinMatchSheet = compiled.querySelector('.button-round-robin-match-sheet')
-
-    expect(buttonRoundRobinMatchSheet.disabled).toBe(true)
-  })
-
-  it('should emit event to nagivate to event details if selected', () => {
-    component.eventList = [event]
-    fixture.detectChanges()
-
-    const eventCard = compiled.querySelector('.event-card-list .event-card .event-name')
+  it('should relay the event to nagivate to event details', () => {
+    const eventCardElement = findEventCardElement()
+    expect(eventCardElement).toBeTruthy()
 
     const viewEventDetailsEventSpy = jest.spyOn(
       component.viewEventDetailsEventEmitter, 'emit')
-
-    eventCard.click()
-
+    eventCardElement.triggerEventHandler('viewEventDetails', event)
     expect(viewEventDetailsEventSpy).toHaveBeenCalled()
-  })
-
-  it('should not emit event to nagivate if only the challonge URL is selected', () => {
-    component.eventList = [event]
-    fixture.detectChanges()
-
-    const eventCard = compiled.querySelector('.event-card-list .event-card .challonge-url')
-
-    const viewEventDetailsEventSpy = jest.spyOn(
-      component.viewEventDetailsEventEmitter, 'emit')
-
-    eventCard.click()
-
-    expect(viewEventDetailsEventSpy).not.toHaveBeenCalled()
   })
 })
