@@ -1,5 +1,7 @@
-UbiPong
-=======
+# UbiPong
+
+Part of <https://github.com/ssung1/ubipong-ecosystem>.  Follow instructions
+there for a quick start.
 
 ## Production Environment
 
@@ -16,6 +18,8 @@ npx nx build --prod --base-href /ubipong/
 or routing will fail.
 
 ## How to E2E Test
+
+Before testing, make sure the backend services are running.
 
 Check settings in `apps/ubipong-ui-e2e/src/config/environment.ts`.
 
