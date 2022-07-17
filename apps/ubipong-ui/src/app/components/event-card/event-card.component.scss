@@ -1,0 +1,12 @@
+mat-card.event-card {
+  margin: .5rem 0;
+
+  .event-name {
+    cursor: pointer;
+  }
+
+  section {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -37,8 +37,6 @@ describe('EventCardComponent', () => {
     const spaceIndex = timeWithDayPeriod.search(' ')
     return timeWithDayPeriod.substring(0, spaceIndex)
   }
-  const locale = 'en-US'
-  let mockUserService: any
   let component: EventCardComponent
   let fixture: ComponentFixture<EventCardComponent>
   let compiled: any
