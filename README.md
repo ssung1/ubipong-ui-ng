@@ -39,6 +39,8 @@ Once the commits are merged into master branch, tag the version with
 git tag v{yyyy-MM-dd}
 ```
 
+Edit environment.prod.ts to set authorization server and client ID.
+
 Run build with
 
 ```bash
